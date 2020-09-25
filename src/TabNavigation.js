@@ -1,8 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ThuNhap from './ThuNhap';
-import ChiTieu from './ChiTieu';
-import ThongKe from './ThongKe';
+import ThuNhap from './feature/thunhap/ThuNhap';
+import ChiTieu from './feature/chitieu/ChiTieu';
+import ThongKe from './feature/thongke/ThongKe';
 import {
     ROUTETHUNHAP,
     ICONTHUNHAP,
@@ -14,7 +14,7 @@ import {
     ICONCHITIEUOUTLINE,
     ICONTHONGKEOUTLINE,
     NAVIGATIONTITLE
-} from './Constant';
+} from './feature/common/Constant';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 

@@ -11,9 +11,9 @@ import {
     Button
 } from 'react-native';
 import moment from 'moment';
-import { dataChiTieu } from './testData/testData';
-import { STACKNAVIGATIONROUTE } from './Constant';
-import { getRandomColor } from './helper/ColorPicker';
+import { dataChiTieu } from '../../testData/testData';
+import { STACKNAVIGATIONROUTE } from '../common/Constant';
+import { getRandomColor } from '../common/ColorPicker';
 
 const style = StyleSheet.create({
     container: {
@@ -72,7 +72,7 @@ const ChiTieu = ({ navigation }) => {
 
                                         numberOfLines={1}
                                         style={[{
-                                            fontSize: 25,
+                                            fontSize: 21,
                                             width: 210
                                         }, style.item]}>
                                         {item.title}

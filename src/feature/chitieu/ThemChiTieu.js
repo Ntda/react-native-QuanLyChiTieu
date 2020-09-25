@@ -6,14 +6,14 @@ import {
     TextInput,
     Dimensions
 } from 'react-native';
-import DateTime from './DateTime';
+import DateTime from '../common/DateTime';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
-import IconSend from './IconSend';
-import { THEMCHITIEUTITLE } from './Constant';
-import inputValid from './validate/valdiateInput';
-import AlertComponent from './helper/AlertComponent';
+import IconSend from '../common/IconSend';
+import { ROUTECHITIEU, THEMCHITIEUTITLE } from '../common/Constant';
+import inputValid from '../common/valdiateInput';
+import AlertComponent from '../common/AlertComponent';
 
 
 const style = StyleSheet.create({
@@ -81,6 +81,7 @@ const ThemChiTieu = ({ navigation }) => {
             });
             return;
         }
+        navigation.navigate(ROUTECHITIEU);
     }
 
     const handleCloseAlert = () => {
@@ -134,6 +135,17 @@ const ThemChiTieu = ({ navigation }) => {
             placeholder='Tiêu đề' />)
     }
 
+    const renderMoney = () => {
+        return (<TextInput
+            onChange={()=>{}}
+            keyboardType='numeric'
+            numeric
+            style={[
+                style.textInput,
+                { paddingBottom: 10 }]}
+            placeholder='Số tiền' />)
+    }
+
     const renderContent = () => {
         return (<AutoGrowingTextInput
             onChange={event => setContent(event.nativeEvent.text || '')}
@@ -162,6 +174,7 @@ const ThemChiTieu = ({ navigation }) => {
         <View style={style.container}>
             {renderDate()}
             {renderTitle()}
+            {renderMoney()}
             {renderCalendar()}
             {renderContent()}
             {alertModel.displayMessage && renderAlert()}

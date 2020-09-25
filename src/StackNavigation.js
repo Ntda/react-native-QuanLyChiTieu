@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigation from './TabNavigation';
-import ThemChiTieu from './ThemChiTieu';
-import { STACKNAVIGATIONROUTE, THEMCHITIEUTITLE } from './Constant';
+import ThemChiTieu from './feature/chitieu/ThemChiTieu';
+import { STACKNAVIGATIONROUTE, THEMCHITIEUTITLE } from './feature/common/Constant';
 
 const Stack = createStackNavigator();
 const StackNavigation = () => {
