@@ -28,6 +28,8 @@ const FOCUSON = {
     CONTENT: 'Content'
 }
 
+const LOCALSTOREKEY = '@QuanLyChiTieu';
+
 export {
     ROUTETHUNHAP,
     ROUTECHITIEU,
@@ -43,5 +45,6 @@ export {
     THEMCHITIEUTITLE,
     NAVBAR_HEIGHT,
     STATUS_BAR_HEIGHT,
-    FOCUSON
+    FOCUSON,
+    LOCALSTOREKEY
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -11,9 +11,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import IconSend from '../common/IconSend';
-import { ROUTECHITIEU, THEMCHITIEUTITLE } from '../common/Constant';
+import { LOCALSTOREKEY, ROUTECHITIEU, THEMCHITIEUTITLE } from '../common/Constant';
 import inputValid from '../common/valdiateInput';
 import AlertComponent from '../common/AlertComponent';
+import { useDispatch, useSelector } from 'react-redux';
+import { setItem } from '../common/localStoreHelper';
 
 
 const style = StyleSheet.create({
@@ -33,6 +35,7 @@ const style = StyleSheet.create({
     }
 });
 const ThemChiTieu = ({ navigation }) => {
+    const dispatch = useDispatch();
     const [showCalendar, setShowCalendar] = useState(false);
     const [date, setDate] = useState(new Date());
     const [title, setTitle] = useState('');
@@ -81,7 +84,16 @@ const ThemChiTieu = ({ navigation }) => {
             });
             return;
         }
-        navigation.navigate(ROUTECHITIEU);
+        //navigation.navigate(ROUTECHITIEU);
+        const model = {
+            key: LOCALSTOREKEY,
+            value: {
+                date,
+                title,
+                content
+            }
+        }
+        dispatch(setItem(model));
     }
 
     const handleCloseAlert = () => {
@@ -137,7 +149,7 @@ const ThemChiTieu = ({ navigation }) => {
 
     const renderMoney = () => {
         return (<TextInput
-            onChange={()=>{}}
+            onChange={() => { }}
             keyboardType='numeric'
             numeric
             style={[

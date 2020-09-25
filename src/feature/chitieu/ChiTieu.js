@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Avatar } from "react-native-elements";
 import {
     View,
@@ -12,8 +12,11 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import { dataChiTieu } from '../../testData/testData';
-import { STACKNAVIGATIONROUTE } from '../common/Constant';
+import { LOCALSTOREKEY, STACKNAVIGATIONROUTE } from '../common/Constant';
 import { getRandomColor } from '../common/ColorPicker';
+import { useDispatch } from 'react-redux';
+import { getItem } from '../common/localStoreHelper';
+import { nanoid } from '@reduxjs/toolkit';
 
 const style = StyleSheet.create({
     container: {
@@ -30,6 +33,7 @@ const style = StyleSheet.create({
 })
 
 const ChiTieu = ({ navigation }) => {
+    const dispatch = useDispatch();
     const renderItem = ({
         item,
         index
@@ -40,11 +44,11 @@ const ChiTieu = ({ navigation }) => {
                     marginTop: 5,
                     borderRadius: 20
                 }}
-                key={index}
+                key={nanoid()}
                 onPress={() => alert(item.title)}
                 underlayColor='#e6f9ff'>
                 <View
-                    key={index}
+                    key={nanoid()}
                     style={style.row}>
                     <View style={{
                         flex: 1,
@@ -119,6 +123,10 @@ const ChiTieu = ({ navigation }) => {
     const renderKey = ({
         index
     }) => index;
+
+    useEffect(() => {
+        dispatch(getItem(LOCALSTOREKEY))
+    }, []);;
     return (
         <SafeAreaView style={style.container}>
             {renderListView()}
