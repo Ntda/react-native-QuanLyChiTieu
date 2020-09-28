@@ -5,7 +5,6 @@ const getItem = createAsyncThunk(
     'get/item',
     async key => {
         const jsonValue = await AsyncStorage.getItem(key);
-        console.log('[getItem]: ' + jsonValue);
         return jsonValue
             ? JSON.parse(jsonValue)
             : null
@@ -17,8 +16,8 @@ const setItem = createAsyncThunk(
     async (model, { getState }) => {
         const { key, value } = model;
         const state = getState();
-        console.log('[set item]: ' + model);
-        const jsonValue = JSON.stringify(value)
+        console.log('[set item]: ' + state);
+        const jsonValue = JSON.stringify([value])
         await AsyncStorage.setItem(key, jsonValue);
         return true;
     }

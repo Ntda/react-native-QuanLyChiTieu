@@ -17,6 +17,7 @@ import { getRandomColor } from '../common/ColorPicker';
 import { useDispatch } from 'react-redux';
 import { getItem } from '../common/localStoreHelper';
 import { nanoid } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 
 const style = StyleSheet.create({
     container: {
@@ -34,6 +35,8 @@ const style = StyleSheet.create({
 
 const ChiTieu = ({ navigation }) => {
     const dispatch = useDispatch();
+    const model = useSelector(state => state.chiTieu);
+    console.log('[model]' + model.loading);
     const renderItem = ({
         item,
         index
@@ -105,7 +108,9 @@ const ChiTieu = ({ navigation }) => {
     const renderListView = () => <FlatList
         data={dataChiTieu}
         renderItem={renderItem}
-        keyExtractor={renderKey}
+        keyExtractor={(_, index) => {
+            return index.toString();
+          }}
     />;
 
     const renderButtonAdd = () => <View style={{
@@ -119,10 +124,6 @@ const ChiTieu = ({ navigation }) => {
             onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.themChiTieu)}
         />
     </View>;
-
-    const renderKey = ({
-        index
-    }) => index;
 
     useEffect(() => {
         dispatch(getItem(LOCALSTOREKEY))

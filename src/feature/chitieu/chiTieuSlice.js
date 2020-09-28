@@ -5,7 +5,7 @@ const chiTieuSlice = createSlice({
     name: 'chitieu',
     initialState: {
         loading: true,
-        chiTieuArray: undefined
+        chiTieuArray: []
     },
     reducers: {
 
@@ -16,7 +16,9 @@ const chiTieuSlice = createSlice({
         },
         [getItem.fulfilled]: (state, action) => {
             state.loading = false;
-            console.log(action.payload);
+            console.log('payload: ' +action.payload);
+            state.chiTieuArray.push(action.payload);
+           
         },
         [getItem.rejected]: (state, action) => {
             state.loading = false;
@@ -37,6 +39,6 @@ const chiTieuSlice = createSlice({
 });
 
 const { actions, reducer } = chiTieuSlice;
-const {} = actions;
+const { } = actions;
 
 export default reducer;
