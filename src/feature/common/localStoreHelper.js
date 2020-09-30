@@ -16,8 +16,9 @@ const setItem = createAsyncThunk(
     async (model, { getState }) => {
         const { key, value } = model;
         const state = getState();
-        console.log('[set item]: ' + state);
-        const jsonValue = JSON.stringify([value])
+        const modelWriter=[...state.chiTieu.chiTieuArray,...[value]];
+        const jsonValue = JSON.stringify(modelWriter)
+        //console.log('[modelWriter]: ' + JSON.stringify(jsonValue));
         await AsyncStorage.setItem(key, jsonValue);
         return true;
     }

@@ -14,8 +14,8 @@ import IconSend from '../common/IconSend';
 import { LOCALSTOREKEY, ROUTECHITIEU, THEMCHITIEUTITLE } from '../common/Constant';
 import inputValid from '../common/valdiateInput';
 import AlertComponent from '../common/AlertComponent';
-import { useDispatch, useSelector } from 'react-redux';
-import { setItem } from '../common/localStoreHelper';
+import { useDispatch } from 'react-redux';
+import { getItem, setItem } from '../common/localStoreHelper';
 
 
 const style = StyleSheet.create({
@@ -63,11 +63,9 @@ const ThemChiTieu = ({ navigation }) => {
         });
     }
 
-    const handleSend = () => {
+    const handleSend = async() => {
         const TIEUDE = 'Tiêu đề';
         const NOIDUNG = 'Nội dung';
-        console.log(title);
-        console.log(content);
         const titleValidator = inputValid(TIEUDE, title);
         if (!titleValidator.valid) {
             setAlertModel({
@@ -84,7 +82,6 @@ const ThemChiTieu = ({ navigation }) => {
             });
             return;
         }
-        //navigation.navigate(ROUTECHITIEU);
         const model = {
             key: LOCALSTOREKEY,
             value: {
@@ -93,7 +90,9 @@ const ThemChiTieu = ({ navigation }) => {
                 content
             }
         }
-        dispatch(setItem(model));
+        await dispatch(setItem(model));
+        await dispatch(getItem(LOCALSTOREKEY));
+        navigation.navigate(ROUTECHITIEU);
     }
 
     const handleCloseAlert = () => {

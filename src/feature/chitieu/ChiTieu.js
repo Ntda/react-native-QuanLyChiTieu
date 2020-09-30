@@ -36,10 +36,11 @@ const style = StyleSheet.create({
 const ChiTieu = ({ navigation }) => {
     const dispatch = useDispatch();
     const model = useSelector(state => state.chiTieu);
-    console.log('[model]' + model.loading);
+    if (!model.chiTieuArray) {
+        return <View>Loading...</View>;
+    }
     const renderItem = ({
-        item,
-        index
+        item
     }) => {
         return (
             <TouchableHighlight
@@ -47,7 +48,6 @@ const ChiTieu = ({ navigation }) => {
                     marginTop: 5,
                     borderRadius: 20
                 }}
-                key={nanoid()}
                 onPress={() => alert(item.title)}
                 underlayColor='#e6f9ff'>
                 <View
@@ -76,7 +76,6 @@ const ChiTieu = ({ navigation }) => {
                                 </View>
                                 <View>
                                     <Text
-
                                         numberOfLines={1}
                                         style={[{
                                             fontSize: 21,
@@ -96,7 +95,7 @@ const ChiTieu = ({ navigation }) => {
                         </View>
                         <View>
                             <Text style={style.item}>
-                                {moment(item.time).format('ll')}
+                                {moment(item.date).format('ll')}
                             </Text>
                         </View>
                     </View>
@@ -106,11 +105,9 @@ const ChiTieu = ({ navigation }) => {
     }
 
     const renderListView = () => <FlatList
-        data={dataChiTieu}
+        data={model.chiTieuArray}
         renderItem={renderItem}
-        keyExtractor={(_, index) => {
-            return index.toString();
-          }}
+        keyExtractor={(_, index) => index.toString()}
     />;
 
     const renderButtonAdd = () => <View style={{
