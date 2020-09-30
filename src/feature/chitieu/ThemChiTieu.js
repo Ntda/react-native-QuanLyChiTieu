@@ -20,10 +20,10 @@ import { getItem, setItem } from '../common/localStoreHelper';
 
 const style = StyleSheet.create({
     container: {
-        marginTop: 10,
         flex: 1,
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor:'white'
     },
     textInput: {
         height: 40,
@@ -54,7 +54,7 @@ const ThemChiTieu = ({ navigation }) => {
         return ({
             title: THEMCHITIEUTITLE,
             headerStyle: {
-                backgroundColor: '#f4511e',
+                backgroundColor: 'gray',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -85,13 +85,12 @@ const ThemChiTieu = ({ navigation }) => {
         const model = {
             key: LOCALSTOREKEY,
             value: {
-                date,
+                date: moment(date),
                 title,
                 content
             }
         }
         await dispatch(setItem(model));
-        await dispatch(getItem(LOCALSTOREKEY));
         navigation.navigate(ROUTECHITIEU);
     }
 

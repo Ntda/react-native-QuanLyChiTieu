@@ -19,20 +19,18 @@ const chiTieuSlice = createSlice({
             state.chiTieuArray=[...[],...action.payload];
 
         },
-        [getItem.rejected]: (state, action) => {
+        [getItem.rejected]: state => {
             state.loading = false;
-            console.log(action.error);
         },
         [setItem.pending]: state => {
             state.loading = true;
         },
         [setItem.fulfilled]: (state, action) => {
             state.loading = false;
-            console.log(action.payload);
+            state.chiTieuArray.push(action.payload);
         },
         [setItem.rejected]: (state, action) => {
             state.loading = false;
-            console.log(action.error);
         }
     }
 });

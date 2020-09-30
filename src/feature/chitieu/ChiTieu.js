@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Avatar } from "react-native-elements";
 import {
     View,
     Text,
@@ -7,17 +6,16 @@ import {
     FlatList,
     SafeAreaView,
     TouchableHighlight,
-    TouchableOpacity,
     Button
 } from 'react-native';
 import moment from 'moment';
-import { dataChiTieu } from '../../testData/testData';
 import { LOCALSTOREKEY, STACKNAVIGATIONROUTE } from '../common/Constant';
 import { getRandomColor } from '../common/ColorPicker';
 import { useDispatch } from 'react-redux';
 import { getItem } from '../common/localStoreHelper';
 import { nanoid } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
+import AvartarSelector from './AvartarSelector';
 
 const style = StyleSheet.create({
     container: {
@@ -39,6 +37,7 @@ const ChiTieu = ({ navigation }) => {
     if (!model.chiTieuArray) {
         return <View>Loading...</View>;
     }
+
     const renderItem = ({
         item
     }) => {
@@ -48,7 +47,7 @@ const ChiTieu = ({ navigation }) => {
                     marginTop: 5,
                     borderRadius: 20
                 }}
-                onPress={() => alert(item.title)}
+                onPress={()=>{}}
                 underlayColor='#e6f9ff'>
                 <View
                     key={nanoid()}
@@ -66,13 +65,9 @@ const ChiTieu = ({ navigation }) => {
                                     marginRight: 10,
                                     justifyContent: 'center'
                                 }}>
-                                    <Avatar
-                                        overlayContainerStyle={{ backgroundColor: getRandomColor() }}
-                                        size='medium'
-                                        rounded
-                                        title={item.title.charAt(0).toUpperCase()}
-                                        activeOpacity={0.7}
-                                    />
+                                    <AvartarSelector
+                                        title={item.title}
+                                        color={getRandomColor()}/>
                                 </View>
                                 <View>
                                     <Text
