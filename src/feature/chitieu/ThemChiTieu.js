@@ -15,7 +15,8 @@ import { LOCALSTOREKEY, ROUTECHITIEU, THEMCHITIEUTITLE } from '../common/Constan
 import inputValid from '../common/valdiateInput';
 import AlertComponent from '../common/AlertComponent';
 import { useDispatch } from 'react-redux';
-import { getItem, setItem } from '../common/localStoreHelper';
+import { setItem } from '../common/localStoreHelper';
+import { nanoid } from '@reduxjs/toolkit';
 
 
 const style = StyleSheet.create({
@@ -23,7 +24,7 @@ const style = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor:'white'
+        backgroundColor: 'white'
     },
     textInput: {
         height: 40,
@@ -63,7 +64,7 @@ const ThemChiTieu = ({ navigation }) => {
         });
     }
 
-    const handleSend = async() => {
+    const handleSend = async () => {
         const TIEUDE = 'Tiêu đề';
         const NOIDUNG = 'Nội dung';
         const titleValidator = inputValid(TIEUDE, title);
@@ -85,9 +86,13 @@ const ThemChiTieu = ({ navigation }) => {
         const model = {
             key: LOCALSTOREKEY,
             value: {
-                date: moment(date),
-                title,
-                content
+                title: moment(date),
+                data: [{
+                    id: nanoid(),
+                    title,
+                    money: '500.000 VND',
+                    content
+                }]
             }
         }
         await dispatch(setItem(model));

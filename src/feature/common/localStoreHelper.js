@@ -16,12 +16,12 @@ const setItem = createAsyncThunk(
     async (model, { getState }) => {
         const { key, value } = model;
         const state = getState();
-        const modelWriter = [...state.chiTieu.chiTieuArray, ...[value]];
+        const modelWriter = [...[], ...[value]];
         const jsonValue = JSON.stringify(modelWriter)
         //console.log('[modelWriter]: ' + JSON.stringify(jsonValue));
         await AsyncStorage.setItem(key, jsonValue);
-        value.date = value.date.toString();
-        return value;
+        //value.date = value.date.toString();
+        //return value;
     }
 );
 

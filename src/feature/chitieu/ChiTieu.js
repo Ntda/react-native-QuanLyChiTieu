@@ -3,10 +3,10 @@ import {
     View,
     Text,
     StyleSheet,
-    FlatList,
     SafeAreaView,
     TouchableHighlight,
-    Button
+    Button,
+    SectionList
 } from 'react-native';
 import moment from 'moment';
 import { LOCALSTOREKEY, STACKNAVIGATIONROUTE } from '../common/Constant';
@@ -28,7 +28,14 @@ const style = StyleSheet.create({
     },
     item: {
         color: 'black'
-    }
+    },
+    sectionHeaderStyle: {
+        backgroundColor: '#efe3db',
+        fontSize: 20,
+        padding: 5,
+        color: 'black',
+        borderRadius: 15
+    },
 })
 
 const ChiTieu = ({ navigation }) => {
@@ -47,7 +54,7 @@ const ChiTieu = ({ navigation }) => {
                     marginTop: 5,
                     borderRadius: 20
                 }}
-                onPress={()=>{}}
+                onPress={() => { }}
                 underlayColor='#e6f9ff'>
                 <View
                     key={nanoid()}
@@ -67,7 +74,7 @@ const ChiTieu = ({ navigation }) => {
                                 }}>
                                     <AvartarSelector
                                         title={item.title}
-                                        color={getRandomColor()}/>
+                                        color={getRandomColor()} />
                                 </View>
                                 <View>
                                     <Text
@@ -79,7 +86,7 @@ const ChiTieu = ({ navigation }) => {
                                         {item.title}
                                     </Text>
                                     <Text style={style.item}>
-                                        {item.spend}
+                                        {item.money}
                                     </Text>
                                     <Text style={{ color: 'gray' }}>
                                         {item.content}
@@ -99,11 +106,19 @@ const ChiTieu = ({ navigation }) => {
         );
     }
 
-    const renderListView = () => <FlatList
-        data={model.chiTieuArray}
-        renderItem={renderItem}
-        keyExtractor={(_, index) => index.toString()}
-    />;
+    const renderSectionList = () => {
+        return (
+            <SectionList
+                sections={model.chiTieuArray}
+                renderSectionHeader={({ section }) => (
+                    <Text style={[style.sectionHeaderStyle, style.row]}>
+                        {moment(section.title).format('ll')}
+                    </Text>
+                )}
+                renderItem={renderItem}
+                keyExtractor={(_, index) => index} />
+        )
+    }
 
     const renderButtonAdd = () => <View style={{
         marginBottom: 20,
@@ -122,7 +137,7 @@ const ChiTieu = ({ navigation }) => {
     }, []);;
     return (
         <SafeAreaView style={style.container}>
-            {renderListView()}
+            {renderSectionList()}
             {renderButtonAdd()}
         </SafeAreaView>
     )
