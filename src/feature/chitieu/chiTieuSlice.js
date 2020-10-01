@@ -16,7 +16,7 @@ const chiTieuSlice = createSlice({
         },
         [getItem.fulfilled]: (state, action) => {
             state.loading = false;
-            state.chiTieuArray=[...[],...action.payload];
+            state.chiTieuArray = [...[], ...action.payload];
 
         },
         [getItem.rejected]: state => {
@@ -27,9 +27,9 @@ const chiTieuSlice = createSlice({
         },
         [setItem.fulfilled]: (state, action) => {
             state.loading = false;
-            state.chiTieuArray.push(action.payload);
+            state.chiTieuArray = action.payload;
         },
-        [setItem.rejected]: (state, action) => {
+        [setItem.rejected]: state => {
             state.loading = false;
         }
     }

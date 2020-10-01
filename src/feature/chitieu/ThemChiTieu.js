@@ -18,7 +18,7 @@ import { useDispatch } from 'react-redux';
 import { setItem } from '../common/localStoreHelper';
 import { nanoid } from '@reduxjs/toolkit';
 
-
+moment.locale('vi'); 
 const style = StyleSheet.create({
     container: {
         flex: 1,
@@ -86,10 +86,11 @@ const ThemChiTieu = ({ navigation }) => {
         const model = {
             key: LOCALSTOREKEY,
             value: {
-                title: moment(date),
+                title: moment(date).format('LL'),
                 data: [{
                     id: nanoid(),
                     title,
+                    time: moment().format('LT'),
                     money: '500.000 VND',
                     content
                 }]

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-community/async-storage';
+import { isEqual } from 'lodash';
 
 const getItem = createAsyncThunk(
     'get/item',
@@ -16,12 +17,21 @@ const setItem = createAsyncThunk(
     async (model, { getState }) => {
         const { key, value } = model;
         const state = getState();
-        const modelWriter = [...[], ...[value]];
-        const jsonValue = JSON.stringify(modelWriter)
-        //console.log('[modelWriter]: ' + JSON.stringify(jsonValue));
+        let { chiTieuArray } = state.chiTieu;
+        const chiTieuModel = chiTieuArray.find(c => isEqual(c.title, value.title));
+        console.log('[setItem]: ' + JSON.stringify(chiTieuArray))
+        console.log('[setItem]: ' + JSON.stringify(value))
+        if (chiTieuModel) {
+            chiTieuArray.data.push(value);
+        } else {
+            chiTieuArray = [...chiTieuArray, ...[value]];
+        }
+        console.log('[setItem]: ' + JSON.stringify(chiTieuArray))
+        const jsonValue = JSON.stringify(chiTieuArray)
+        
         await AsyncStorage.setItem(key, jsonValue);
-        //value.date = value.date.toString();
-        //return value;
+        //await AsyncStorage.clear();
+        return chiTieuArray;
     }
 );
 

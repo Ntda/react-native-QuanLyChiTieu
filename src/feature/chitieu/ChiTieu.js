@@ -45,6 +45,7 @@ const ChiTieu = ({ navigation }) => {
         return <View>Loading...</View>;
     }
 
+    console.log('[Chi tieu]: '+ JSON.stringify(model.chiTieuArray));
     const renderItem = ({
         item
     }) => {
@@ -97,7 +98,7 @@ const ChiTieu = ({ navigation }) => {
                         </View>
                         <View>
                             <Text style={style.item}>
-                                {moment(item.date).format('ll')}
+                                {item.time}
                             </Text>
                         </View>
                     </View>
