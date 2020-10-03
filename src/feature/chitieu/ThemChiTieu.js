@@ -86,11 +86,11 @@ const ThemChiTieu = ({ navigation }) => {
         const model = {
             key: LOCALSTOREKEY,
             value: {
-                title: moment(date).format('LL'),
+                title: moment(new Date(date)).format('LL'),
                 data: [{
                     id: nanoid(),
                     title,
-                    time: moment().format('LT'),
+                    time: moment(new Date()).format('LT'),
                     money: '500.000 VND',
                     content
                 }]

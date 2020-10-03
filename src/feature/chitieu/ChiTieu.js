@@ -49,6 +49,8 @@ const ChiTieu = ({ navigation }) => {
     const renderItem = ({
         item
     }) => {
+        debugger
+        console.log('[Chi tieu]=> Item: '+ JSON.stringify(item));
         return (
             <TouchableHighlight
                 style={{

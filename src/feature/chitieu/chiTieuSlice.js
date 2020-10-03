@@ -27,6 +27,7 @@ const chiTieuSlice = createSlice({
         },
         [setItem.fulfilled]: (state, action) => {
             state.loading = false;
+            console.log('[setItem.fulfilled]: '+ JSON.stringify(action.payload))
             state.chiTieuArray = action.payload;
         },
         [setItem.rejected]: state => {
