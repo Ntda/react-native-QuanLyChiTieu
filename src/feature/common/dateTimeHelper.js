@@ -14,12 +14,10 @@ const convertTime12to24 = time12h => {
 }
 
 const compareTime = (source, dest) => {
-    const dateTimeSource = Date.parse(`01/01/2011 ${source}`);
-    const dateTimeDest = Date.parse(`01/01/2011 ${dest}`);
-    if (dateTimeSource > dateTimeDest) {
+    if (source > dest) {
         return -1;
     }
-    if (dateTimeSource < dateTimeDest) {
+    if (source < dest) {
         return 1;
     }
     return 0;

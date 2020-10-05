@@ -30,7 +30,7 @@ const style = StyleSheet.create({
         color: 'black'
     },
     sectionHeaderStyle: {
-        backgroundColor: '#efe3db',
+        backgroundColor: '#dde0e4',
         fontSize: 20,
         padding: 5,
         color: 'black',
@@ -124,10 +124,10 @@ const ChiTieu = ({ navigation }) => {
     }
 
     const renderButtonAdd = () => <View style={{
-        marginBottom: 20,
         backgroundColor: 'red',
-        borderTopEndRadius: 20,
-        borderBottomEndRadius: 20,
+        position:'absolute',
+        bottom: 10,
+        right: 10
     }}>
         <Button
             title='Add'
