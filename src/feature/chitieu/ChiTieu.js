@@ -5,18 +5,18 @@ import {
     StyleSheet,
     SafeAreaView,
     TouchableHighlight,
-    Button,
     SectionList
 } from 'react-native';
 import moment from 'moment';
-import { LOCALSTOREKEY, STACKNAVIGATIONROUTE } from '../common/Constant';
+import { LOCALSTOREKEY } from '../common/Constant';
 import { getRandomColor } from '../common/ColorPicker';
 import { useDispatch } from 'react-redux';
 import { getItem } from '../common/localStoreHelper';
 import { nanoid } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import AvartarSelector from './AvartarSelector';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import AddComponent from './AddComponent';
+import ViewModeComponent from './ViewModeComponent';
 
 const style = StyleSheet.create({
     container: {
@@ -43,15 +43,13 @@ const ChiTieu = ({ navigation }) => {
     const dispatch = useDispatch();
     const model = useSelector(state => state.chiTieu);
     if (!model.chiTieuArray) {
-        return <View>Loading...</View>;
+        return <View>Loading...</View>
     }
 
     console.log('[Chi tieu]: ' + JSON.stringify(model.chiTieuArray));
     const renderItem = ({
         item
     }) => {
-        debugger
-        console.log('[Chi tieu]=> Item: ' + JSON.stringify(item));
         return (
             <TouchableHighlight
                 style={{
@@ -124,83 +122,19 @@ const ChiTieu = ({ navigation }) => {
         )
     }
 
-    const renderButtonFilter = () => <View style={{
-        position: 'absolute',
-        bottom: 50,
-        right: 10,
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderRadius: 50,
-        borderColor: '#ddd',
-        borderBottomWidth: 0,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        elevation: 1,
-        paddingLeft: 30,
-        paddingRight: 25,
-        paddingTop: 5,
-        paddingBottom: 5,
-        flexDirection: 'row'
-    }}>
+    const renderButtonViewMode = () => {
+        return (
+            <ViewModeComponent
+                navigation={navigation} />
+        )
+    }
 
-        <AntDesign
-            style={{
-                color: 'red',
-                marginRight: 10
-            }}
-            name='filter'
-            size={25}
-            onPress={() => { }} />
-        <Text style={{
-            color: 'red',
-            fontSize: 15,
-            fontFamily: 'Times'
-        }}
-            onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.themChiTieu)}>
-            Loc
-        </Text>
-    </View >;
-
-    const renderButtonAdd = () => <View style={{
-        position: 'absolute',
-        bottom: 10,
-        right: 10,
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderRadius: 50,
-        borderColor: '#ddd',
-        borderBottomWidth: 0,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        elevation: 1,
-        paddingLeft: 30,
-        paddingRight: 25,
-        paddingTop: 5,
-        paddingBottom: 5,
-        flexDirection: 'row'
-    }}>
-        <AntDesign
-            style={{
-                color: 'red',
-                marginRight: 10
-            }}
-            name='edit'
-            size={25}
-            onPress={() => { }} />
-        <Text style={{
-            color: 'red',
-            fontSize: 15,
-            fontFamily: 'Times'
-        }}
-            onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.themChiTieu)}>
-            Thêm
-        </Text>
-    </View>
-        ;
+    const renderButtonAdd = () => {
+        return (
+            <AddComponent
+                navigation={navigation} />
+        )
+    }
 
     useEffect(() => {
         dispatch(getItem(LOCALSTOREKEY))
@@ -208,7 +142,7 @@ const ChiTieu = ({ navigation }) => {
     return (
         <SafeAreaView style={style.container}>
             {renderSectionList()}
-            {renderButtonFilter()}
+            {renderButtonViewMode()}
             {renderButtonAdd()}
         </SafeAreaView>
     )

@@ -16,7 +16,13 @@ const NAVIGATIONTITLE = {
 };
 const STACKNAVIGATIONROUTE = {
     home: 'Home',
-    themChiTieu: 'ThemChiTieu'
+    themChiTieu: 'ThemChiTieu',
+    viewMode:'viewMode'
+}
+
+const VIEWMODEROUTE = {
+    route: 'Xem',
+    title: 'Xem'
 }
 
 const THEMCHITIEUTITLE = 'Thêm chi tiêu';
@@ -46,5 +52,6 @@ export {
     NAVBAR_HEIGHT,
     STATUS_BAR_HEIGHT,
     FOCUSON,
-    LOCALSTOREKEY
+    LOCALSTOREKEY,
+    VIEWMODEROUTE
 }
