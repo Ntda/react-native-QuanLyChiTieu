@@ -115,7 +115,7 @@ const ChiTieu = ({ navigation }) => {
                 sections={model.chiTieuArray}
                 renderSectionHeader={({ section }) => (
                     <Text style={[style.sectionHeaderStyle, style.row]}>
-                        {moment(section.title).format('ll')}
+                        {moment(new Date(section.title)).format('ll')}
                     </Text>
                 )}
                 renderItem={renderItem}

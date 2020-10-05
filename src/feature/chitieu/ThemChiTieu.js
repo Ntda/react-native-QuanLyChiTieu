@@ -17,8 +17,9 @@ import AlertComponent from '../common/AlertComponent';
 import { useDispatch } from 'react-redux';
 import { setItem } from '../common/localStoreHelper';
 import { nanoid } from '@reduxjs/toolkit';
+import { commaFormatted, getNumberFromString } from '../common/numberFormater';
 
-moment.locale('vi'); 
+moment.locale('vi');
 const style = StyleSheet.create({
     container: {
         flex: 1,
@@ -41,6 +42,7 @@ const ThemChiTieu = ({ navigation }) => {
     const [date, setDate] = useState(new Date());
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [money, setMoney] = useState(null);
     const [alertModel, setAlertModel] = useState({
         displayMessage: false,
         message: ''
@@ -91,7 +93,7 @@ const ThemChiTieu = ({ navigation }) => {
                     id: nanoid(),
                     title,
                     time: moment(new Date()).format('LT'),
-                    money: '500.000 VND',
+                    money,
                     content
                 }]
             }
@@ -115,6 +117,20 @@ const ThemChiTieu = ({ navigation }) => {
                     onSend={handleSend} />)
         });
     }, [navigation, title, content]);
+
+    const handleMoneyChange = event => {
+        let { text } = event.nativeEvent;
+        console.log('[Money]=> change: ' + text)
+        text = text.replace('đ', '');
+        const ammount = getNumberFromString(text);
+        console.log('[ammount]=> change: ' + ammount)
+        let ammountFormater = commaFormatted(ammount);
+        console.log('[Money]=> change: ' + ammountFormater)
+        ammountFormater = ammountFormater
+            ? `${ammountFormater} đ`
+            : '';
+        setMoney(ammountFormater);
+    }
 
     const renderDate = () => {
         return (<View>
@@ -153,12 +169,15 @@ const ThemChiTieu = ({ navigation }) => {
 
     const renderMoney = () => {
         return (<TextInput
-            onChange={() => { }}
+            ref={el => moneyInputRef = el}
+            onChange={handleMoneyChange}
             keyboardType='numeric'
             numeric
+            value={money}
             style={[
                 style.textInput,
-                { paddingBottom: 10 }]}
+                { paddingBottom: 10 }
+            ]}
             placeholder='Số tiền' />)
     }
 
