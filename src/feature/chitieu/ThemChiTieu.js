@@ -69,11 +69,21 @@ const ThemChiTieu = ({ navigation }) => {
     const handleSend = async () => {
         const TIEUDE = 'Tiêu đề';
         const NOIDUNG = 'Nội dung';
+        const SOTIEN = 'Số tiền';
         const titleValidator = inputValid(TIEUDE, title);
         if (!titleValidator.valid) {
             setAlertModel({
                 displayMessage: true,
                 message: titleValidator.message
+            });
+            return;
+        }
+        console.log(money);
+        const moneyValidator = inputValid(SOTIEN, money);
+        if (!moneyValidator.valid) {
+            setAlertModel({
+                displayMessage: true,
+                message: moneyValidator.message
             });
             return;
         }
@@ -116,7 +126,7 @@ const ThemChiTieu = ({ navigation }) => {
                 <IconSend
                     onSend={handleSend} />)
         });
-    }, [navigation, title, content]);
+    }, [navigation, title, content, money]);
 
     const handleMoneyChange = event => {
         let { text } = event.nativeEvent;

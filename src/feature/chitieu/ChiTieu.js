@@ -7,7 +7,6 @@ import {
     TouchableHighlight,
     SectionList
 } from 'react-native';
-import moment from 'moment';
 import { LOCALSTOREKEY } from '../common/Constant';
 import { getRandomColor } from '../common/ColorPicker';
 import { useDispatch } from 'react-redux';
@@ -95,7 +94,6 @@ const ChiTieu = ({ navigation }) => {
                                     </Text>
                                 </View>
                             </View>
-
                         </View>
                         <View>
                             <Text style={style.item}>
@@ -108,15 +106,23 @@ const ChiTieu = ({ navigation }) => {
         );
     }
 
+    const renderSectionListHeader = ({ section }) => {
+        return (
+            <Text style={[style.sectionHeaderStyle, style.row]}>
+                {section.title}
+                <Text style={{
+                    color: 'gray',
+                    fontSize: 19
+                }}> ({section.totalMoney})</Text>
+            </Text>
+        )
+    }
+
     const renderSectionList = () => {
         return (
             <SectionList
                 sections={model.chiTieuArray}
-                renderSectionHeader={({ section }) => (
-                    <Text style={[style.sectionHeaderStyle, style.row]}>
-                        {moment(new Date(section.title)).format('ll')}
-                    </Text>
-                )}
+                renderSectionHeader={renderSectionListHeader}
                 renderItem={renderItem}
                 keyExtractor={(_, index) => index} />
         )
