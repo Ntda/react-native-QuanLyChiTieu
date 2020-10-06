@@ -16,7 +16,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import AvartarSelector from './AvartarSelector';
 import AddComponent from './AddComponent';
-import ViewModeComponent from './ViewModeComponent';
+import FilterTimeRangeComponent from './FilterTimeRangeComponent';
 
 const style = StyleSheet.create({
     container: {
@@ -122,9 +122,9 @@ const ChiTieu = ({ navigation }) => {
         )
     }
 
-    const renderButtonViewMode = () => {
+    const renderButtonFilter = () => {
         return (
-            <ViewModeComponent
+            <FilterTimeRangeComponent
                 navigation={navigation} />
         )
     }
@@ -142,7 +142,7 @@ const ChiTieu = ({ navigation }) => {
     return (
         <SafeAreaView style={style.container}>
             {renderSectionList()}
-            {renderButtonViewMode()}
+            {renderButtonFilter()}
             {renderButtonAdd()}
         </SafeAreaView>
     )

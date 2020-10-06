@@ -5,10 +5,10 @@ import {
     View,
     Text
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const ViewModeComponent = ({ navigation }) => {
-    const renderButtonViewMode = () => {
+const FilterTimeRangeComponent = ({ navigation }) => {
+    const renderButtonFilter = () => {
         return (
             <View style={{
                 position: 'absolute',
@@ -33,30 +33,29 @@ const ViewModeComponent = ({ navigation }) => {
                     style={{
                         flexDirection: 'row'
                     }}
-                    onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.viewMode)}
+                    onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.timeRange)}
                 >
-                    <Ionicons
+                    <AntDesign
                         style={{
                             color: 'red',
                             marginRight: 10
                         }}
-                        name='eye-outline'
-                        size={25}
-                        onPress={() => { }} />
+                        name='filter'
+                        size={25} />
                     <Text style={{
                         color: 'red',
                         fontSize: 15,
                         fontFamily: 'Times'
                     }}>
-                        Xem
+                        Lọc
                 </Text>
                 </TouchableOpacity>
             </View >
         )
     }
     return (
-        renderButtonViewMode()
+        renderButtonFilter()
     );
 };
 
-export default ViewModeComponent;
+export default FilterTimeRangeComponent;

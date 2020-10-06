@@ -17,12 +17,12 @@ const NAVIGATIONTITLE = {
 const STACKNAVIGATIONROUTE = {
     home: 'Home',
     themChiTieu: 'ThemChiTieu',
-    viewMode:'viewMode'
+    timeRange: 'timeRange'
 }
 
-const VIEWMODEROUTE = {
+const TIMERANGEROUTE = {
     route: 'Xem',
-    title: 'Xem'
+    title: 'Khoảng thời gian'
 }
 
 const THEMCHITIEUTITLE = 'Thêm chi tiêu';
@@ -35,6 +35,14 @@ const FOCUSON = {
 }
 
 const LOCALSTOREKEY = '@QuanLyChiTieu';
+
+const TIMERANGE = [
+    { label: 'Hôm nay', value: 0 },
+    { label: 'Tuần này', value: 1 },
+    { label: 'Tháng này', value: 2 },
+    { label: 'Năm nay', value: 3 },
+    { label: 'Khoảng thời gian', value: 4 }];
+
 
 export {
     ROUTETHUNHAP,
@@ -53,5 +61,6 @@ export {
     STATUS_BAR_HEIGHT,
     FOCUSON,
     LOCALSTOREKEY,
-    VIEWMODEROUTE
+    TIMERANGEROUTE,
+    TIMERANGE
 }
