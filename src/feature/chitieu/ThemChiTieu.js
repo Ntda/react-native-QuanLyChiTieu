@@ -66,33 +66,26 @@ const ThemChiTieu = ({ navigation }) => {
         });
     }
 
+    const validatebeforeSend = (title, value) => {
+        const validationResult = inputValid(title, value);
+        if (!validationResult.valid) {
+            setAlertModel({
+                displayMessage: true,
+                message: validationResult.message
+            });
+            return false;
+        }
+        return true;
+    }
+
     const handleSend = async () => {
         const TIEUDE = 'Tiêu đề';
         const NOIDUNG = 'Nội dung';
         const SOTIEN = 'Số tiền';
-        const titleValidator = inputValid(TIEUDE, title);
-        if (!titleValidator.valid) {
-            setAlertModel({
-                displayMessage: true,
-                message: titleValidator.message
-            });
-            return;
-        }
-        console.log(money);
-        const moneyValidator = inputValid(SOTIEN, money);
-        if (!moneyValidator.valid) {
-            setAlertModel({
-                displayMessage: true,
-                message: moneyValidator.message
-            });
-            return;
-        }
-        const contentValidator = inputValid(NOIDUNG, content);
-        if (!contentValidator.valid) {
-            setAlertModel({
-                displayMessage: true,
-                message: contentValidator.message
-            });
+        const validationResult = validatebeforeSend(TIEUDE, title)
+            && validatebeforeSend(SOTIEN, money)
+            && validatebeforeSend(NOIDUNG, content);
+        if (!validationResult) {
             return;
         }
         const model = {
@@ -130,12 +123,9 @@ const ThemChiTieu = ({ navigation }) => {
 
     const handleMoneyChange = event => {
         let { text } = event.nativeEvent;
-        console.log('[Money]=> change: ' + text)
         text = text.replace('đ', '');
         const ammount = getNumberFromString(text);
-        console.log('[ammount]=> change: ' + ammount)
         let ammountFormater = commaFormatted(ammount);
-        console.log('[Money]=> change: ' + ammountFormater)
         ammountFormater = ammountFormater
             ? `${ammountFormater} đ`
             : '';
@@ -152,7 +142,6 @@ const ThemChiTieu = ({ navigation }) => {
                         paddingLeft: 35,
                         paddingBottom: 10
                     }]}
-                placeholder='Ngày'
                 value={moment(date).format('LL')}
                 editable={false}
             />

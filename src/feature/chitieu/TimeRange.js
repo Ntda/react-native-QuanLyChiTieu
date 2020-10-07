@@ -1,14 +1,42 @@
-import React, { useEffect } from 'react';
-import { TIMERANGE, TIMERANGEROUTE } from '../common/Constant';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import React, { useEffect, useState } from 'react';
+import { TIMERANGEROUTE } from '../common/Constant';
 import {
     View,
+    Text,
     StyleSheet,
     TextInput,
     Dimensions
 } from 'react-native';
+import DateTime from '../common/DateTime';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        backgroundColor: 'white',
+        padding: 20
+    },
+    displayCalendar: {
+        height: 50,
+        borderColor: 'gray',
+        borderBottomWidth: 1.0,
+        fontSize: 25,
+        width: Math.round(Dimensions.get('window').width) - 20,
+        marginTop: 5,
+        position: 'relative',
+        paddingLeft: 35,
+        paddingBottom: 10
+    },
+    icons: {
+        position: 'absolute',
+        marginTop: 38
+    }
+});
 const TimeRange = ({ navigation }) => {
+    const [showCalendar, setShowCalendar] = useState(false);
+    const [date, setDate] = useState(new Date());
     const renderStyleHeader = () => {
         return ({
             title: TIMERANGEROUTE.title,
@@ -22,47 +50,50 @@ const TimeRange = ({ navigation }) => {
         });
     }
 
+    const handleUpdateDate = d => {
+        setShowCalendar(false);
+        setDate(d);
+    }
+
     useEffect(() => {
         navigation.setOptions({
             ...renderStyleHeader()
         });
     }, [navigation]);
+
+    const renderInputDateControl = (title, style) => {
+        return (
+            <View style={style}>
+                <Text style={{
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    color: 'gray'
+                }}>{title}</Text>
+                <TextInput
+                    style={[styles.displayCalendar]}
+                    value={moment(date).format('LL')}
+                    editable={false}
+                />
+                <Ionicons
+                    style={styles.icons}
+                    name='ios-calendar'
+                    size={25}
+                    onPress={() => setShowCalendar(true)} />
+                {showCalendar &&
+                    <DateTime
+                        defaultDate={date}
+                        handleUpdateDate={handleUpdateDate}
+                        handleHideDatePicker={() => setShowCalendar(false)} />}
+            </View>
+        )
+    }
+
     return (
-        <View>
-            <RadioForm
-                animation
-                buttonColor={'#50C900'}
-            >
-                {/* To create radio buttons, loop through your array of options */}
-                {
-                    TIMERANGE.map((obj, i) => (
-                        <RadioButton labelHorizontal={true} key={i} >
-                            {/*  You can set RadioButtonLabel before RadioButtonInput */}
-                            <RadioButtonInput
-                                obj={obj}
-                                index={i}
-                                isSelected
-                                onPress={() => { }}
-                                borderWidth={1}
-                                buttonInnerColor={'#0e5eef'}
-                                buttonOuterColor={0 === i ? '#2196f3' : 'gray'}
-                                buttonSize={33}
-                                buttonOuterSize={40}
-                                buttonStyle={{}}
-                                buttonWrapStyle={{ marginLeft: 10 }}
-                            />
-                            <RadioButtonLabel
-                                obj={obj}
-                                index={i}
-                                labelHorizontal={true}
-                                onPress={() => { }}
-                                labelStyle={{ fontSize: 25, color: 'gray' }}
-                                labelWrapStyle={{}}
-                            />
-                        </RadioButton>
-                    ))
-                }
-            </RadioForm>
+        <View style={styles.container}>
+            {renderInputDateControl('Từ ngày')}
+            {renderInputDateControl('Đến ngày',{
+                marginTop: 40
+            })}
         </View>
     );
 };

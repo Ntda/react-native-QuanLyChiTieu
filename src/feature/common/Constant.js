@@ -36,14 +36,6 @@ const FOCUSON = {
 
 const LOCALSTOREKEY = '@QuanLyChiTieu';
 
-const TIMERANGE = [
-    { label: 'Hôm nay', value: 0 },
-    { label: 'Tuần này', value: 1 },
-    { label: 'Tháng này', value: 2 },
-    { label: 'Năm nay', value: 3 },
-    { label: 'Khoảng thời gian', value: 4 }];
-
-
 export {
     ROUTETHUNHAP,
     ROUTECHITIEU,
@@ -61,6 +53,5 @@ export {
     STATUS_BAR_HEIGHT,
     FOCUSON,
     LOCALSTOREKEY,
-    TIMERANGEROUTE,
-    TIMERANGE
+    TIMERANGEROUTE
 }
