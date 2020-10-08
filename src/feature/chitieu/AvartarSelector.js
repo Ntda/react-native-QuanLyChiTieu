@@ -19,7 +19,8 @@ const AvartarSelector = props => {
         return (
             <Ionicons
                 style={{
-                    color: 'tomato'}}
+                    color: 'tomato'
+                }}
                 name='checkmark-circle-outline'
                 size={45}
                 onPress={() => setDisplayAvatar(true)} />

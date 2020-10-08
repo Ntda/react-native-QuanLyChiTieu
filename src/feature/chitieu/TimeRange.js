@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { TIMERANGEROUTE } from '../common/Constant';
+import { ROUTECHITIEU, TIMERANGEROUTE } from '../common/Constant';
 import {
     View,
     Text,
     StyleSheet,
-    TextInput,
-    Dimensions
+    TextInput
 } from 'react-native';
-import DateTime from '../common/DateTime';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import moment from 'moment';
 import CheckBox from 'react-native-check-box';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { nanoid } from '@reduxjs/toolkit';
+import InputDateTimeComponent from './InputDateTimeComponent';
+import AlertComponent from '../common/AlertComponent';
 
 const styles = StyleSheet.create({
     container: {
@@ -20,26 +17,18 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         backgroundColor: 'white',
         padding: 20
-    },
-    displayCalendar: {
-        height: 50,
-        borderColor: 'gray',
-        borderBottomWidth: 1.0,
-        fontSize: 22,
-        marginTop: 5,
-        position: 'relative',
-        paddingLeft: 35
-    },
-    icons: {
-        position: 'absolute',
-        marginTop: 37
     }
 });
 const TimeRange = ({ navigation }) => {
-    const [showCalendar, setShowCalendar] = useState(false);
+    const [showCalendarFromDate, setShowCalendarFromDate] = useState(false);
+    const [showCalendarToDate, setShowCalendarToDate] = useState(false);
     const [fromDate, setFromDate] = useState(new Date());
     const [toDate, setToDate] = useState(new Date());
     const [checked, setChecked] = useState(true);
+    const [message, setMessage] = useState({
+        display: false,
+        value: ''
+    });
 
     const renderStyleHeader = () => {
         return ({
@@ -55,12 +44,12 @@ const TimeRange = ({ navigation }) => {
     }
 
     const handleUpdateFromDate = date => {
-        setShowCalendar(false);
+        setShowCalendarFromDate(false);
         setFromDate(date);
     }
 
     const handleUpdateToDate = date => {
-        setShowCalendar(false);
+        setShowCalendarToDate(false);
         setToDate(date);
     }
 
@@ -70,70 +59,31 @@ const TimeRange = ({ navigation }) => {
         });
     }, [navigation]);
 
-    const renderInputDateControl = (title, key, date, style) => {
-        console.log('[Date]: ' + key);
-        console.log('[Date: =>]: ' + JSON.stringify(date));
-        return (
-            <View style={style}>
-                <Text style={{
-                    fontSize: 20,
-                    fontWeight: 'bold',
-                    color: 'gray'
-                }}>{title}</Text>
-                <TextInput
-                    style={[styles.displayCalendar]}
-                    value={checked
-                        ? ''
-                        : moment(date).format('LL')}
-                    editable={false}
-                />
-                {!checked && <Ionicons
-                    style={styles.icons}
-                    name='ios-calendar'
-                    size={25}
-                    disable={true}
-                    onPress={() => setShowCalendar(true)} />}
-                {showCalendar && key === 'FromDate' &&
-                    <DateTime
-                        defaultDate={date}
-                        handleUpdateDate={handleUpdateFromDate}
-                        handleHideDatePicker={() => setShowCalendar(false)} />}
-                {showCalendar && key === 'ToDate' &&
-                    <DateTime
-                        defaultDate={date}
-                        handleUpdateDate={handleUpdateToDate}
-                        handleHideDatePicker={() => setShowCalendar(false)} />}
-            </View>
-        )
-    }
-
     const handleFilter = () => {
-        const model = {
-            from: date
+        const fromDateTypeDate = Date.parse(fromDate);
+        const toDateTypeDate = Date.parse(toDate);
+
+        if (fromDateTypeDate > toDateTypeDate) {
+            const newMessage = {
+                display: true,
+                value: 'From date phai nho hon to date'
+            };
+            setMessage(newMessage);
+            return;
         }
+
+        const model = {
+            timeRange: {
+                fromDate,
+                toDate
+            },
+            showToday: checked
+        }
+        navigation.navigate(ROUTECHITIEU);
     }
 
-    return (
-        <View style={styles.container}>
-            <View style={{
-                marginBottom: 20,
-                backgroundColor: '#E7F7F8',
-                padding: 8,
-                borderRadius: 10
-            }}>
-                <Text>- Chọn khoảng thời gian để xem chi tiêu của bạn. </Text>
-                <Text>- Để xem hôm nay, chọn 'xem hôm nay'. </Text>
-            </View>
-            <View style={{
-                backgroundColor: '#F1FAF2',
-                borderRadius: 15,
-                padding: 10
-            }}>
-                {renderInputDateControl('Từ ngày', 'FromDate', fromDate)}
-                {renderInputDateControl('Đến ngày', 'ToDate', toDate, {
-                    marginTop: 20
-                })}
-            </View>
+    const renderCheckbox = () => {
+        return (
             <CheckBox
                 style={{
                     marginTop: 40
@@ -148,13 +98,17 @@ const TimeRange = ({ navigation }) => {
                 isChecked={checked}
                 rightText='Chi tiêu hôm nay'
             />
+        )
+    }
+
+    const renderButtonSubmit = () => {
+        return (
             <TouchableOpacity
                 style={{
                     backgroundColor: 'tomato',
                     padding: 10,
                     marginTop: 30,
-                    borderRadius: 18,
-
+                    borderRadius: 18
                 }}
                 onPress={handleFilter}>
                 <Text style={{
@@ -164,6 +118,65 @@ const TimeRange = ({ navigation }) => {
                     color: 'white'
                 }}>Xác nhận</Text>
             </TouchableOpacity>
+        );
+    }
+
+    const renderDescription = () => {
+        return (
+            <View style={{
+                marginBottom: 20,
+                backgroundColor: '#b8bdb5',
+                padding: 8,
+                borderRadius: 10
+            }}>
+                <Text>- Chọn khoảng thời gian để xem chi tiêu của bạn. </Text>
+                <Text>- Để xem hôm nay, chọn 'xem hôm nay'. </Text>
+            </View>
+        )
+    }
+
+    const renderFilterTimeRange = () => {
+        return (
+            <View style={{
+                backgroundColor: '#F1FAF2',
+                borderRadius: 15,
+                padding: 10
+            }}>
+                <InputDateTimeComponent
+                    title='Từ ngày'
+                    date={fromDate}
+                    checked={checked}
+                    showCalendar={showCalendarFromDate}
+                    onShowCalendar={() => setShowCalendarFromDate(true)}
+                    onUpdateDate={handleUpdateFromDate}
+                />
+                <InputDateTimeComponent
+                    title='Đến ngày'
+                    date={toDate}
+                    checked={checked}
+                    showCalendar={showCalendarToDate}
+                    onShowCalendar={() => setShowCalendarToDate(true)}
+                    onUpdateDate={handleUpdateToDate}
+                    style={{ marginTop: 20 }}
+                />
+            </View>
+        )
+    }
+    return (
+        <View style={styles.container}>
+            {renderDescription()}
+            {renderFilterTimeRange()}
+            {renderCheckbox()}
+            {renderButtonSubmit()}
+            {message.display &&
+                <AlertComponent
+                    message={message.value}
+                    confirmText='OK'
+                    confirmButtonColor='#DD6B55'
+                    onCloseAlert={() => setMessage({
+                        ...message,
+                        display: false
+                    })} />}
         </View>
     );
 };
