@@ -10,6 +10,9 @@ import CheckBox from 'react-native-check-box';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import InputDateTimeComponent from './InputDateTimeComponent';
 import AlertComponent from '../common/AlertComponent';
+import { setFilter } from '../filter/filterSlice';
+import { useDispatch, useStore } from 'react-redux';
+import moment from 'moment';
 
 const styles = StyleSheet.create({
     container: {
@@ -20,11 +23,15 @@ const styles = StyleSheet.create({
     }
 });
 const TimeRange = ({ navigation }) => {
+    const state = useStore().getState();
+    const dispatch = useDispatch();
+    const filterModel = state.filter;
+    console.log('[filterModel]: ' + JSON.stringify(filterModel));
     const [showCalendarFromDate, setShowCalendarFromDate] = useState(false);
     const [showCalendarToDate, setShowCalendarToDate] = useState(false);
-    const [fromDate, setFromDate] = useState(new Date());
-    const [toDate, setToDate] = useState(new Date());
-    const [checked, setChecked] = useState(true);
+    const [fromDate, setFromDate] = useState(new Date(filterModel.fromDate));
+    const [toDate, setToDate] = useState(new Date(filterModel.toDate));
+    const [checked, setChecked] = useState(filterModel.isShowToday);
     const [message, setMessage] = useState({
         display: false,
         value: ''
@@ -66,19 +73,20 @@ const TimeRange = ({ navigation }) => {
         if (fromDateTypeDate > toDateTypeDate) {
             const newMessage = {
                 display: true,
-                value: 'From date phai nho hon to date'
+                value: 'Ngày bắt đầu phải nhỏ hơn ngày kết thúc'
             };
             setMessage(newMessage);
             return;
         }
 
-        const model = {
+        const filterModel = {
             timeRange: {
-                fromDate,
-                toDate
+                fromDate: moment(fromDate).format('LL'),
+                toDate: moment(toDate).format('LL')
             },
-            showToday: checked
+            isShowToday: checked
         }
+        dispatch(setFilter(filterModel));
         navigation.navigate(ROUTECHITIEU);
     }
 

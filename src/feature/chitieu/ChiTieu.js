@@ -9,10 +9,9 @@ import {
 } from 'react-native';
 import { LOCALSTOREKEY } from '../common/Constant';
 import { getRandomColor } from '../common/ColorPicker';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getItem } from '../common/localStoreHelper';
 import { nanoid } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
 import AvartarSelector from './AvartarSelector';
 import AddComponent from './AddComponent';
 import FilterTimeRangeComponent from './FilterTimeRangeComponent';
@@ -40,6 +39,8 @@ const style = StyleSheet.create({
 
 const ChiTieu = ({ navigation }) => {
     const dispatch = useDispatch();
+    const filterModel = useSelector(state => state.filter);
+    const { fromDate, toDate, isShowToday } = filterModel;
     const model = useSelector(state => state.chiTieu);
     if (!model.chiTieuArray) {
         return <View>Loading...</View>
@@ -143,8 +144,9 @@ const ChiTieu = ({ navigation }) => {
     }
 
     useEffect(() => {
+        console.log('[useEffect]')
         dispatch(getItem(LOCALSTOREKEY))
-    }, []);;
+    }, [fromDate, toDate, isShowToday]);
     return (
         <SafeAreaView style={style.container}>
             {renderSectionList()}
