@@ -14,12 +14,12 @@ import IconSend from '../common/IconSend';
 import { LOCALSTOREKEY, ROUTECHITIEU, THEMCHITIEUTITLE } from '../common/Constant';
 import inputValid from '../common/valdiateInput';
 import AlertComponent from '../common/AlertComponent';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setItem } from '../common/localStoreHelper';
 import { nanoid } from '@reduxjs/toolkit';
 import { commaFormatted, getNumberFromString } from '../common/numberFormater';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-moment.locale('vi');
 const style = StyleSheet.create({
     container: {
         flex: 1,
@@ -28,7 +28,7 @@ const style = StyleSheet.create({
         backgroundColor: 'white'
     },
     textInput: {
-        height: 40,
+        height: 50,
         borderColor: 'gray',
         borderBottomWidth: 1.0,
         fontSize: 20,
@@ -116,8 +116,11 @@ const ThemChiTieu = ({ navigation }) => {
         navigation.setOptions({
             ...renderStyleHeader(),
             headerRight: () => (
-                <IconSend
-                    onSend={handleSend} />)
+                <TouchableOpacity
+                    onPress={handleSend}>
+                    <IconSend />
+                </TouchableOpacity>
+            )
         });
     }, [navigation, title, content, money]);
 
@@ -148,7 +151,7 @@ const ThemChiTieu = ({ navigation }) => {
             <Ionicons
                 style={{
                     position: 'absolute',
-                    marginTop: 30
+                    marginTop: 40
                 }}
                 name='ios-calendar'
                 size={25}

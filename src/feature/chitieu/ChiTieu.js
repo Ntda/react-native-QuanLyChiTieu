@@ -7,7 +7,7 @@ import {
     TouchableHighlight,
     SectionList
 } from 'react-native';
-import { LOCALSTOREKEY } from '../common/Constant';
+import { LOCALSTOREKEY, ICONTYPE } from '../common/Constant';
 import { getRandomColor } from '../common/ColorPicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItem } from '../common/localStoreHelper';
@@ -15,6 +15,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import AvartarSelector from './AvartarSelector';
 import AddComponent from './AddComponent';
 import FilterTimeRangeComponent from './FilterTimeRangeComponent';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const style = StyleSheet.create({
     container: {
@@ -35,6 +36,9 @@ const style = StyleSheet.create({
         color: 'black',
         borderRadius: 15
     },
+    spinnerTextStyle: {
+        color: '#FFF'
+    }
 })
 
 const ChiTieu = ({ navigation }) => {
@@ -42,11 +46,8 @@ const ChiTieu = ({ navigation }) => {
     const filterModel = useSelector(state => state.filter);
     const { fromDate, toDate, isShowToday } = filterModel;
     const model = useSelector(state => state.chiTieu);
-    if (!model.chiTieuArray) {
-        return <View>Loading...</View>
-    }
 
-    console.log('[Chi tieu]: ' + JSON.stringify(model.chiTieuArray));
+    console.log('[Chi tieu]: ' + JSON.stringify(model));
     const renderItem = ({
         item
     }) => {
@@ -96,11 +97,6 @@ const ChiTieu = ({ navigation }) => {
                                 </View>
                             </View>
                         </View>
-                        <View>
-                            <Text style={style.item}>
-                                {item.time}
-                            </Text>
-                        </View>
                     </View>
                 </View>
             </TouchableHighlight >
@@ -114,7 +110,7 @@ const ChiTieu = ({ navigation }) => {
                 <Text style={{
                     color: 'gray',
                     fontSize: 19
-                }}> ({section.totalMoney})</Text>
+                }}> ({section.totalMoneyDisplay})</Text>
             </Text>
         )
     }
@@ -132,6 +128,9 @@ const ChiTieu = ({ navigation }) => {
     const renderButtonFilter = () => {
         return (
             <FilterTimeRangeComponent
+                iconType={isShowToday
+                    ? ICONTYPE.ICONFILTERANT
+                    : ICONTYPE.ICONFILTERAWARESOME}
                 navigation={navigation} />
         )
     }
@@ -144,11 +143,13 @@ const ChiTieu = ({ navigation }) => {
     }
 
     useEffect(() => {
-        console.log('[useEffect]')
         dispatch(getItem(LOCALSTOREKEY))
     }, [fromDate, toDate, isShowToday]);
     return (
         <SafeAreaView style={style.container}>
+            <Spinner
+                visible={model.loading} 
+                style={style.spinnerTextStyle} />
             {renderSectionList()}
             {renderButtonFilter()}
             {renderButtonAdd()}

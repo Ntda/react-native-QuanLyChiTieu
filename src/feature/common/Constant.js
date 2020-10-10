@@ -25,6 +25,11 @@ const TIMERANGEROUTE = {
     title: 'Khoảng thời gian'
 }
 
+const ICONTYPE = {
+    ICONFILTERANT: 'ICONFILTERANT',
+    ICONFILTERAWARESOME: 'ICONFILTERAWARESOME'
+}
+
 const THEMCHITIEUTITLE = 'Thêm chi tiêu';
 
 const NAVBAR_HEIGHT = 64;
@@ -53,5 +58,6 @@ export {
     STATUS_BAR_HEIGHT,
     FOCUSON,
     LOCALSTOREKEY,
-    TIMERANGEROUTE
+    TIMERANGEROUTE,
+    ICONTYPE
 }

@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { compareTime } from '../common/dateTimeHelper';
 import { getItem, setItem } from '../common/localStoreHelper';
-import { totalMoney, buildTotalMoney } from '../common/commonHelper';
+import { buildTotalMoneyPerDay, totalMoneyPerDayFormatted, buildTotalMoneyBaseOnTimeRange } from '../common/commonHelper';
+import { commaFormatted } from '../common/numberFormater';
 
 const chiTieuSlice = createSlice({
     name: 'chitieu',
     initialState: {
-        loading: true,
+        totalMoneyBaseOnTimeRange: 0,
+        loading: false,
         chiTieuArray: []
     },
     reducers: {
@@ -23,9 +25,11 @@ const chiTieuSlice = createSlice({
                 const dateTimeDest = Date.parse(dest.title);
                 return compareTime(dateTimeSource, dateTimeDest);
             });
-            buildTotalMoney(action.payload);
+            buildTotalMoneyPerDay(action.payload);
+            totalMoneyPerDayFormatted(action.payload);
             state.chiTieuArray = [...[], ...action.payload];
-
+            state.totalMoneyBaseOnTimeRange = buildTotalMoneyBaseOnTimeRange(action.payload);
+            state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
         },
         [getItem.rejected]: state => {
             state.loading = false;
@@ -40,7 +44,7 @@ const chiTieuSlice = createSlice({
                 const dateTimeDest = Date.parse(dest.title);
                 return compareTime(dateTimeSource, dateTimeDest);
             });
-            buildTotalMoney(action.payload);
+            buildTotalMoneyPerDay(action.payload);
             state.chiTieuArray = action.payload;
         },
         [setItem.rejected]: state => {

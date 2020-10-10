@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     },
     icons: {
         position: 'absolute',
-        marginTop: 37
+        marginTop: 42
     }
 });
 
