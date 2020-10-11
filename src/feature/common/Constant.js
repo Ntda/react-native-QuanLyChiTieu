@@ -17,7 +17,8 @@ const NAVIGATIONTITLE = {
 const STACKNAVIGATIONROUTE = {
     home: 'Home',
     themChiTieu: 'ThemChiTieu',
-    timeRange: 'timeRange'
+    timeRange: 'timeRange',
+    chitiet:'ChiTiet'
 }
 
 const TIMERANGEROUTE = {

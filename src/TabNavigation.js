@@ -66,10 +66,6 @@ const TabNavigation = () => {
                 name={ROUTETHUNHAP}
                 component={ThuNhap} />
             <Tab.Screen
-                options={{
-                    title: NAVIGATIONTITLE.chiTieu,
-                    tabBarBadge: 5
-                 }}
                 name={ROUTECHITIEU}
                 component={ChiTieu} />
             <Tab.Screen

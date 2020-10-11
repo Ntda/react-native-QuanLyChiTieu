@@ -1,12 +1,12 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { STACKNAVIGATIONROUTE, ICONTYPE } from '../common/Constant';
+import { STACKNAVIGATIONROUTE, ICONTYPE } from './Constant';
 import {
     View,
     Text,
     StyleSheet
 } from 'react-native';
-import IconSelector from '../common/IconSelector';
+import IconSelector from './IconSelector';
 
 const styles = StyleSheet.create({
     container: {

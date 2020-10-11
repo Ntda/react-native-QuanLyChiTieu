@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { STACKNAVIGATIONROUTE } from '../common/Constant';
+import { STACKNAVIGATIONROUTE } from './Constant';
 import {
     View,
     Text

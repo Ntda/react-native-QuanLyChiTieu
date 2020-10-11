@@ -30,6 +30,7 @@ const chiTieuSlice = createSlice({
             state.chiTieuArray = [...[], ...action.payload];
             state.totalMoneyBaseOnTimeRange = buildTotalMoneyBaseOnTimeRange(action.payload);
             state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
+            console.log('[totalMoneyBaseOnTimeRange]: '+ JSON.stringify(state.totalMoneyBaseOnTimeRangeDisplay))
         },
         [getItem.rejected]: state => {
             state.loading = false;
@@ -45,7 +46,11 @@ const chiTieuSlice = createSlice({
                 return compareTime(dateTimeSource, dateTimeDest);
             });
             buildTotalMoneyPerDay(action.payload);
-            state.chiTieuArray = action.payload;
+            totalMoneyPerDayFormatted(action.payload);
+            state.chiTieuArray = [...[], ...action.payload];
+            state.totalMoneyBaseOnTimeRange = buildTotalMoneyBaseOnTimeRange(action.payload);
+            state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
+            console.log('[totalMoneyBaseOnTimeRange]: '+ JSON.stringify(state.totalMoneyBaseOnTimeRangeDisplay))
         },
         [setItem.rejected]: state => {
             state.loading = false;

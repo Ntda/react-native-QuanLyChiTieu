@@ -4,6 +4,7 @@ import TabNavigation from './TabNavigation';
 import ThemChiTieu from './feature/chitieu/ThemChiTieu';
 import { STACKNAVIGATIONROUTE } from './feature/common/Constant';
 import TimeRange from './feature/chitieu/TimeRange';
+import Detail from './feature/detail/Detail';
 
 const Stack = createStackNavigator();
 const StackNavigation = () => {
@@ -16,10 +17,13 @@ const StackNavigation = () => {
                 options={{ headerShown: false }} />
             <Stack.Screen
                 name={STACKNAVIGATIONROUTE.themChiTieu}
-                component={ThemChiTieu}/>
+                component={ThemChiTieu} />
             <Stack.Screen
                 name={STACKNAVIGATIONROUTE.timeRange}
-                component={TimeRange}/>
+                component={TimeRange} />
+            <Stack.Screen
+                name={STACKNAVIGATIONROUTE.chitiet}
+                component={Detail} />
         </Stack.Navigator>
     )
 }

@@ -70,7 +70,7 @@ const TimeRange = ({ navigation }) => {
         const fromDateTypeDate = Date.parse(fromDate);
         const toDateTypeDate = Date.parse(toDate);
 
-        if (fromDateTypeDate > toDateTypeDate) {
+        if (fromDateTypeDate > toDateTypeDate && !checked) {
             const newMessage = {
                 display: true,
                 value: 'Ngày bắt đầu phải nhỏ hơn ngày kết thúc'
