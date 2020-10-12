@@ -22,16 +22,15 @@ const styles = StyleSheet.create({
         padding: 20
     }
 });
-const TimeRange = ({ navigation }) => {
-    const state = useStore().getState();
+const TimeRange = ({ route, navigation }) => {
     const dispatch = useDispatch();
-    const filterModel = state.filter;
-    console.log('[filterModel]: ' + JSON.stringify(filterModel));
+    const { params } = route;
+    console.log('[filterModel]: ' + JSON.stringify(params));
     const [showCalendarFromDate, setShowCalendarFromDate] = useState(false);
     const [showCalendarToDate, setShowCalendarToDate] = useState(false);
-    const [fromDate, setFromDate] = useState(new Date(filterModel.fromDate));
-    const [toDate, setToDate] = useState(new Date(filterModel.toDate));
-    const [checked, setChecked] = useState(filterModel.isShowToday);
+    const [fromDate, setFromDate] = useState(new Date(params.fromDate));
+    const [toDate, setToDate] = useState(new Date(params.toDate));
+    const [checked, setChecked] = useState(params.isShowToday);
     const [message, setMessage] = useState({
         display: false,
         value: ''
@@ -41,11 +40,11 @@ const TimeRange = ({ navigation }) => {
         return ({
             title: TIMERANGEROUTE.title,
             headerStyle: {
-                backgroundColor: 'gray',
+                backgroundColor: 'gray'
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
-                fontWeight: 'bold',
+                fontWeight: 'bold'
             }
         });
     }
@@ -86,7 +85,10 @@ const TimeRange = ({ navigation }) => {
             },
             isShowToday: checked
         }
-        dispatch(setFilterChiTieu(filterModel));
+        const action = params.type === 'chiTieu'
+            ? setFilterChiTieu(filterModel)
+            : undefined;
+        action && dispatch(action);
         navigation.navigate(ROUTECHITIEU);
     }
 
@@ -137,7 +139,7 @@ const TimeRange = ({ navigation }) => {
                 padding: 8,
                 borderRadius: 10
             }}>
-                <Text>- Chọn khoảng thời gian để xem chi tiêu của bạn. </Text>
+                <Text>- Chọn khoảng thời gian để xem {params.type} của bạn. </Text>
                 <Text>- Để xem hôm nay, chọn 'xem hôm nay'. </Text>
             </View>
         )

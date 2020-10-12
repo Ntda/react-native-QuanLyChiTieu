@@ -1,11 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { compareTime } from '../common/dateTimeHelper';
-import { getItemChiTieu, setItemChiTieu } from '../common/localStoreHelper';
-import { buildTotalMoneyPerDay, totalMoneyPerDayFormatted, buildTotalMoneyBaseOnTimeRange } from '../common/commonHelper';
+import { getItemThuNhap, setItemThuNhap } from '../common/localStoreHelper';
+import {
+    buildTotalMoneyPerDay,
+    totalMoneyPerDayFormatted,
+    buildTotalMoneyBaseOnTimeRange
+} from '../common/commonHelper';
 import { commaFormatted } from '../common/numberFormater';
 
-const chiTieuSlice = createSlice({
-    name: 'chitieu',
+const thuNhapSlice = createSlice({
+    name: 'thunhap',
     initialState: {
         totalMoneyBaseOnTimeRange: 0,
         loading: false,
@@ -15,10 +19,10 @@ const chiTieuSlice = createSlice({
 
     },
     extraReducers: {
-        [getItemChiTieu.pending]: state => {
+        [getItemThuNhap.pending]: state => {
             state.loading = true;
         },
-        [getItemChiTieu.fulfilled]: (state, action) => {
+        [getItemThuNhap.fulfilled]: (state, action) => {
             state.loading = false;
             action.payload.sort((src, dest) => {
                 const dateTimeSource = Date.parse(src.title);
@@ -32,13 +36,13 @@ const chiTieuSlice = createSlice({
             state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
             console.log('[totalMoneyBaseOnTimeRange]: '+ JSON.stringify(state.totalMoneyBaseOnTimeRangeDisplay))
         },
-        [getItemChiTieu.rejected]: state => {
+        [getItemThuNhap.rejected]: state => {
             state.loading = false;
         },
-        [setItemChiTieu.pending]: state => {
+        [setItemThuNhap.pending]: state => {
             state.loading = true;
         },
-        [setItemChiTieu.fulfilled]: (state, action) => {
+        [setItemThuNhap.fulfilled]: (state, action) => {
             state.loading = false;
             action.payload.sort((src, dest) => {
                 const dateTimeSource = Date.parse(src.title);
@@ -52,14 +56,14 @@ const chiTieuSlice = createSlice({
             state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
             console.log('[totalMoneyBaseOnTimeRange]: '+ JSON.stringify(state.totalMoneyBaseOnTimeRangeDisplay))
         },
-        [setItemChiTieu.rejected]: state => {
+        [setItemThuNhap.rejected]: state => {
             state.loading = false;
         }
     }
 });
 
 
-const { actions, reducer } = chiTieuSlice;
+const { actions, reducer } = thuNhapSlice;
 const { } = actions;
 
 export default reducer;

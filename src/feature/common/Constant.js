@@ -17,6 +17,7 @@ const NAVIGATIONTITLE = {
 const STACKNAVIGATIONROUTE = {
     home: 'Home',
     themChiTieu: 'ThemChiTieu',
+    themThuNhap: 'ThemThuNhap',
     timeRange: 'timeRange',
     chitiet:'ChiTiet'
 }
@@ -33,6 +34,8 @@ const ICONTYPE = {
 
 const THEMCHITIEUTITLE = 'Thêm chi tiêu';
 
+const THEMTHUNHAPTITLE = 'Thêm thu nhập';
+
 const NAVBAR_HEIGHT = 64;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 const FOCUSON = {
@@ -40,7 +43,16 @@ const FOCUSON = {
     CONTENT: 'Content'
 }
 
-const LOCALSTOREKEY = '@QuanLyChiTieu';
+const LOCALSTOREKEY={
+    THUNHAP: '@QuanLyThuNhap',
+    CHITIEU: '@QuanLyChiTieu'
+};
+
+const TABTYPE={
+    CHITIEU: 'chiTieu',
+    THUNHAP: 'ThuNhap',
+    THONGKE: 'ThongKe'
+}
 
 export {
     ROUTETHUNHAP,
@@ -55,10 +67,12 @@ export {
     NAVIGATIONTITLE,
     STACKNAVIGATIONROUTE,
     THEMCHITIEUTITLE,
+    THEMTHUNHAPTITLE,
     NAVBAR_HEIGHT,
     STATUS_BAR_HEIGHT,
     FOCUSON,
     LOCALSTOREKEY,
     TIMERANGEROUTE,
-    ICONTYPE
+    ICONTYPE,
+    TABTYPE
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Them from '../common/Them';
 
-const ThemChiTieu = ({ route, navigation }) => {
+const ThemThuNhap = ({ route, navigation }) => {
     const { titleHeader } = route.params;
     return (
         <Them
@@ -11,4 +11,4 @@ const ThemChiTieu = ({ route, navigation }) => {
     );
 };
 
-export default ThemChiTieu;
+export default ThemThuNhap;

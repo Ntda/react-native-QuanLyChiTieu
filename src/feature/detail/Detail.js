@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { isEqual } from 'lodash';
+import { TABTYPE } from '../common/Constant';
 
 const styles = StyleSheet.create({
     container: {
@@ -45,7 +47,7 @@ const Detail = ({
     //console.log('[Detail]: ' + JSON.stringify(route.params));
     const {
         id,
-        type,
+        tabType,
         title,
         date,
         money,
@@ -67,7 +69,7 @@ const Detail = ({
                     </View>
                     <Text>{' '}</Text>
                     <View style={[styles.date, styles.ammount]}>
-                        <Text>{type === 'chitieu'
+                        <Text>{isEqual(tabType, TABTYPE.CHITIEU)
                             ? '- '
                             : ''}
                             {money}</Text>

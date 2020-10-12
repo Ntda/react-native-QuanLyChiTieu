@@ -1,13 +1,17 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { STACKNAVIGATIONROUTE } from './Constant';
 import {
     View,
     Text
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const AddComponent = ({navigation}) => {
+const AddComponent = props => {
+    const {
+        navigation,
+        route,
+        titleHeader
+    } = props;
     const renderButtonAdd = () => {
         return (
             <View style={{
@@ -33,14 +37,16 @@ const AddComponent = ({navigation}) => {
                     style={{
                         flexDirection: 'row',
                     }}
-                    onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.themChiTieu)}>
+                    onPress={() => navigation.navigate(route, {
+                        titleHeader
+                    })}>
                     <AntDesign
                         style={{
                             color: '#033dfc',
                             marginRight: 10
                         }}
                         name='edit'
-                        size={25}/>
+                        size={25} />
                     <Text style={{
                         color: '#033dfc',
                         fontSize: 15,

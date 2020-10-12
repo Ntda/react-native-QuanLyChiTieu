@@ -3,40 +3,72 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { isEqual } from 'lodash';
 import { executeFilter } from './commonHelper';
 
-const getItem = createAsyncThunk(
-    'get/item',
-    async (key, { getState }) => {
-        const filterModel = getState().filter;
-        const jsonValue = await AsyncStorage.getItem(key);
-        const chiTieuArray = jsonValue
-            ? JSON.parse(jsonValue)
-            : [];
-        return executeFilter(chiTieuArray, filterModel);
+const getItemChiTieu = createAsyncThunk(
+    'get/itemChiTieu',
+    async model => {
+        const result = await getItemFromLocalStorage(model);
+        return result;
     }
 );
 
-const setItem = createAsyncThunk(
-    'set/item',
+const setItemChiTieu = createAsyncThunk(
+    'set/itemChiTieu',
     async (model, { getState }) => {
-        const { key, value } = model;
         const filterModel = getState().filter;
-        const jsonValue = await AsyncStorage.getItem(key);
-        let newChiTieuArray = jsonValue
-            ? JSON.parse(jsonValue)
-            : [];
-        const chiTieuModel = newChiTieuArray.find(c => isEqual(c.title, value.title));
-        chiTieuModel
-            ? chiTieuModel.data.push(value.data[0])
-            : newChiTieuArray.push(value)
-
-        await AsyncStorage.setItem(key, JSON.stringify(newChiTieuArray), e => {
-            console.log('[setItem->Error: ]' + JSON.stringify(e));
-        });
-        return executeFilter(newChiTieuArray, filterModel);
+        const filterModelChiTieu = filterModel.chiTieu;
+        const result= await setItemToLocalStore(model, filterModelChiTieu);
+        return result;
     }
 );
 
+const getItemThuNhap = createAsyncThunk(
+    'get/itemThuNhap',
+    async model => {
+        const result = await getItemFromLocalStorage(model);
+        return result;
+    }
+);
+
+const setItemThuNhap = createAsyncThunk(
+    'set/itemThuNhap',
+    async (model, { getState }) => {
+        const filterModel = getState().filter;
+        const filterModelThuNhap = filterModel.thuNhap;
+        const result= await setItemToLocalStore(model, filterModelThuNhap);
+        return result;
+    }
+);
+
+const getItemFromLocalStorage = async model => {
+    const {
+        localStoreKey,
+        ...rest } = model;
+    const jsonValue = await AsyncStorage.getItem(localStoreKey);
+    const jsonToArray = jsonValue
+        ? JSON.parse(jsonValue)
+        : [];
+    return executeFilter(jsonToArray, rest);
+}
+
+const setItemToLocalStore = async (model, filter) => {
+    const { key, value } = model;
+    const jsonValue = await AsyncStorage.getItem(key);
+    let newArray = jsonValue
+        ? JSON.parse(jsonValue)
+        : [];
+    const result = newArray.find(c => isEqual(c.title, value.title));
+    result
+        ? result.data.push(value.data[0])
+        : newArray.push(value)
+
+    await AsyncStorage.setItem(key, JSON.stringify(newArray), e => {
+        console.log('[setItemToLocalStore->Error: ]' + JSON.stringify(e));
+    });
+    return executeFilter(newArray, filter);
+}
 export {
-    getItem,
-    setItem
+    getItemChiTieu,
+    setItemChiTieu,
+    getItemThuNhap,
+    setItemThuNhap
 }

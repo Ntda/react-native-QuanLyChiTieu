@@ -30,17 +30,19 @@ const styles = StyleSheet.create({
     }
 })
 
-const FilterTimeRangeComponent = ({
-    navigation,
-    iconType
-}) => {
+const FilterTimeRangeComponent = props => {
+    const {
+        navigation,
+        iconType,
+        ...rest
+    } = props;
     return (
         <View style={styles.container}>
             <TouchableOpacity
                 style={{
                     flexDirection: 'row'
                 }}
-                onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.timeRange)}
+                onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.timeRange, { ...rest })}
             >
                 <IconSelector
                     type={iconType}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -7,10 +7,8 @@ import {
     TouchableHighlight,
     SectionList
 } from 'react-native';
-import { LOCALSTOREKEY, ICONTYPE, NAVIGATIONTITLE, STACKNAVIGATIONROUTE } from './Constant';
+import { ICONTYPE, NAVIGATIONTITLE, STACKNAVIGATIONROUTE, TABTYPE } from './Constant';
 import { getRandomColor } from './ColorPicker';
-import { useDispatch, useSelector } from 'react-redux';
-import { getItem } from './localStoreHelper';
 import { nanoid } from '@reduxjs/toolkit';
 import AvartarSelector from './AvartarSelector';
 import AddComponent from './AddComponent';
@@ -44,13 +42,15 @@ const style = StyleSheet.create({
     }
 })
 
-const ListViewComponent = ({ navigation }) => {
-    const dispatch = useDispatch();
-    const filterModel = useSelector(state => state.filter);
-    const { fromDate, toDate, isShowToday } = filterModel;
-    const modelChiTieu = useSelector(state => state.chiTieu);
+const ListViewComponent = props => {
+    const {
+        navigation,
+        model,
+        titleHeader,
+        ...rest
+    } = props;
 
-    console.log('[Chi tieu]: ' + JSON.stringify(modelChiTieu));
+    console.log('[Chi tieu]: ' + JSON.stringify(model));
     const renderItem = ({
         item,
         section
@@ -65,7 +65,7 @@ const ListViewComponent = ({ navigation }) => {
                 onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.chitiet, {
                     ...item,
                     date: section.title,
-                    type: 'chitieu'
+                    tabType: TABTYPE.CHITIEU
                 })}
                 underlayColor='#e6f9ff'>
                 <View
@@ -135,7 +135,7 @@ const ListViewComponent = ({ navigation }) => {
     const renderSectionList = () => {
         return (
             <SectionList
-                sections={modelChiTieu.chiTieuArray}
+                sections={model.entities}
                 renderSectionHeader={renderSectionListHeader}
                 renderItem={renderItem}
                 keyExtractor={(_, index) => index} />
@@ -145,36 +145,29 @@ const ListViewComponent = ({ navigation }) => {
     const renderButtonFilter = () => {
         return (
             <FilterTimeRangeComponent
-                iconType={isShowToday
+                iconType={rest.isShowToday
                     ? ICONTYPE.ICONFILTERANT
                     : ICONTYPE.ICONFILTERAWARESOME}
-                navigation={navigation} />
+                navigation={navigation}
+                {...rest}
+            />
         )
     }
 
     const renderButtonAdd = () => {
         return (
             <AddComponent
-                navigation={navigation} />
+                navigation={navigation}
+                route={rest.route}
+                titleHeader={titleHeader} />
         )
     }
 
-    useEffect(() => {
-        dispatch(getItem(LOCALSTOREKEY))
-    }, [fromDate, toDate, isShowToday]);
-
-    useEffect(() => {
-        navigation.setOptions({
-            title: NAVIGATIONTITLE.chiTieu,
-            tabBarBadge: modelChiTieu.totalMoneyBaseOnTimeRangeDisplay
-        });
-    }, [modelChiTieu.totalMoneyBaseOnTimeRangeDisplay]);
-
-    if (modelChiTieu.loading) {
+    if (model.loading) {
         return (
             <SafeAreaView style={style.container}>
                 <Spinner
-                    visible={modelChiTieu.loading}
+                    visible={model.loading}
                     style={style.spinnerTextStyle} />
             </SafeAreaView>
         )
@@ -182,7 +175,7 @@ const ListViewComponent = ({ navigation }) => {
     return (
         <SafeAreaView style={style.container}>
             <Spinner
-                visible={modelChiTieu.loading}
+                visible={model.loading}
                 style={style.spinnerTextStyle} />
             {renderSectionList()}
             {renderButtonFilter()}
