@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ROUTECHITIEU, TIMERANGEROUTE } from '../common/Constant';
+import { ROUTECHITIEU, TIMERANGEROUTE } from './Constant';
 import {
     View,
     Text,
@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import InputDateTimeComponent from './InputDateTimeComponent';
-import AlertComponent from '../common/AlertComponent';
-import { setFilter } from '../filter/filterSlice';
+import InputDateTimeComponent from '../chitieu/InputDateTimeComponent';
+import AlertComponent from './AlertComponent';
+import { setFilterChiTieu } from '../filter/filterSlice';
 import { useDispatch, useStore } from 'react-redux';
 import moment from 'moment';
 
@@ -86,7 +86,7 @@ const TimeRange = ({ navigation }) => {
             },
             isShowToday: checked
         }
-        dispatch(setFilter(filterModel));
+        dispatch(setFilterChiTieu(filterModel));
         navigation.navigate(ROUTECHITIEU);
     }
 

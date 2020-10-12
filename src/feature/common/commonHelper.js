@@ -7,7 +7,7 @@ import { isEqual } from 'lodash';
 
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
-const totalMoney = spends => spends.reduce(reducer);
+const totalMoney = spends => spends.reduce(reducer, 0);
 
 const buildTotalMoneyPerDay = payload => {
     for (let i = 0; i < payload.length; i++) {

@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigation from './TabNavigation';
 import ThemChiTieu from './feature/chitieu/ThemChiTieu';
 import { STACKNAVIGATIONROUTE } from './feature/common/Constant';
-import TimeRange from './feature/chitieu/TimeRange';
+import TimeRange from './feature/common/TimeRange';
 import Detail from './feature/detail/Detail';
 
 const Stack = createStackNavigator();
