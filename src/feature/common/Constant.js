@@ -1,4 +1,4 @@
-import { Platform } from "react-native";
+import { Platform } from 'react-native';
 
 const ROUTETHUNHAP = 'ThuNhap';
 const ROUTECHITIEU = 'ChiTieu';
@@ -18,7 +18,8 @@ const STACKNAVIGATIONROUTE = {
     home: 'Home',
     themChiTieu: 'ThemChiTieu',
     themThuNhap: 'ThemThuNhap',
-    timeRange: 'timeRange',
+    filterChiTieu: 'filterChiTieu',
+    filterThuNhap: 'filterThuNhap',
     chitiet:'ChiTiet'
 }
 

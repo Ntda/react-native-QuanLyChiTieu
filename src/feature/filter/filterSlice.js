@@ -11,14 +11,11 @@ const filterSlice = createSlice({
     name: 'filter/filter',
     initialState: {
         thuNhap:{
-          ...filterModel  
+          ...filterModel
         },
         chiTieu: {
             ...filterModel
-        },
-        /* fromDate: moment(new Date()).format('LL'),
-        toDate: moment(new Date()).format('LL'),
-        isShowToday: true */
+        }
     },
     reducers: {
         setFilterChiTieu: (state, action) => {

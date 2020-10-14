@@ -34,15 +34,17 @@ const FilterTimeRangeComponent = props => {
     const {
         navigation,
         iconType,
+        filterRoute,
         ...rest
     } = props;
+    console.log('[filterChiTieuModel]: ' + JSON.stringify(rest));
     return (
         <View style={styles.container}>
             <TouchableOpacity
                 style={{
                     flexDirection: 'row'
                 }}
-                onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.timeRange, { ...rest })}
+                onPress={() => navigation.navigate(filterRoute, { ...rest })}
             >
                 <IconSelector
                     type={iconType}

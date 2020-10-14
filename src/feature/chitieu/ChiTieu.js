@@ -6,11 +6,12 @@ import ListViewComponent from '../common/ListViewComponent';
 
 const ChiTieu = ({ navigation }) => {
     const dispatch = useDispatch();
-    const filterModel = useSelector(state => state.filter);
-    const { fromDate, toDate, isShowToday } = filterModel.chiTieu;
+    const filterChiTieuModel = useSelector(state => state.filter.chiTieu);
+    const { fromDate, toDate, isShowToday } = filterChiTieuModel;
     const modelChiTieu = useSelector(state => state.chiTieu);
 
-    console.log('[Chi tieu]: ' + JSON.stringify(modelChiTieu));
+    //console.log('[Chi tieu]: ' + JSON.stringify(modelChiTieu));
+  
 
     useEffect(() => {
         const model={
@@ -32,13 +33,12 @@ const ChiTieu = ({ navigation }) => {
     return (
         <ListViewComponent
             navigation={navigation}
-            filterModel={filterModel}
-            fromDate={fromDate}
-            toDate={toDate}
-            isShowToday={isShowToday}
+            filterModel={filterChiTieuModel}
             route={STACKNAVIGATIONROUTE.themChiTieu}
             model={modelChiTieu}
-            titleHeader={THEMCHITIEUTITLE}/>
+            tabType={NAVIGATIONTITLE.chiTieu}
+            titleHeader={THEMCHITIEUTITLE}
+            filterRoute={STACKNAVIGATIONROUTE.filterChiTieu}/>
     )
 }
 

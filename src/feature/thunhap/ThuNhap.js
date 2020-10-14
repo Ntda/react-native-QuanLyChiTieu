@@ -6,8 +6,8 @@ import ListViewComponent from '../common/ListViewComponent';
 
 const ThuNhap = ({ navigation }) => {
     const dispatch = useDispatch();
-    const filterModel = useSelector(state => state.filter);
-    const { fromDate, toDate, isShowToday } = filterModel.thuNhap;
+    const filterThuNhapModel = useSelector(state => state.filter.thuNhap);
+    const { fromDate, toDate, isShowToday } = filterThuNhapModel;
     const modelThuNhap = useSelector(state => state.thuNhap);
 
     console.log('[Thu nhap]: ' + JSON.stringify(modelThuNhap));
@@ -32,14 +32,13 @@ const ThuNhap = ({ navigation }) => {
     return (
         <ListViewComponent
             navigation={navigation}
-            filterModel={filterModel}
-            fromDate={fromDate}
-            toDate={toDate}
-            isShowToday={isShowToday}
+            filterModel={filterThuNhapModel}
             route={STACKNAVIGATIONROUTE.themThuNhap}
             model={modelThuNhap}
-            titleHeader={THEMTHUNHAPTITLE} />
+            tabType={NAVIGATIONTITLE.thuNhap}
+            titleHeader={THEMTHUNHAPTITLE}
+            filterRoute={STACKNAVIGATIONROUTE.filterThuNhap} />
     )
-}
+} 
 
 export default ThuNhap;

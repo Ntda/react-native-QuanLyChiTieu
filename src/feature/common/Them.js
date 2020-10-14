@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
     View,
-    Text,
     StyleSheet,
     TextInput,
     Dimensions
@@ -14,8 +13,6 @@ import IconSend from './IconSend';
 import { LOCALSTOREKEY, ROUTECHITIEU, THEMCHITIEUTITLE } from './Constant';
 import inputValid from './valdiateInput';
 import AlertComponent from './AlertComponent';
-import { useDispatch, useSelector } from 'react-redux';
-import { setItemChiTieu } from './localStoreHelper';
 import { nanoid } from '@reduxjs/toolkit';
 import { commaFormatted, getNumberFromString } from './numberFormater';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -36,8 +33,12 @@ const style = StyleSheet.create({
         marginTop: 30
     }
 });
-const Them = ({ titleHeader, navigation }) => {
-    const dispatch = useDispatch();
+const Them = props => {
+    const {
+        titleHeader,
+        navigation,
+        onAdd
+    } = props;
     const [showCalendar, setShowCalendar] = useState(false);
     const [date, setDate] = useState(new Date());
     const [title, setTitle] = useState('');
@@ -78,7 +79,7 @@ const Them = ({ titleHeader, navigation }) => {
         return true;
     }
 
-    const handleSend = async () => {
+    const handleSend = () => {
         const TIEUDE = 'Tiêu đề';
         const NOIDUNG = 'Nội dung';
         const SOTIEN = 'Số tiền';
@@ -89,7 +90,6 @@ const Them = ({ titleHeader, navigation }) => {
             return;
         }
         const model = {
-            key: LOCALSTOREKEY.CHITIEU,
             value: {
                 title: moment(new Date(date)).format('LL'),
                 data: [{
@@ -101,8 +101,7 @@ const Them = ({ titleHeader, navigation }) => {
                 }]
             }
         }
-        await dispatch(setItemChiTieu(model));
-        navigation.navigate(ROUTECHITIEU);
+        onAdd(model);
     }
 
     const handleCloseAlert = () => {

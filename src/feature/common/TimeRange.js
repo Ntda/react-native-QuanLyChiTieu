@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { ROUTECHITIEU, TIMERANGEROUTE } from './Constant';
+import { TIMERANGEROUTE } from './Constant';
 import {
     View,
     Text,
-    StyleSheet,
-    TextInput
+    StyleSheet
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import InputDateTimeComponent from '../chitieu/InputDateTimeComponent';
 import AlertComponent from './AlertComponent';
-import { setFilterChiTieu } from '../filter/filterSlice';
-import { useDispatch, useStore } from 'react-redux';
 import moment from 'moment';
 
 const styles = StyleSheet.create({
@@ -22,15 +19,19 @@ const styles = StyleSheet.create({
         padding: 20
     }
 });
-const TimeRange = ({ route, navigation }) => {
-    const dispatch = useDispatch();
-    const { params } = route;
-    console.log('[filterModel]: ' + JSON.stringify(params));
+const TimeRange = props => {
+    const {
+        route,
+        navigation,
+        onSetFilter
+    } = props;
+    const { filterModel, tabType } = route.params;
+    console.log('[filterModel]: ' + JSON.stringify(filterModel));
     const [showCalendarFromDate, setShowCalendarFromDate] = useState(false);
     const [showCalendarToDate, setShowCalendarToDate] = useState(false);
-    const [fromDate, setFromDate] = useState(new Date(params.fromDate));
-    const [toDate, setToDate] = useState(new Date(params.toDate));
-    const [checked, setChecked] = useState(params.isShowToday);
+    const [fromDate, setFromDate] = useState(new Date(filterModel.fromDate));
+    const [toDate, setToDate] = useState(new Date(filterModel.toDate));
+    const [checked, setChecked] = useState(filterModel.isShowToday);
     const [message, setMessage] = useState({
         display: false,
         value: ''
@@ -85,11 +86,7 @@ const TimeRange = ({ route, navigation }) => {
             },
             isShowToday: checked
         }
-        const action = params.type === 'chiTieu'
-            ? setFilterChiTieu(filterModel)
-            : undefined;
-        action && dispatch(action);
-        navigation.navigate(ROUTECHITIEU);
+        onSetFilter(filterModel);
     }
 
     const renderCheckbox = () => {
@@ -139,7 +136,7 @@ const TimeRange = ({ route, navigation }) => {
                 padding: 8,
                 borderRadius: 10
             }}>
-                <Text>- Chọn khoảng thời gian để xem {params.type} của bạn. </Text>
+                <Text>- Chọn khoảng thời gian để xem {tabType.toLowerCase()} của bạn. </Text>
                 <Text>- Để xem hôm nay, chọn 'xem hôm nay'. </Text>
             </View>
         )

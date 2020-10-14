@@ -145,7 +145,7 @@ const ListViewComponent = props => {
     const renderButtonFilter = () => {
         return (
             <FilterTimeRangeComponent
-                iconType={rest.isShowToday
+                iconType={rest.filterModel.isShowToday
                     ? ICONTYPE.ICONFILTERANT
                     : ICONTYPE.ICONFILTERAWARESOME}
                 navigation={navigation}
