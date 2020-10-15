@@ -1,18 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
     View,
     Text,
     StyleSheet
 } from 'react-native';
-import { isEqual } from 'lodash';
-import { NAVIGATIONTITLE } from '../common/Constant';
-import PieChartComponent from '../../chart/PieChartComponent';
-import { useStore } from 'react-redux';
 
 const styles = StyleSheet.create({
-    container: {
-        margin: 10
-    },
     title: {
         color: 'black',
         fontSize: 20,
@@ -26,7 +19,8 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     ammount: {
-        backgroundColor: 'tomato'
+        backgroundColor: 'tomato',
+        color: 'red'
     },
     description: {
         marginTop: 20,
@@ -40,25 +34,11 @@ const styles = StyleSheet.create({
     }
 })
 
-const Detail = ({
-    route,
-    navigation
-}) => {
-    console.log('[Detail]: ' + JSON.stringify(route.params));
-    const store = useStore();
+const Detail = props => {
     const {
-        id,
-        tabType,
         title,
         date,
-        money,
-        content } = route.params;
-
-    useEffect(() => {
-        navigation.setOptions({
-            title: 'Chi tiết'
-        });
-    }, []);
+        content } = props.route.params;
 
     const renderTitle = () => {
         return (
@@ -69,12 +49,7 @@ const Detail = ({
                         <Text>{date}</Text>
                     </View>
                     <Text>{' '}</Text>
-                    <View style={[styles.date, styles.ammount]}>
-                        <Text>{isEqual(tabType, NAVIGATIONTITLE.chiTieu)
-                            ? '- '
-                            : ''}
-                            {money}</Text>
-                    </View>
+                    {props.children}
                 </Text>
             </View>
         )
@@ -83,6 +58,10 @@ const Detail = ({
     const renderContent = () => {
         return (
             <View style={[styles.description]}>
+                <Text style={{
+                    color: 'gray',
+                    fontSize: 18
+                }}>Nội dung:</Text>
                 <Text style={styles.content}>
                     {content}
                 </Text>
@@ -90,36 +69,11 @@ const Detail = ({
         )
     }
 
-    const renderChart = () => {
-        const state = store.getState();
-        const { thuNhap, chiTieu } = state;
-        const ammountThuNhap = thuNhap.totalMoneyBaseOnTimeRange;
-        const ammountChiTieu = chiTieu.totalMoneyBaseOnTimeRange;
-        const data = [{
-            key: 1,
-            amount: ammountThuNhap,
-            svg: { fill: '#a6f5c8' },
-        },
-        {
-            key: 2,
-            amount: ammountChiTieu,
-            svg: { fill: '#ede1bb' }
-        }];
-        return (
-            <View style={{
-
-            }}>
-                <PieChartComponent
-                    data={data} />
-            </View>);
-    }
-
     return (
-        <View style={styles.container}>
-            {renderChart()}
+        <>
             {renderTitle()}
             {renderContent()}
-        </View>
+        </>
     );
 };
 

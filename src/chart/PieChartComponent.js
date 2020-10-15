@@ -11,7 +11,7 @@ const PieChartComponent = ({data}) => {
                     key={index}
                     x={pieCentroid[0]}
                     y={pieCentroid[1]}
-                    fill={'black'}
+                    fill='white'
                     textAnchor={'middle'}
                     alignmentBaseline={'middle'}
                     fontSize={17}

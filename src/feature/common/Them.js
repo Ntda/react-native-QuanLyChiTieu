@@ -10,7 +10,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import IconSend from './IconSend';
-import { LOCALSTOREKEY, ROUTECHITIEU, THEMCHITIEUTITLE } from './Constant';
 import inputValid from './valdiateInput';
 import AlertComponent from './AlertComponent';
 import { nanoid } from '@reduxjs/toolkit';
@@ -153,7 +152,7 @@ const Them = props => {
                     marginTop: 40
                 }}
                 name='ios-calendar'
-                size={25}
+                size={30}
                 onPress={() => setShowCalendar(true)} />
         </View>)
     }

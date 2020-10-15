@@ -4,6 +4,7 @@ import {
 } from './numberFormater';
 import moment from 'moment';
 import { isEqual } from 'lodash';
+import { CHART } from './Constant';
 
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
@@ -52,27 +53,30 @@ const executeFilter = (array, filterModel) => {
 const buildDataPieChart = (ammountThuNhap, ammountChiTieu) => {
     if (!ammountThuNhap) {
         return [{
-            key: 1,
+            key: 'chiTieu',
             amount: 100,
-            svg: { fill: '#a6f5c8' }
+            svg: { fill: CHART.COLORCONLAI }
         }]
     }
     if (!ammountChiTieu) {
         return [{
-            key: 1,
+            key: 'sodu',
             amount: 100,
-            svg: { fill: '#ede1bb' }
+            svg: { fill: CHART.COLORCHITIEU }
         }]
     }
 
+    const percent = ammountChiTieu / ammountThuNhap * 100;
+    const ceilPercent = Math.ceil(percent);
+
     return [{
-        key: 1,
-        amount: 50,
-        svg: { fill: '#a6f5c8' }
+        key: 'chiTieu',
+        amount: ceilPercent,
+        svg: { fill: CHART.COLORCONLAI }
     }, {
-        key: 1,
-        amount: 50,
-        svg: { fill: '#ede1bb' }
+        key: 'sodu',
+        amount: 100 - ceilPercent,
+        svg: { fill: CHART.COLORCHITIEU }
     }]
 }
 

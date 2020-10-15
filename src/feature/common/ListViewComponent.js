@@ -5,9 +5,10 @@ import {
     StyleSheet,
     SafeAreaView,
     TouchableHighlight,
-    SectionList
+    SectionList,
+    TouchableOpacity
 } from 'react-native';
-import { ICONTYPE, NAVIGATIONTITLE, STACKNAVIGATIONROUTE, TABTYPE } from './Constant';
+import { ICONTYPE, STACKNAVIGATIONROUTE } from './Constant';
 import { getRandomColor } from './ColorPicker';
 import { nanoid } from '@reduxjs/toolkit';
 import AvartarSelector from './AvartarSelector';
@@ -15,6 +16,8 @@ import AddComponent from './AddComponent';
 import FilterTimeRangeComponent from './FilterTimeRangeComponent';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Dimensions } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const widthDimension = Dimensions.get('window').width;
 const style = StyleSheet.create({
@@ -47,22 +50,23 @@ const ListViewComponent = props => {
         navigation,
         model,
         titleHeader,
+        viewDetail,
         ...rest
     } = props;
 
-    console.log('[Chi tieu]: ' + JSON.stringify(model));
+    //console.log('[Chi tieu]: ' + JSON.stringify(model));
     const renderItem = ({
         item,
         section
     }) => {
-        console.log('[Item]: ' + JSON.stringify(section));
+        //console.log('[Item]: ' + JSON.stringify(section));
         return (
             <TouchableHighlight
                 style={{
                     marginTop: 5,
                     borderRadius: 20
                 }}
-                onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.chitiet, {
+                onPress={() => navigation.navigate(viewDetail, {
                     ...item,
                     date: section.title,
                     tabType: rest.tabType
@@ -119,16 +123,42 @@ const ListViewComponent = props => {
 
     const renderSectionListHeader = ({ section }) => {
         return (
-            <View style={[style.sectionHeaderStyle, style.row]}>
-                <Text>
-                    {section.title}
-                    <Text style={{
-                        color: 'gray',
-                        fontSize: 19
-                    }}> ({section.totalMoneyDisplay})</Text>
-                </Text>
-            </View>
-
+            <TouchableOpacity
+                onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.viewDetailPerDay, { section })}>
+                <View style={[
+                    style.sectionHeaderStyle,
+                    style.row,
+                    {
+                        flexDirection: 'row',
+                        justifyContent: 'space-between'
+                    }]}>
+                    <View>
+                        <Text>
+                            {section.title}
+                            <Text style={{
+                                color: 'gray',
+                                fontSize: 19
+                            }}> ({section.totalMoneyDisplay})</Text>
+                        </Text>
+                    </View>
+                    <View style={{
+                        flexDirection: 'row'
+                    }}>
+                        <View style={{
+                            marginRight: 5
+                        }}>
+                            <AntDesign
+                                name='setting'
+                                size={28}
+                                onPress={() => { }} />
+                        </View>
+                        <MaterialIcons
+                            name='navigate-next'
+                            size={30}
+                            onPress={() => { }} />
+                    </View>
+                </View>
+            </TouchableOpacity >
         )
     }
 
