@@ -11,10 +11,10 @@ const ChiTieu = ({ navigation }) => {
     const modelChiTieu = useSelector(state => state.chiTieu);
 
     //console.log('[Chi tieu]: ' + JSON.stringify(modelChiTieu));
-  
+
 
     useEffect(() => {
-        const model={
+        const model = {
             localStoreKey: LOCALSTOREKEY.CHITIEU,
             fromDate,
             toDate,
@@ -38,7 +38,8 @@ const ChiTieu = ({ navigation }) => {
             model={modelChiTieu}
             tabType={NAVIGATIONTITLE.chiTieu}
             titleHeader={THEMCHITIEUTITLE}
-            filterRoute={STACKNAVIGATIONROUTE.filterChiTieu}/>
+            filterRoute={STACKNAVIGATIONROUTE.filterChiTieu}
+            viewDetail={STACKNAVIGATIONROUTE.viewDetailChiTieu} />
     )
 }
 

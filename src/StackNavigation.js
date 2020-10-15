@@ -2,11 +2,12 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigation from './TabNavigation';
 import { STACKNAVIGATIONROUTE } from './feature/common/Constant';
-import Detail from './feature/detail/Detail';
 import ThemChiTieu from './feature/chitieu/ThemChiTieu';
 import FilterChiTieu from './feature/chitieu/FilterChiTieu';
 import ThemThuNhap from './feature/thunhap/ThemThuNhap';
 import FilterThuNhap from './feature/thunhap/FilterThuNhap';
+import ChiTieuDetail from './feature/chitieu/DetailChiTieu';
+import ThuNhapDetail from './feature/thunhap/DetailThuNhap';
 
 const Stack = createStackNavigator();
 const StackNavigation = () => {
@@ -30,8 +31,11 @@ const StackNavigation = () => {
                 name={STACKNAVIGATIONROUTE.filterThuNhap}
                 component={FilterThuNhap} />
             <Stack.Screen
-                name={STACKNAVIGATIONROUTE.chitiet}
-                component={Detail} />
+                name={STACKNAVIGATIONROUTE.viewDetailChiTieu}
+                component={ChiTieuDetail} />
+            <Stack.Screen
+                name={STACKNAVIGATIONROUTE.viewDetailThuNhap}
+                component={ThuNhapDetail} />
         </Stack.Navigator>
     )
 }

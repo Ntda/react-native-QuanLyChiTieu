@@ -37,8 +37,10 @@ const ThuNhap = ({ navigation }) => {
             model={modelThuNhap}
             tabType={NAVIGATIONTITLE.thuNhap}
             titleHeader={THEMTHUNHAPTITLE}
-            filterRoute={STACKNAVIGATIONROUTE.filterThuNhap} />
+            filterRoute={STACKNAVIGATIONROUTE.filterThuNhap}
+            viewDetail={STACKNAVIGATIONROUTE.viewDetailThuNhap}
+        />
     )
-} 
+}
 
 export default ThuNhap;

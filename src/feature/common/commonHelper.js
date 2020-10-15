@@ -52,26 +52,28 @@ const executeFilter = (array, filterModel) => {
 const buildDataPieChart = (ammountThuNhap, ammountChiTieu) => {
     if (!ammountThuNhap) {
         return [{
-            key: 1,
+            key: 'chiTieu',
             amount: 100,
             svg: { fill: '#a6f5c8' }
         }]
     }
     if (!ammountChiTieu) {
         return [{
-            key: 1,
+            key: 'sodu',
             amount: 100,
             svg: { fill: '#ede1bb' }
         }]
     }
 
+    const percent = ammountChiTieu / ammountThuNhap * 100;
+
     return [{
-        key: 1,
-        amount: 50,
+        key: 'chiTieu',
+        amount: Math.ceil(percent),
         svg: { fill: '#a6f5c8' }
     }, {
-        key: 1,
-        amount: 50,
+        key: 'sodu',
+        amount: 100 - percent,
         svg: { fill: '#ede1bb' }
     }]
 }

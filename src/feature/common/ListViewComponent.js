@@ -47,22 +47,23 @@ const ListViewComponent = props => {
         navigation,
         model,
         titleHeader,
+        viewDetail,
         ...rest
     } = props;
 
-    console.log('[Chi tieu]: ' + JSON.stringify(model));
+    //console.log('[Chi tieu]: ' + JSON.stringify(model));
     const renderItem = ({
         item,
         section
     }) => {
-        console.log('[Item]: ' + JSON.stringify(section));
+        //console.log('[Item]: ' + JSON.stringify(section));
         return (
             <TouchableHighlight
                 style={{
                     marginTop: 5,
                     borderRadius: 20
                 }}
-                onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.chitiet, {
+                onPress={() => navigation.navigate(viewDetail, {
                     ...item,
                     date: section.title,
                     tabType: rest.tabType

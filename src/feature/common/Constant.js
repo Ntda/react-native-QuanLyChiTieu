@@ -20,7 +20,9 @@ const STACKNAVIGATIONROUTE = {
     themThuNhap: 'ThemThuNhap',
     filterChiTieu: 'filterChiTieu',
     filterThuNhap: 'filterThuNhap',
-    chitiet:'ChiTiet'
+    chitiet: 'ChiTiet',
+    viewDetailChiTieu: 'viewDetailChiTieu',
+    viewDetailThuNhap: 'viewDetailThuNhap'
 }
 
 const TIMERANGEROUTE = {
@@ -44,17 +46,21 @@ const FOCUSON = {
     CONTENT: 'Content'
 }
 
-const LOCALSTOREKEY={
+const LOCALSTOREKEY = {
     THUNHAP: '@QuanLyThuNhap',
     CHITIEU: '@QuanLyChiTieu'
 };
 
-const TABTYPE={
+const TABTYPE = {
     CHITIEU: 'chiTieu',
     THUNHAP: 'ThuNhap',
     THONGKE: 'ThongKe'
 }
 
+const VIEWDETAIL = {
+    CHITIEU: 'detail chi tieu',
+    THUNHAP: 'detail thu nhap'
+}
 export {
     ROUTETHUNHAP,
     ROUTECHITIEU,
@@ -75,5 +81,6 @@ export {
     LOCALSTOREKEY,
     TIMERANGEROUTE,
     ICONTYPE,
-    TABTYPE
+    TABTYPE,
+    VIEWDETAIL
 }
