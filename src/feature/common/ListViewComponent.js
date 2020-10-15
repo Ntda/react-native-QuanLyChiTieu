@@ -65,7 +65,7 @@ const ListViewComponent = props => {
                 onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.chitiet, {
                     ...item,
                     date: section.title,
-                    tabType: TABTYPE.CHITIEU
+                    tabType: rest.tabType
                 })}
                 underlayColor='#e6f9ff'>
                 <View

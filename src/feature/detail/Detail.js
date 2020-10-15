@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import {
     View,
     Text,
     StyleSheet
 } from 'react-native';
-import moment from 'moment';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { isEqual } from 'lodash';
-import { TABTYPE } from '../common/Constant';
+import { NAVIGATIONTITLE } from '../common/Constant';
+import PieChartComponent from '../../chart/PieChartComponent';
+import { useStore } from 'react-redux';
 
 const styles = StyleSheet.create({
     container: {
         margin: 10
     },
     title: {
+        color: 'black',
         fontSize: 20,
         fontWeight: 'bold'
     },
@@ -44,7 +44,8 @@ const Detail = ({
     route,
     navigation
 }) => {
-    //console.log('[Detail]: ' + JSON.stringify(route.params));
+    console.log('[Detail]: ' + JSON.stringify(route.params));
+    const store = useStore();
     const {
         id,
         tabType,
@@ -62,14 +63,14 @@ const Detail = ({
     const renderTitle = () => {
         return (
             <View>
-                <Text style={styles.title}>
+                <Text style={[styles.title]}>
                     {title}{' '}
                     <View style={styles.date}>
                         <Text>{date}</Text>
                     </View>
                     <Text>{' '}</Text>
                     <View style={[styles.date, styles.ammount]}>
-                        <Text>{isEqual(tabType, TABTYPE.CHITIEU)
+                        <Text>{isEqual(tabType, NAVIGATIONTITLE.chiTieu)
                             ? '- '
                             : ''}
                             {money}</Text>
@@ -81,7 +82,7 @@ const Detail = ({
 
     const renderContent = () => {
         return (
-            <View style={styles.description}>
+            <View style={[styles.description]}>
                 <Text style={styles.content}>
                     {content}
                 </Text>
@@ -89,8 +90,33 @@ const Detail = ({
         )
     }
 
+    const renderChart = () => {
+        const state = store.getState();
+        const { thuNhap, chiTieu } = state;
+        const ammountThuNhap = thuNhap.totalMoneyBaseOnTimeRange;
+        const ammountChiTieu = chiTieu.totalMoneyBaseOnTimeRange;
+        const data = [{
+            key: 1,
+            amount: ammountThuNhap,
+            svg: { fill: '#a6f5c8' },
+        },
+        {
+            key: 2,
+            amount: ammountChiTieu,
+            svg: { fill: '#ede1bb' }
+        }];
+        return (
+            <View style={{
+
+            }}>
+                <PieChartComponent
+                    data={data} />
+            </View>);
+    }
+
     return (
         <View style={styles.container}>
+            {renderChart()}
             {renderTitle()}
             {renderContent()}
         </View>

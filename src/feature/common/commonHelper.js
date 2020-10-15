@@ -49,10 +49,38 @@ const executeFilter = (array, filterModel) => {
     });
 }
 
+const buildDataPieChart = (ammountThuNhap, ammountChiTieu) => {
+    if (!ammountThuNhap) {
+        return [{
+            key: 1,
+            amount: 100,
+            svg: { fill: '#a6f5c8' }
+        }]
+    }
+    if (!ammountChiTieu) {
+        return [{
+            key: 1,
+            amount: 100,
+            svg: { fill: '#ede1bb' }
+        }]
+    }
+
+    return [{
+        key: 1,
+        amount: 50,
+        svg: { fill: '#a6f5c8' }
+    }, {
+        key: 1,
+        amount: 50,
+        svg: { fill: '#ede1bb' }
+    }]
+}
+
 export {
     totalMoney,
     buildTotalMoneyPerDay,
     totalMoneyPerDayFormatted,
     executeFilter,
-    buildTotalMoneyBaseOnTimeRange
+    buildTotalMoneyBaseOnTimeRange,
+    buildDataPieChart
 };

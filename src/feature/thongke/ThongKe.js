@@ -4,7 +4,7 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
-import PieChartComponent from './PieChartComponent';
+import PieChartComponent from '../../chart/PieChartComponent';
 
 const style = StyleSheet.create({
     container: {
