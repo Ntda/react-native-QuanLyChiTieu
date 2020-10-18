@@ -4,15 +4,10 @@ import {
     Text,
     StyleSheet,
     SafeAreaView,
-    TouchableHighlight,
     SectionList,
-    TouchableOpacity,
-    Dimensions
+    TouchableOpacity
 } from 'react-native';
 import { ICONTYPE } from './Constant';
-import { getRandomColor } from './ColorPicker';
-import { nanoid } from '@reduxjs/toolkit';
-import AvartarSelector from './AvartarSelector';
 import AddComponent from './AddComponent';
 import FilterTimeRangeComponent from './FilterTimeRangeComponent';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -21,7 +16,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import ItemCommon from './ItemCommon';
 import NoDataComponent from './NoDataComponent';
 
-const widthDimension = Dimensions.get('window').width;
 const style = StyleSheet.create({
     container: {
         flex: 1,
@@ -55,6 +49,9 @@ const ListViewComponent = props => {
         titleHeader,
         routeViewDetailPerDay,
         routeViewDetail,
+        messageNoData,
+        colorMoney,
+        prefixMoney,
         ...rest
     } = props;
 
@@ -70,6 +67,8 @@ const ListViewComponent = props => {
                 date={section.title}
                 title={item.title}
                 money={item.money}
+                colorMoney={colorMoney}
+                prefixMoney={prefixMoney}
                 content={item.content}
                 navigation={navigation}
             />
@@ -91,9 +90,9 @@ const ListViewComponent = props => {
                         <Text>
                             {section.title}
                             <Text style={{
-                                color: 'gray',
+                                color: colorMoney,
                                 fontSize: 19
-                            }}> ({section.totalMoneyDisplay})</Text>
+                            }}> ({prefixMoney}{section.totalMoneyDisplay})</Text>
                         </Text>
                     </View>
                     <View style={{
@@ -165,7 +164,7 @@ const ListViewComponent = props => {
             {model.entities.length > 0 ?
                 renderSectionList()
                 : <NoDataComponent
-                    message='Không có chi tiêu' />}
+                    message={messageNoData} />}
             {renderButtonFilter()}
             {renderButtonAdd()}
         </SafeAreaView>

@@ -21,7 +21,7 @@ const ChiTieuDetail = ({
         money,
     } = route.params;
 
-    useSetHeaderDetail(navigation);
+    useSetHeaderDetail(navigation,'Chi tiết');
 
     const appendMoneyToTitle = () => {
         return (

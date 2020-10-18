@@ -34,6 +34,9 @@ const ChiTieu = ({ navigation }) => {
     return (
         <ListViewComponent
             navigation={navigation}
+            messageNoData='Không có chi tiêu'
+            colorMoney='red'
+            prefixMoney='-'
             filterModel={filterChiTieuModel}
             route={STACKNAVIGATIONROUTE.themChiTieu}
             model={modelChiTieu}

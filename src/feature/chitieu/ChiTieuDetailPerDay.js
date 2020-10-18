@@ -59,6 +59,8 @@ const ChiTieuDetailPerDay = props => {
                 value: `- ${totalMoneyDisplay}`,
                 color: 'red'
             }}
+            colorMoney='red'
+            prefixMoney='-'
             title={title}
             dataListView={dataListView}
             routeViewDetail={STACKNAVIGATIONROUTE.viewDetailChiTieu}

@@ -28,6 +28,8 @@ const ItemCommon = props => {
         date,
         title,
         money,
+        colorMoney,
+        prefixMoney,
         content,
         navigation
     } = props;
@@ -73,8 +75,10 @@ const ItemCommon = props => {
                                     }, styles.item]}>
                                     {title}
                                 </Text>
-                                <Text style={styles.item}>
-                                    {money}
+                                <Text style={[styles.item, {
+                                    color: colorMoney
+                                }]}>
+                                    {prefixMoney}{money}
                                 </Text>
                                 <Text
                                     numberOfLines={2}

@@ -21,7 +21,7 @@ const ThuNhapDetail = ({
         money,
     } = route.params;
 
-    useSetHeaderDetail(navigation);
+    useSetHeaderDetail(navigation, 'Thu nhập');
 
     const appendMoneyToTitle = () => {
         return (

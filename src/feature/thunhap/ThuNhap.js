@@ -32,6 +32,9 @@ const ThuNhap = ({ navigation }) => {
     return (
         <ListViewComponent
             navigation={navigation}
+            messageNoData='Không có thu nhập'
+            colorMoney='green'
+            prefixMoney='+'
             filterModel={filterThuNhapModel}
             route={STACKNAVIGATIONROUTE.themThuNhap}
             model={modelThuNhap}

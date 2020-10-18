@@ -52,6 +52,8 @@ const ThuNhapDetailPerDay = props => {
     return (
         <DetailPerDay
             route={route}
+            colorMoney='green'
+            prefixMoney='+'
             navigation={navigation}
             dataPieChart={dataPieChart}
             ammount={{

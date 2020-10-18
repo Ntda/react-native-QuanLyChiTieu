@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-const useSetHeaderDetail = navigation => {
+const useSetHeaderDetail = (navigation, title) => {
     useEffect(() => {
         navigation.setOptions({
-            title: 'Chi tiết'
+            title
         });
     }, [navigation]);
 };

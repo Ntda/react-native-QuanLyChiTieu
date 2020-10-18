@@ -32,71 +32,30 @@ const styles = StyleSheet.create({
 
 const DetailPerDay = props => {
     const {
-        route,
+        colorMoney,
+        prefixMoney,
         navigation,
         dataPieChart,
-        ammount,
         title,
         dataListView,
         routeViewDetail
     } = props;
 
     //console.log('[params]: ' + JSON.stringify(route.params));
-    useSetHeaderDetail(navigation);
+    useSetHeaderDetail(navigation, title);
 
     const renderItemListView = ({
         item }) => {
         return (
             <ItemCommon
-            routeViewDetail={routeViewDetail}
-            date={title}
-            title={item.title}
-            money={item.money.substring(1)}
-            content={item.content}
-            navigation={navigation}/>
-            /*{ <TouchableHighlight
-                style={{
-                    padding: 10,
-                    margin: 5,
-                    borderRadius: 20
-                }}
-                onPress={() => navigation.navigate(routeViewDetail, {
-                    title: item.title,
-                    date: title,
-                    money: item.money.substring(1),
-                    content: item.content
-                })}
-                underlayColor='#e6f9ff'>
-                <View style={{
-                    flexDirection: 'row'
-                }}>
-                    <View style={{
-                        marginRight: 10,
-                        justifyContent: 'center'
-                    }}>
-                        <AvartarSelector
-                            title={item.title}
-                            color={getRandomColor()} />
-                    </View>
-                    <View>
-                        <Text
-                            numberOfLines={1}
-                            style={{
-                                fontSize: 21,
-                                width: widthDimension - 150
-                            }}>{item.title}</Text>
-                        <Text style={{
-                            color: ammount.color
-                        }}>{item.money}</Text>
-                        <Text
-                            numberOfLines={2}
-                            style={{
-                                width: widthDimension - 120,
-                                color: 'gray'
-                            }}>{item.content}</Text>
-                    </View>
-                </View>
-            </TouchableHighlight> }*/
+                colorMoney={colorMoney}
+                prefixMoney={prefixMoney}
+                routeViewDetail={routeViewDetail}
+                date={title}
+                title={item.title}
+                money={item.money.substring(1)}
+                content={item.content}
+                navigation={navigation} />
         )
     }
 
@@ -117,13 +76,6 @@ const DetailPerDay = props => {
                 borderRadius: 10,
                 marginTop: 40
             }}>
-                <View>
-                    <Text style={{
-                        color: 'gray',
-                        fontSize: 20
-                    }}>{title}
-                    </Text>
-                </View>
                 {renderListView()}
             </View>
         )
