@@ -16,7 +16,7 @@ const setItemChiTieu = createAsyncThunk(
     async (model, { getState }) => {
         const filterModel = getState().filter;
         const filterModelChiTieu = filterModel.chiTieu;
-        const result= await setItemToLocalStore(model, filterModelChiTieu);
+        const result = await setItemToLocalStore(model, filterModelChiTieu);
         return result;
     }
 );
@@ -34,7 +34,7 @@ const setItemThuNhap = createAsyncThunk(
     async (model, { getState }) => {
         const filterModel = getState().filter;
         const filterModelThuNhap = filterModel.thuNhap;
-        const result= await setItemToLocalStore(model, filterModelThuNhap);
+        const result = await setItemToLocalStore(model, filterModelThuNhap);
         return result;
     }
 );
@@ -66,9 +66,22 @@ const setItemToLocalStore = async (model, filter) => {
     });
     return executeFilter(newArray, filter);
 }
+
+const getDataByDate = async model => {
+    const { localStoreKey, date } = model;
+    const jsonValue = await AsyncStorage.getItem(localStoreKey);
+    let newArray = jsonValue
+        ? JSON.parse(jsonValue)
+        : [];
+    const result = newArray.find(f => isEqual(date, f.title));
+    return result
+        ? result
+        : { data: [] }
+}
 export {
     getItemChiTieu,
     setItemChiTieu,
     getItemThuNhap,
-    setItemThuNhap
+    setItemThuNhap,
+    getDataByDate
 }

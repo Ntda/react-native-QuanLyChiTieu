@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
@@ -6,18 +6,20 @@ import {
     SafeAreaView,
     TouchableHighlight,
     SectionList,
-    TouchableOpacity
+    TouchableOpacity,
+    Dimensions
 } from 'react-native';
-import { ICONTYPE, STACKNAVIGATIONROUTE } from './Constant';
+import { ICONTYPE } from './Constant';
 import { getRandomColor } from './ColorPicker';
 import { nanoid } from '@reduxjs/toolkit';
 import AvartarSelector from './AvartarSelector';
 import AddComponent from './AddComponent';
 import FilterTimeRangeComponent from './FilterTimeRangeComponent';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { Dimensions } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import ItemCommon from './ItemCommon';
+import NoDataComponent from './NoDataComponent';
 
 const widthDimension = Dimensions.get('window').width;
 const style = StyleSheet.create({
@@ -46,11 +48,13 @@ const style = StyleSheet.create({
 })
 
 const ListViewComponent = props => {
+    const [itemDeleted, setItemDeleted] = useState([]);
     const {
         navigation,
         model,
         titleHeader,
-        viewDetail,
+        routeViewDetailPerDay,
+        routeViewDetail,
         ...rest
     } = props;
 
@@ -61,70 +65,21 @@ const ListViewComponent = props => {
     }) => {
         //console.log('[Item]: ' + JSON.stringify(section));
         return (
-            <TouchableHighlight
-                style={{
-                    marginTop: 5,
-                    borderRadius: 20
-                }}
-                onPress={() => navigation.navigate(viewDetail, {
-                    ...item,
-                    date: section.title,
-                    tabType: rest.tabType
-                })}
-                underlayColor='#e6f9ff'>
-                <View
-                    key={nanoid()}
-                    style={style.row}>
-                    <View style={{
-                        flex: 1,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between'
-                    }}>
-                        <View>
-                            <View style={{
-                                flexDirection: 'row'
-                            }}>
-                                <View style={{
-                                    marginRight: 10,
-                                    justifyContent: 'center'
-                                }}>
-                                    <AvartarSelector
-                                        title={item.title}
-                                        color={getRandomColor()} />
-                                </View>
-                                <View>
-                                    <Text
-                                        numberOfLines={1}
-                                        style={[{
-                                            fontSize: 21,
-                                            width: widthDimension - 150
-                                        }, style.item]}>
-                                        {item.title}
-                                    </Text>
-                                    <Text style={style.item}>
-                                        {item.money}
-                                    </Text>
-                                    <Text
-                                        numberOfLines={2}
-                                        style={{
-                                            color: 'gray',
-                                            width: widthDimension - 90
-                                        }}>
-                                        {item.content}
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-            </TouchableHighlight >
+            <ItemCommon
+                routeViewDetail={routeViewDetail}
+                date={section.title}
+                title={item.title}
+                money={item.money}
+                content={item.content}
+                navigation={navigation}
+            />
         );
     }
 
     const renderSectionListHeader = ({ section }) => {
         return (
             <TouchableOpacity
-                onPress={() => navigation.navigate(STACKNAVIGATIONROUTE.viewDetailPerDay, { section })}>
+                onPress={() => navigation.navigate(routeViewDetailPerDay, { ...section })}>
                 <View style={[
                     style.sectionHeaderStyle,
                     style.row,
@@ -207,7 +162,10 @@ const ListViewComponent = props => {
             <Spinner
                 visible={model.loading}
                 style={style.spinnerTextStyle} />
-            {renderSectionList()}
+            {model.entities.length > 0 ?
+                renderSectionList()
+                : <NoDataComponent
+                    message='Không có chi tiêu' />}
             {renderButtonFilter()}
             {renderButtonAdd()}
         </SafeAreaView>

@@ -25,7 +25,9 @@ const ThuNhapDetail = ({
 
     const appendMoneyToTitle = () => {
         return (
-            <Text>{money}</Text>
+            <Text style={{
+                color: 'green'
+            }}>+{money}</Text>
         )
     }
     return (

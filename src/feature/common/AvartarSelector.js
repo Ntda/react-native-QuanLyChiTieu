@@ -4,6 +4,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const AvartarSelector = props => {
     const [displayAvatar, setDisplayAvatar] = useState(true);
+    const handleDisplayAvatar = canDisplay => {
+        console.log('[handleDisplayAvatar]: '+ canDisplay)
+        setDisplayAvatar(canDisplay);
+    }
     const renderAvatar = () => {
         return (
             <Avatar
@@ -12,7 +16,7 @@ const AvartarSelector = props => {
                 rounded
                 title={props.title.charAt(0).toUpperCase()}
                 activeOpacity={0.7}
-                onPress={() => setDisplayAvatar(false)}
+                onPress={() => handleDisplayAvatar(false)}
             />);
     }
     const renderCheckedIcon = () => {
@@ -23,13 +27,13 @@ const AvartarSelector = props => {
                 }}
                 name='checkmark-circle-outline'
                 size={45}
-                onPress={() => setDisplayAvatar(true)} />
+                onPress={() => handleDisplayAvatar(true)} />
         );
     }
 
     return (
         <>
-            { displayAvatar
+            {displayAvatar
                 ? renderAvatar()
                 : renderCheckedIcon()}
         </>

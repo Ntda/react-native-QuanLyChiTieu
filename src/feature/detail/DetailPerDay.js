@@ -2,14 +2,19 @@ import React from 'react';
 import {
     View,
     Text,
-    StyleSheet
+    StyleSheet,
+    FlatList,
+    TouchableHighlight,
+    Dimensions
 } from 'react-native';
 import PieChartComponent from '../../chart/PieChartComponent';
-import { useStore } from 'react-redux';
-import { buildDataPieChart } from '../common/commonHelper';
-import { getNumberFromString } from '../common/numberFormater';
 import useSetHeaderDetail from '../customHook/useSetHeaderDetail';
 import { CHART } from '../common/Constant';
+import AvartarSelector from '../common/AvartarSelector';
+import { getRandomColor } from '../common/ColorPicker';
+import ItemCommon from '../common/ItemCommon';
+
+const widthDimension = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {
@@ -18,97 +23,137 @@ const styles = StyleSheet.create({
     infoChart: {
         padding: 25,
         borderRadius: 15
+    },
+    chartDescription: {
+        width: 80,
+        height: 10,
     }
 })
 
-const DetailPerDay = ({
-    route,
-    navigation
-}) => {
+const DetailPerDay = props => {
     const {
-        money,
-    } = route.params;
+        route,
+        navigation,
+        dataPieChart,
+        ammount,
+        title,
+        dataListView,
+        routeViewDetail
+    } = props;
 
+    //console.log('[params]: ' + JSON.stringify(route.params));
     useSetHeaderDetail(navigation);
 
-    const renderChart = props => {
-        const { dataPieChart } = props;
-      /*   const state = store.getState();
-        const { thuNhap } = state;
-        const ammountThuNhap = thuNhap.totalMoneyBaseOnTimeRange;
-        const ammountChiTieu = getNumberFromString(money);
-        const dataPieChart = buildDataPieChart(ammountThuNhap, ammountChiTieu); */
+    const renderItemListView = ({
+        item }) => {
+        return (
+            <ItemCommon
+            routeViewDetail={routeViewDetail}
+            date={title}
+            title={item.title}
+            money={item.money.substring(1)}
+            content={item.content}
+            navigation={navigation}/>
+            /*{ <TouchableHighlight
+                style={{
+                    padding: 10,
+                    margin: 5,
+                    borderRadius: 20
+                }}
+                onPress={() => navigation.navigate(routeViewDetail, {
+                    title: item.title,
+                    date: title,
+                    money: item.money.substring(1),
+                    content: item.content
+                })}
+                underlayColor='#e6f9ff'>
+                <View style={{
+                    flexDirection: 'row'
+                }}>
+                    <View style={{
+                        marginRight: 10,
+                        justifyContent: 'center'
+                    }}>
+                        <AvartarSelector
+                            title={item.title}
+                            color={getRandomColor()} />
+                    </View>
+                    <View>
+                        <Text
+                            numberOfLines={1}
+                            style={{
+                                fontSize: 21,
+                                width: widthDimension - 150
+                            }}>{item.title}</Text>
+                        <Text style={{
+                            color: ammount.color
+                        }}>{item.money}</Text>
+                        <Text
+                            numberOfLines={2}
+                            style={{
+                                width: widthDimension - 120,
+                                color: 'gray'
+                            }}>{item.content}</Text>
+                    </View>
+                </View>
+            </TouchableHighlight> }*/
+        )
+    }
+
+    const renderListView = () => {
+        console.log('[dataListView]: ' + JSON.stringify(dataListView))
+        return (
+            <FlatList
+                data={dataListView}
+                renderItem={renderItemListView} />
+        )
+    }
+
+    const renderDetail = () => {
+        return (
+            <View style={{
+                padding: 10,
+                backgroundColor: 'white',
+                borderRadius: 10,
+                marginTop: 40
+            }}>
+                <View>
+                    <Text style={{
+                        color: 'gray',
+                        fontSize: 20
+                    }}>{title}
+                    </Text>
+                </View>
+                {renderListView()}
+            </View>
+        )
+    }
+    const renderChart = () => {
         return (
             <View>
+                <Text>Chi tiêu: <View style={[
+                    styles.chartDescription, {
+                        backgroundColor: CHART.COLORCHITIEU
+                    }]} />
+                </Text>
+                <Text style={{
+                    marginTop: 5,
+                }}>Còn lại:  <View style={[
+                    styles.chartDescription, {
+                        backgroundColor: CHART.COLORCONLAI
+                    }]} />
+                </Text>
                 <PieChartComponent
                     data={dataPieChart} />
-                <Text style={{
-                    backgroundColor: 'red',
-                    paddingTop: 20,
-                    textAlign: 'center',
-                    color: 'gray',
-                    fontSize: 20
-                }}>Số dư khả dụng</Text>
-                <Text style={{
-                    backgroundColor: 'red',
-                    textAlign: 'center',
-                    color: 'black',
-                    fontSize: 25,
-                    fontWeight: 'bold'
-                }}>Số dư khả dụng</Text>
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-around'
-                }}>
-                    <Text
-                        style={[styles.infoChart, { backgroundColor: CHART.COLORCHITIEU }]}
-                    >Khả dụng</Text>
-                    <Text>Khả dụng</Text>
-                </View>
             </View>
         );
-    }
-
-    const appendMoneyToTitle = () => {
-        return (
-            <Text style={{
-                color: 'red'
-            }}>-{money}</Text>
-        )
-    }
-
-    const renderTitle = () => {
-        return (
-            <View>
-                <Text style={[styles.title]}>
-                    {title}{' '}
-                    <View style={styles.date}>
-                        <Text>{date}</Text>
-                    </View>
-                    <Text>{' '}</Text>
-                    {props.children}
-                </Text>
-            </View>
-        )
-    }
-
-    const renderContent = () => {
-        return (
-            <View style={[styles.description]}>
-                <Text style={{
-                    color: 'gray',
-                    fontSize: 18
-                }}>Nội dung:</Text>
-                <Text style={styles.content}>
-                    {content}
-                </Text>
-            </View>
-        )
     }
 
     return (
         <View style={styles.container}>
             {renderChart()}
+            {props.children}
+            {renderDetail()}
         </View>
     );
 };

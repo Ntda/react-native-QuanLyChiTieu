@@ -1,24 +1,35 @@
 import React from 'react';
 import { PieChart } from 'react-native-svg-charts';
 import { Text } from 'react-native-svg';
+import { commaFormatted } from '../feature/common/numberFormater';
+import { isEqual } from 'lodash';
 
-const PieChartComponent = ({data}) => {
+const PieChartComponent = ({ data, onRenderLabel }) => {
     const Labels = ({ slices }) => {
         return slices.map((slice, index) => {
             const { pieCentroid, data } = slice;
+            const label = isEqual(data.key, 'chiTieu')
+                ? {
+                    color: 'red',
+                    symbol: '-'
+                }
+                : {
+                    color: 'blue',
+                    symbol: ''
+                };
             return (
                 <Text
                     key={index}
                     x={pieCentroid[0]}
                     y={pieCentroid[1]}
-                    fill='white'
-                    textAnchor={'middle'}
-                    alignmentBaseline={'middle'}
+                    fill={label.color}
+                    textAnchor='middle'
+                    alignmentBaseline='middle'
                     fontSize={17}
                     stroke={'black'}
                     strokeWidth={0.2}
                 >
-                    {`${data.amount}%`}
+                    {`${label.symbol}${commaFormatted(data.amount)} đ`}
                 </Text>
             )
         })
@@ -29,7 +40,8 @@ const PieChartComponent = ({data}) => {
         valueAccessor={({ item }) => item.amount}
         data={data}
         spacing={0}
-        outerRadius={'95%'}
+        innerRadius='50%'
+        outerRadius='100%'
     >
         <Labels />
     </PieChart>

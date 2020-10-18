@@ -20,10 +20,10 @@ const STACKNAVIGATIONROUTE = {
     themThuNhap: 'ThemThuNhap',
     filterChiTieu: 'filterChiTieu',
     filterThuNhap: 'filterThuNhap',
-    chitiet: 'ChiTiet',
-    viewDetailChiTieu: 'viewDetailChiTieu',
+    viewDetailChiTieu: 'viewDetailchiTieu',
     viewDetailThuNhap: 'viewDetailThuNhap',
-    viewDetailPerDay: 'viewDtailPerDay'
+    viewDetailChiTieuPerDay: 'viewDetailChiTieuPerDay',
+    viewDetailThuNhapPerDay: 'viewDetailThuNhapPerDay'
 }
 
 const TIMERANGEROUTE = {
@@ -64,8 +64,8 @@ const VIEWDETAIL = {
 }
 
 const CHART = {
-    COLORCHITIEU: '#eb0e4d',
-    COLORCONLAI: 'green',
+    COLORCHITIEU: 'gray',
+    COLORCONLAI: 'tomato',
 
 }
 export {

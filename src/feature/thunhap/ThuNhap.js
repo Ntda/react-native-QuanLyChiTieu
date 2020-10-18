@@ -38,7 +38,8 @@ const ThuNhap = ({ navigation }) => {
             tabType={NAVIGATIONTITLE.thuNhap}
             titleHeader={THEMTHUNHAPTITLE}
             filterRoute={STACKNAVIGATIONROUTE.filterThuNhap}
-            viewDetail={STACKNAVIGATIONROUTE.viewDetailThuNhap}
+            routeViewDetailPerDay={STACKNAVIGATIONROUTE.viewDetailThuNhapPerDay}
+            routeViewDetail={STACKNAVIGATIONROUTE.viewDetailThuNhap}
         />
     )
 }

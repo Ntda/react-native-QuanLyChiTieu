@@ -37,7 +37,7 @@ const FilterTimeRangeComponent = props => {
         filterRoute,
         ...rest
     } = props;
-    console.log('[filterChiTieuModel]: ' + JSON.stringify(rest));
+    //console.log('[filterChiTieuModel]: ' + JSON.stringify(rest));
     return (
         <View style={styles.container}>
             <TouchableOpacity

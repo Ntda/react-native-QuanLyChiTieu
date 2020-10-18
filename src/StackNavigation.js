@@ -8,6 +8,8 @@ import ThemThuNhap from './feature/thunhap/ThemThuNhap';
 import FilterThuNhap from './feature/thunhap/FilterThuNhap';
 import ChiTieuDetail from './feature/chitieu/DetailChiTieu';
 import ThuNhapDetail from './feature/thunhap/DetailThuNhap';
+import ChiTieuDetailPerDay from './feature/chitieu/ChiTieuDetailPerDay';
+import ThuNhapDetailPerDay from './feature/thunhap/ThuNhapDetailPerDay';
 
 const Stack = createStackNavigator();
 const StackNavigation = () => {
@@ -30,6 +32,12 @@ const StackNavigation = () => {
             <Stack.Screen
                 name={STACKNAVIGATIONROUTE.filterThuNhap}
                 component={FilterThuNhap} />
+            <Stack.Screen
+                name={STACKNAVIGATIONROUTE.viewDetailChiTieuPerDay}
+                component={ChiTieuDetailPerDay} />
+            <Stack.Screen
+                name={STACKNAVIGATIONROUTE.viewDetailThuNhapPerDay}
+                component={ThuNhapDetailPerDay} />
             <Stack.Screen
                 name={STACKNAVIGATIONROUTE.viewDetailChiTieu}
                 component={ChiTieuDetail} />

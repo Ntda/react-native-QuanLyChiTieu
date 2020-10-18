@@ -3,6 +3,7 @@ import { LOCALSTOREKEY, ICONTYPE, NAVIGATIONTITLE, STACKNAVIGATIONROUTE, THEMCHI
 import { useDispatch, useSelector } from 'react-redux';
 import { getItemChiTieu } from '../common/localStoreHelper';
 import ListViewComponent from '../common/ListViewComponent';
+import NoDataComponent from '../common/NoDataComponent';
 
 const ChiTieu = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -39,7 +40,9 @@ const ChiTieu = ({ navigation }) => {
             tabType={NAVIGATIONTITLE.chiTieu}
             titleHeader={THEMCHITIEUTITLE}
             filterRoute={STACKNAVIGATIONROUTE.filterChiTieu}
-            viewDetail={STACKNAVIGATIONROUTE.viewDetailChiTieu} />
+            routeViewDetailPerDay={STACKNAVIGATIONROUTE.viewDetailChiTieuPerDay}
+            routeViewDetail={STACKNAVIGATIONROUTE.viewDetailChiTieu}
+        />
     )
 }
 
