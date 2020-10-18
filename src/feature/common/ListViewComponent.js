@@ -109,7 +109,7 @@ const ListViewComponent = props => {
                         <MaterialIcons
                             name='navigate-next'
                             size={30}
-                            onPress={() => { }} />
+                            onPress={() => navigation.navigate(routeViewDetailPerDay, { ...section })} />
                     </View>
                 </View>
             </TouchableOpacity >
