@@ -21,7 +21,11 @@ const ThuNhapDetail = ({
         money,
     } = route.params;
 
-    useSetHeaderDetail(navigation, 'Thu nhập');
+    const handleDeleteChiTieu = () => {
+        navigation.popToTop();
+    }
+
+    useSetHeaderDetail(navigation, 'Thu nhập', () => handleDeleteChiTieu);
 
     const appendMoneyToTitle = () => {
         return (

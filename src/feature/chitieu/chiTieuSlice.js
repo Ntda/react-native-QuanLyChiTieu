@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { compareTime } from '../common/dateTimeHelper';
-import { getItemChiTieu, setItemChiTieu } from '../common/localStoreHelper';
+import {
+    getItemChiTieu,
+    setItemChiTieu,
+    deleteItemChiTieu
+} from '../common/localStoreHelper';
 import { buildTotalMoneyPerDay, totalMoneyPerDayFormatted, buildTotalMoneyBaseOnTimeRange } from '../common/commonHelper';
 import { commaFormatted } from '../common/numberFormater';
 
@@ -30,7 +34,7 @@ const chiTieuSlice = createSlice({
             state.entities = [...[], ...action.payload];
             state.totalMoneyBaseOnTimeRange = buildTotalMoneyBaseOnTimeRange(action.payload);
             state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
-            console.log('[totalMoneyBaseOnTimeRange]: '+ JSON.stringify(state.totalMoneyBaseOnTimeRangeDisplay))
+            console.log('[totalMoneyBaseOnTimeRange]: ' + JSON.stringify(state.totalMoneyBaseOnTimeRangeDisplay))
         },
         [getItemChiTieu.rejected]: state => {
             state.loading = false;
@@ -50,9 +54,28 @@ const chiTieuSlice = createSlice({
             state.entities = [...[], ...action.payload];
             state.totalMoneyBaseOnTimeRange = buildTotalMoneyBaseOnTimeRange(action.payload);
             state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
-            console.log('[totalMoneyBaseOnTimeRange]: '+ JSON.stringify(state.totalMoneyBaseOnTimeRangeDisplay))
+            console.log('[totalMoneyBaseOnTimeRange]: ' + JSON.stringify(state.totalMoneyBaseOnTimeRangeDisplay))
         },
         [setItemChiTieu.rejected]: state => {
+            state.loading = false;
+        },
+        [deleteItemChiTieu.pending]: state => {
+            state.loading = true;
+        },
+        [deleteItemChiTieu.fulfilled]: (state, action) => {
+            state.loading = false;
+            action.payload.sort((src, dest) => {
+                const dateTimeSource = Date.parse(src.title);
+                const dateTimeDest = Date.parse(dest.title);
+                return compareTime(dateTimeSource, dateTimeDest);
+            });
+            buildTotalMoneyPerDay(action.payload);
+            totalMoneyPerDayFormatted(action.payload);
+            state.entities = [...[], ...action.payload];
+            state.totalMoneyBaseOnTimeRange = buildTotalMoneyBaseOnTimeRange(action.payload);
+            state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
+        },
+        [deleteItemChiTieu.rejected]: state => {
             state.loading = false;
         }
     }

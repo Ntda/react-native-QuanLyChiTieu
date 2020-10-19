@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-community/async-storage';
-import { isEqual } from 'lodash';
+import { isEqual, cloneDeep } from 'lodash';
 import { executeFilter } from './commonHelper';
 
 const getItemChiTieu = createAsyncThunk(
@@ -38,6 +38,52 @@ const setItemThuNhap = createAsyncThunk(
         return result;
     }
 );
+
+const deleteItemChiTieu = createAsyncThunk(
+    'delete/itemChiTieu',
+    async (model, { getState }) => {
+        console.log('[delete/itemChiTieu]: START');
+        const filterModel = getState().filter;
+        const filterModelChiTieu = filterModel.chiTieu;
+        const { date, localStoreKey, dataId } = model;
+        try {
+
+            const jsonValue = await AsyncStorage.getItem(localStoreKey);
+            let newArray = jsonValue
+                ? JSON.parse(jsonValue)
+                : [];
+                console.log('[delete/itemChiTieu]: '+ JSON.stringify(newArray));
+                console.log('[delete/itemChiTieu]:date: '+ date);
+            let indexitemDeleted;
+            for (let i = 0; i < newArray.length; i++) {
+                if (isEqual(newArray[i].title.trim(), date.trim()))
+                    indexitemDeleted = i;
+                break;
+            }
+
+            console.log('[delete/itemChiTieu]:item: '+ JSON.stringify(indexitemDeleted));
+
+            let { data } = newArray[indexitemDeleted];
+            newArray[indexitemDeleted].data = data.filter(d => !isEqual(d.id, dataId));
+
+            
+
+            await AsyncStorage.setItem(localStoreKey, JSON.stringify(newArray), e => {
+                console.log('[delete/itemChiTieu->Error: ]' + JSON.stringify(e));
+            });
+            const getDataModel = {
+                localStoreKey,
+                ...filterModelChiTieu
+            };
+
+            const result = executeFilter(newArray, getDataModel);
+            console.log('[delete/itemChiTieu]: ' + result)
+            return result;
+        } catch (err) {
+            console.log('[[delete/itemChiTieu]err: ' + err.message)
+        }
+    }
+)
 
 const getItemFromLocalStorage = async model => {
     const {
@@ -83,5 +129,6 @@ export {
     setItemChiTieu,
     getItemThuNhap,
     setItemThuNhap,
-    getDataByDate
+    getDataByDate,
+    deleteItemChiTieu
 }

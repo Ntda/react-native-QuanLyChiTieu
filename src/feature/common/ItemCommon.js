@@ -31,7 +31,8 @@ const ItemCommon = props => {
         colorMoney,
         prefixMoney,
         content,
-        navigation
+        navigation,
+        id
     } = props;
     return (
         <TouchableHighlight
@@ -44,6 +45,7 @@ const ItemCommon = props => {
                 title,
                 date,
                 money,
+                id,
                 content
             })}
             underlayColor='#e6f9ff'>

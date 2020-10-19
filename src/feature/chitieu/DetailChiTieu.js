@@ -6,6 +6,9 @@ import {
 } from 'react-native';
 import useSetHeaderDetail from '../customHook/useSetHeaderDetail';
 import Detail from '../detail/Detail';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteItemChiTieu } from '../common/localStoreHelper';
+import { LOCALSTOREKEY } from '../common/Constant';
 
 const styles = StyleSheet.create({
     container: {
@@ -17,11 +20,23 @@ const ChiTieuDetail = ({
     route,
     navigation
 }) => {
+    const dispatch = useDispatch();
     const {
         money,
+        date,
+        id
     } = route.params;
+    const handleDeleteChiTieu = async () => {
+        const deleteModel = {
+            date,
+            dataId: id,
+            localStoreKey: LOCALSTOREKEY.CHITIEU
+        }
+        await dispatch(deleteItemChiTieu(deleteModel));
+        navigation.popToTop();
+    }
 
-    useSetHeaderDetail(navigation,'Chi tiết');
+    useSetHeaderDetail(navigation, 'Chi tiêu', handleDeleteChiTieu);
 
     const appendMoneyToTitle = () => {
         return (

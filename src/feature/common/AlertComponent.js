@@ -8,13 +8,12 @@ const AlertComponent = ({
     confirmButtonColor }) => {
     return (<AwesomeAlert
         show={true}
-        showProgress
         useNativeDriver
-        showProgress
         message={message}
         closeOnTouchOutside
         closeOnHardwareBackPress
         showConfirmButton
+        showCancelButton
         confirmText={confirmText}
         confirmButtonColor={confirmButtonColor}
         onConfirmPressed={onCloseAlert}

@@ -71,6 +71,7 @@ const ListViewComponent = props => {
                 prefixMoney={prefixMoney}
                 content={item.content}
                 navigation={navigation}
+                id={item.id}
             />
         );
     }
