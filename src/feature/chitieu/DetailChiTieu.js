@@ -9,6 +9,7 @@ import Detail from '../detail/Detail';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteItemChiTieu } from '../common/localStoreHelper';
 import { LOCALSTOREKEY } from '../common/Constant';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const styles = StyleSheet.create({
     container: {
@@ -36,7 +37,18 @@ const ChiTieuDetail = ({
         navigation.popToTop();
     }
 
-    useSetHeaderDetail(navigation, 'Chi tiêu', handleDeleteChiTieu);
+    const deleteIcon = <AntDesign
+        name='delete'
+        size={25} />
+
+    const headerModel ={
+        navigation,
+        title: 'Chi tiêu',
+        onDelete: handleDeleteChiTieu,
+        children: deleteIcon
+    }
+
+    useSetHeaderDetail(headerModel);
 
     const appendMoneyToTitle = () => {
         return (

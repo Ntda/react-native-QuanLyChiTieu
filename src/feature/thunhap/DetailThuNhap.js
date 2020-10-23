@@ -25,7 +25,14 @@ const ThuNhapDetail = ({
         navigation.popToTop();
     }
 
-    useSetHeaderDetail(navigation, 'Thu nhập', () => handleDeleteChiTieu);
+    const headerModel ={
+        navigation,
+        title: 'Thu nhập',
+        onDelete: handleDeleteChiTieu,
+        children: undefined
+    }
+
+    useSetHeaderDetail(headerModel);
 
     const appendMoneyToTitle = () => {
         return (

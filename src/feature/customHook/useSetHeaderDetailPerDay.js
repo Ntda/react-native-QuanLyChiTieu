@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-
-const useSetHeaderDetail = headerModel => {
-    const {
-        navigation,
-        title,
-        onDelete,
-        children
-    } = headerModel;
+const useSetHeaderDetailPerDay = (
+    navigation,
+    title,
+    onDelete,
+    children) => {
     useEffect(() => {
         navigation.setOptions({
             title,
@@ -18,12 +16,15 @@ const useSetHeaderDetail = headerModel => {
                         marginRight: 5
                     }}
                     onPress={() => onDelete()}>
-                    {children}
+                        
+                    <AntDesign
+                        name='delete'
+                        size={25} />
                 </TouchableOpacity>
             )
         });
-    }, [headerModel]);
+    }, [navigation]);
 };
 
 
-export default useSetHeaderDetail;
+export default useSetHeaderDetailPerDay;

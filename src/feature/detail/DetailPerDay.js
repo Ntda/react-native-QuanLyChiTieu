@@ -41,8 +41,15 @@ const DetailPerDay = props => {
         routeViewDetail
     } = props;
 
+    const headerModel ={
+        navigation,
+        title,
+        onDelete: undefined,
+        children: undefined
+    }
+
     //console.log('[params]: ' + JSON.stringify(route.params));
-    useSetHeaderDetail(navigation, title);
+    useSetHeaderDetail(headerModel);
 
     const renderItemListView = ({
         item }) => {
