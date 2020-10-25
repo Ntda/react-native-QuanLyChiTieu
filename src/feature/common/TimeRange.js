@@ -23,7 +23,8 @@ const TimeRange = props => {
     const {
         route,
         navigation,
-        onSetFilter
+        onSetFilter,
+        checkboxTitle
     } = props;
     const { filterModel, tabType } = route.params;
     console.log('[filterModel]: ' + JSON.stringify(filterModel));
@@ -103,7 +104,7 @@ const TimeRange = props => {
                 uncheckedCheckBoxColor='gray'
                 onClick={() => setChecked(!checked)}
                 isChecked={checked}
-                rightText='Chi tiêu hôm nay'
+                rightText={checkboxTitle}
             />
         )
     }

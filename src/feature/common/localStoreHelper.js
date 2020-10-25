@@ -39,6 +39,51 @@ const setItemThuNhap = createAsyncThunk(
     }
 );
 
+const deleteItemThuNhap = createAsyncThunk(
+    'delete/itemThuNhap',
+    async (model, { getState }) => {
+        console.log('[delete/itemThuNhap]: START');
+        const filterModel = getState().filter;
+        const filterModelThuNhap = filterModel.thuNhap;
+        const { date, localStoreKey, dataId } = model;
+        try {
+
+            const jsonValue = await AsyncStorage.getItem(localStoreKey);
+            let newArray = jsonValue
+                ? JSON.parse(jsonValue)
+                : [];
+
+            let indexitemDeleted;
+            for (let i = 0; i < newArray.length; i++) {
+                console.log('[delete/itemThuNhap]:title: ' + newArray[i].title);
+                if (isEqual(newArray[i].title, date)) {
+                    indexitemDeleted = i;
+                    break;
+                }
+            }
+
+            let { data } = newArray[indexitemDeleted];
+            newArray[indexitemDeleted].data = data.filter(d => !isEqual(d.id, dataId));
+
+            if (!newArray[indexitemDeleted].data.length) {
+                newArray = newArray.filter((_, index) => !isEqual(index, indexitemDeleted));
+            }
+
+            await AsyncStorage.setItem(localStoreKey, JSON.stringify(newArray), e => {
+                console.log('[delete/itemThuNhap->Error: ]' + JSON.stringify(e));
+            });
+            const getDataModel = {
+                localStoreKey,
+                ...filterModelThuNhap
+            };
+
+            return executeFilter(newArray, getDataModel);
+        } catch (err) {
+            console.log('[delete/itemThuNhap]err: ' + err.message)
+        }
+    }
+)
+
 const deleteItemChiTieu = createAsyncThunk(
     'delete/itemChiTieu',
     async (model, { getState }) => {
@@ -52,21 +97,22 @@ const deleteItemChiTieu = createAsyncThunk(
             let newArray = jsonValue
                 ? JSON.parse(jsonValue)
                 : [];
-                console.log('[delete/itemChiTieu]: '+ JSON.stringify(newArray));
-                console.log('[delete/itemChiTieu]:date: '+ date);
+
             let indexitemDeleted;
             for (let i = 0; i < newArray.length; i++) {
-                if (isEqual(newArray[i].title.trim(), date.trim()))
+                console.log('[delete/itemChiTieu]:title: ' + newArray[i].title);
+                if (isEqual(newArray[i].title, date)) {
                     indexitemDeleted = i;
-                break;
+                    break;
+                }
             }
-
-            console.log('[delete/itemChiTieu]:item: '+ JSON.stringify(indexitemDeleted));
 
             let { data } = newArray[indexitemDeleted];
             newArray[indexitemDeleted].data = data.filter(d => !isEqual(d.id, dataId));
 
-            
+            if (!newArray[indexitemDeleted].data.length) {
+                newArray = newArray.filter((_, index) => !isEqual(index, indexitemDeleted));
+            }
 
             await AsyncStorage.setItem(localStoreKey, JSON.stringify(newArray), e => {
                 console.log('[delete/itemChiTieu->Error: ]' + JSON.stringify(e));
@@ -76,11 +122,9 @@ const deleteItemChiTieu = createAsyncThunk(
                 ...filterModelChiTieu
             };
 
-            const result = executeFilter(newArray, getDataModel);
-            console.log('[delete/itemChiTieu]: ' + result)
-            return result;
+            return executeFilter(newArray, getDataModel);
         } catch (err) {
-            console.log('[[delete/itemChiTieu]err: ' + err.message)
+            console.log('[delete/itemChiTieu]err: ' + err.message)
         }
     }
 )
@@ -130,5 +174,6 @@ export {
     getItemThuNhap,
     setItemThuNhap,
     getDataByDate,
-    deleteItemChiTieu
+    deleteItemChiTieu,
+    deleteItemThuNhap
 }

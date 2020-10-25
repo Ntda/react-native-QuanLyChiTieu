@@ -1,11 +1,35 @@
 import React, { useState } from 'react';
 import { Avatar } from "react-native-elements";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import CheckBox from 'react-native-check-box';
+import { Image } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { NAVIGATIONTITLE } from './Constant';
+import { setSelectedItemChiTieu, setSelectedItemThuNhap } from '../delete/deleteSlice';
 
 const AvartarSelector = props => {
+    const {
+        tabType,
+        id
+    } = props;
+    const dispatch = useDispatch();
+
     const [displayAvatar, setDisplayAvatar] = useState(true);
+
     const handleDisplayAvatar = canDisplay => {
-        console.log('[handleDisplayAvatar]: '+ canDisplay)
+        console.log('[handleDisplayAvatar]: ' + canDisplay)
+        const payload = {
+            dataId: id,
+            selected: !canDisplay
+        };
+        switch (tabType) {
+            case NAVIGATIONTITLE.chiTieu:
+                dispatch(setSelectedItemChiTieu(payload));
+                break;
+            case NAVIGATIONTITLE.thuNhap:
+                dispatch(setSelectedItemThuNhap(payload))
+                break;
+        }
+
         setDisplayAvatar(canDisplay);
     }
     const renderAvatar = () => {
@@ -21,13 +45,12 @@ const AvartarSelector = props => {
     }
     const renderCheckedIcon = () => {
         return (
-            <Ionicons
-                style={{
-                    color: 'tomato'
-                }}
-                name='checkmark-circle-outline'
-                size={45}
-                onPress={() => handleDisplayAvatar(true)} />
+            <CheckBox
+                checkedCheckBoxColor='#1F85DE'
+                onClick={() => handleDisplayAvatar(true)}
+                isChecked
+                checkedImage={<Image source={require('../../image/check.png')} />}
+            />
         );
     }
 

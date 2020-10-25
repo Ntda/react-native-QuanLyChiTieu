@@ -15,6 +15,7 @@ const FilterThuNhap = ({ route, navigation }) => {
             route={route}
             navigation={navigation}
             onSetFilter={handleSetFilter}
+            checkboxTitle='Thu nhập hôm nay'
         />
     );
 };

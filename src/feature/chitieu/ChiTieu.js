@@ -27,7 +27,7 @@ const ChiTieu = ({ navigation }) => {
     useEffect(() => {
         navigation.setOptions({
             title: NAVIGATIONTITLE.chiTieu,
-            tabBarBadge: modelChiTieu.totalMoneyBaseOnTimeRangeDisplay
+            tabBarBadge: `- ${modelChiTieu.totalMoneyBaseOnTimeRangeDisplay}`
         });
     }, [modelChiTieu.totalMoneyBaseOnTimeRangeDisplay]);
 

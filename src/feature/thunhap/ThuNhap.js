@@ -25,7 +25,7 @@ const ThuNhap = ({ navigation }) => {
     useEffect(() => {
         navigation.setOptions({
             title: NAVIGATIONTITLE.thuNhap,
-            tabBarBadge: modelThuNhap.totalMoneyBaseOnTimeRangeDisplay
+            tabBarBadge: `+ ${modelThuNhap.totalMoneyBaseOnTimeRangeDisplay}`
         });
     }, [modelThuNhap.totalMoneyBaseOnTimeRangeDisplay]);
 

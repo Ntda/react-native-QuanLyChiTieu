@@ -32,7 +32,8 @@ const ItemCommon = props => {
         prefixMoney,
         content,
         navigation,
-        id
+        id,
+        tabType
     } = props;
     return (
         <TouchableHighlight
@@ -65,8 +66,11 @@ const ItemCommon = props => {
                                 justifyContent: 'center'
                             }}>
                                 <AvartarSelector
+                                    tabType={tabType}
+                                    id={id}
                                     title={title}
-                                    color={getRandomColor()} />
+                                    color={getRandomColor()}
+                                />
                             </View>
                             <View>
                                 <Text

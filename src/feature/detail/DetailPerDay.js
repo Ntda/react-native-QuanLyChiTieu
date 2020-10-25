@@ -62,7 +62,8 @@ const DetailPerDay = props => {
                 title={item.title}
                 money={item.money.substring(1)}
                 content={item.content}
-                navigation={navigation} />
+                navigation={navigation}
+                id={item.id} />
         )
     }
 

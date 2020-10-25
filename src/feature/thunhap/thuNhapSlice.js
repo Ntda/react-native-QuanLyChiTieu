@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { compareTime } from '../common/dateTimeHelper';
-import { getItemThuNhap, setItemThuNhap } from '../common/localStoreHelper';
+import { getItemThuNhap, setItemThuNhap, deleteItemThuNhap } from '../common/localStoreHelper';
 import {
     buildTotalMoneyPerDay,
     totalMoneyPerDayFormatted,
@@ -48,7 +48,7 @@ const thuNhapSlice = createSlice({
                 const dateTimeSource = Date.parse(src.title);
                 const dateTimeDest = Date.parse(dest.title);
                 return compareTime(dateTimeSource, dateTimeDest);
-            });
+            }); 
             buildTotalMoneyPerDay(action.payload);
             totalMoneyPerDayFormatted(action.payload);
             state.entities = [...[], ...action.payload];
@@ -57,6 +57,25 @@ const thuNhapSlice = createSlice({
             console.log('[totalMoneyBaseOnTimeRange]: '+ JSON.stringify(state.totalMoneyBaseOnTimeRangeDisplay))
         },
         [setItemThuNhap.rejected]: state => {
+            state.loading = false;
+        },
+        [deleteItemThuNhap.pending]: state => {
+            state.loading = true;
+        },
+        [deleteItemThuNhap.fulfilled]: (state, action) => {
+            state.loading = false;
+            action.payload.sort((src, dest) => {
+                const dateTimeSource = Date.parse(src.title);
+                const dateTimeDest = Date.parse(dest.title);
+                return compareTime(dateTimeSource, dateTimeDest);
+            });
+            buildTotalMoneyPerDay(action.payload);
+            totalMoneyPerDayFormatted(action.payload);
+            state.entities = [...[], ...action.payload];
+            state.totalMoneyBaseOnTimeRange = buildTotalMoneyBaseOnTimeRange(action.payload);
+            state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
+        },
+        [deleteItemThuNhap.rejected]: state => {
             state.loading = false;
         }
     }

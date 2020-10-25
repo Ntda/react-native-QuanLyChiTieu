@@ -5,12 +5,12 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
-import IconSelector from './IconSelector';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        bottom: 50,
+        bottom: 96,
         right: 10,
         backgroundColor: 'white',
         borderWidth: 1,
@@ -29,35 +29,30 @@ const styles = StyleSheet.create({
     }
 })
 
-const FilterTimeRangeComponent = props => {
-    const {
-        navigation,
-        iconType,
-        filterRoute,
-        ...rest
-    } = props;
-    //console.log('[filterChiTieuModel]: ' + JSON.stringify(rest));
+const DeleteManyComponent = ({
+    onDeleteManyItem,
+    totalItem
+}) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity
                 style={{
                     flexDirection: 'row'
                 }}
-                onPress={() => navigation.navigate(filterRoute, { ...rest })}
+                onPress={onDeleteManyItem}
             >
-                <IconSelector
-                    type={iconType}
-                />
+                <AntDesign
+                    name='delete'
+                    size={25} />
                 <Text style={{
-                    color: 'red',
-                    fontSize: 15,
+                    fontSize: 20,
                     fontFamily: 'Times'
                 }}>
-                    Lọc
+                    {' '}({totalItem})
                 </Text>
             </TouchableOpacity>
         </View >
     );
 };
 
-export default FilterTimeRangeComponent;
+export default DeleteManyComponent;

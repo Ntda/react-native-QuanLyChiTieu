@@ -15,6 +15,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ItemCommon from './ItemCommon';
 import NoDataComponent from './NoDataComponent';
+import deleteManyFactory from './deleteManyFactory';
 
 const style = StyleSheet.create({
     container: {
@@ -72,6 +73,7 @@ const ListViewComponent = props => {
                 content={item.content}
                 navigation={navigation}
                 id={item.id}
+                tabType={rest.tabType}
             />
         );
     }
@@ -139,6 +141,8 @@ const ListViewComponent = props => {
         )
     }
 
+    const renderDeleteMany = () => deleteManyFactory(rest.tabType);
+
     const renderButtonAdd = () => {
         return (
             <AddComponent
@@ -166,6 +170,7 @@ const ListViewComponent = props => {
                 renderSectionList()
                 : <NoDataComponent
                     message={messageNoData} />}
+            {renderDeleteMany()}
             {renderButtonFilter()}
             {renderButtonAdd()}
         </SafeAreaView>

@@ -16,6 +16,7 @@ const FilterChiTieu = ({ route, navigation }) => {
             route={route}
             navigation={navigation}
             onSetFilter={handleSetFilter}
+            checkboxTitle='Chi tiêu hôm nay'
         />
     );
 };

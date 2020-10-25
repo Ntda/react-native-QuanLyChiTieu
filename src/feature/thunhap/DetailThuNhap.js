@@ -4,8 +4,10 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
-import useSetHeaderDetail from '../customHook/useSetHeaderDetail';
 import Detail from '../detail/Detail';
+import useDeleteDetail from '../customHook/useDeleteDetail';
+import { LOCALSTOREKEY } from '../common/Constant';
+import { deleteItemThuNhap } from '../common/localStoreHelper';
 
 const styles = StyleSheet.create({
     container: {
@@ -19,20 +21,24 @@ const ThuNhapDetail = ({
 }) => {
     const {
         money,
+        date,
+        id
     } = route.params;
 
-    const handleDeleteChiTieu = () => {
-        navigation.popToTop();
-    }
-
-    const headerModel ={
+    const propsDelete = {
+        date,
+        dataId: id,
+        localStoreKey: LOCALSTOREKEY.THUNHAP,
+        action: deleteItemThuNhap,
         navigation,
-        title: 'Thu nhập',
-        onDelete: handleDeleteChiTieu,
-        children: undefined
+        message: 'Xoá thu nhập',
+        buttonTextCancel: 'Cancel',
+        styleButtonCancel: 'cancel',
+        buttonTextOK: 'Ok',
+        styleButtonOK: 'ok',
+        titleHeader: 'Thu nhập'
     }
-
-    useSetHeaderDetail(headerModel);
+    useDeleteDetail(propsDelete);
 
     const appendMoneyToTitle = () => {
         return (

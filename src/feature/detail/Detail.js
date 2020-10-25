@@ -38,7 +38,8 @@ const Detail = props => {
     const {
         title,
         date,
-        content } = props.route.params;
+        content
+    } = props.route.params;
 
     const renderTitle = () => {
         return (

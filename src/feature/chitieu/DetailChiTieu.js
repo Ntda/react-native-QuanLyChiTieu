@@ -4,12 +4,10 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
-import useSetHeaderDetail from '../customHook/useSetHeaderDetail';
 import Detail from '../detail/Detail';
-import { useDispatch, useSelector } from 'react-redux';
 import { deleteItemChiTieu } from '../common/localStoreHelper';
 import { LOCALSTOREKEY } from '../common/Constant';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import useDeleteDetail from '../customHook/useDeleteDetail';
 
 const styles = StyleSheet.create({
     container: {
@@ -21,34 +19,26 @@ const ChiTieuDetail = ({
     route,
     navigation
 }) => {
-    const dispatch = useDispatch();
     const {
         money,
         date,
         id
     } = route.params;
-    const handleDeleteChiTieu = async () => {
-        const deleteModel = {
-            date,
-            dataId: id,
-            localStoreKey: LOCALSTOREKEY.CHITIEU
-        }
-        await dispatch(deleteItemChiTieu(deleteModel));
-        navigation.popToTop();
-    }
 
-    const deleteIcon = <AntDesign
-        name='delete'
-        size={25} />
-
-    const headerModel ={
+    const propsDelete = {
+        date,
+        dataId: id,
+        localStoreKey: LOCALSTOREKEY.CHITIEU,
+        action: deleteItemChiTieu,
         navigation,
-        title: 'Chi tiêu',
-        onDelete: handleDeleteChiTieu,
-        children: deleteIcon
+        message: 'Xoá chi tiêu',
+        buttonTextCancel: 'Cancel',
+        styleButtonCancel: 'cancel',
+        buttonTextOK: 'Ok',
+        styleButtonOK: 'ok',
+        titleHeader: 'Chi tiêu'
     }
-
-    useSetHeaderDetail(headerModel);
+    useDeleteDetail(propsDelete);
 
     const appendMoneyToTitle = () => {
         return (
