@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "837245375524",
+    "firebase_url": "https://quanlychitieu-edf7c.firebaseio.com",
+    "project_id": "quanlychitieu-edf7c",
+    "storage_bucket": "quanlychitieu-edf7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837245375524:android:45694ef50bedf171f874b1",
+        "android_client_info": {
+          "package_name": "com.quanlychitieu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "837245375524-6qahfnjhnu20k0bf4p30no206kljja0u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPqGm8OGxIHdk5CnFDNCTIcyr8LWM-0Hw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "837245375524-6qahfnjhnu20k0bf4p30no206kljja0u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

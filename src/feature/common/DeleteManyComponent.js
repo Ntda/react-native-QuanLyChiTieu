@@ -6,6 +6,7 @@ import {
     StyleSheet
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import confirmWrapper from './confirmWrapper';
 
 const styles = StyleSheet.create({
     container: {
@@ -30,8 +31,8 @@ const styles = StyleSheet.create({
 })
 
 const DeleteManyComponent = ({
-    onDeleteManyItem,
-    totalItem
+    totalItem,
+    confirmModel
 }) => {
     return (
         <View style={styles.container}>
@@ -39,7 +40,7 @@ const DeleteManyComponent = ({
                 style={{
                     flexDirection: 'row'
                 }}
-                onPress={onDeleteManyItem}
+                onPress={() => confirmWrapper(confirmModel)}
             >
                 <AntDesign
                     name='delete'

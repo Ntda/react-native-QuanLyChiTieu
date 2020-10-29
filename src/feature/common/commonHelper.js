@@ -50,6 +50,13 @@ const executeFilter = (array, filterModel) => {
     });
 }
 
+const getMonday = d => {
+    d = new Date(d);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+}
+
 const buildDataPieChart = (ammountThuNhap, ammountChiTieu) => {
     if (!ammountThuNhap || ammountThuNhap < ammountChiTieu) {
         return [{
@@ -83,5 +90,6 @@ export {
     totalMoneyPerDayFormatted,
     executeFilter,
     buildTotalMoneyBaseOnTimeRange,
-    buildDataPieChart
+    buildDataPieChart,
+    getMonday
 };

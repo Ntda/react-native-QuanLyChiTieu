@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Avatar } from "react-native-elements";
 import CheckBox from 'react-native-check-box';
 import { Image } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NAVIGATIONTITLE } from './Constant';
 import { setSelectedItemChiTieu, setSelectedItemThuNhap } from '../delete/deleteSlice';
+import { isEqual } from 'lodash';
 
 const AvartarSelector = props => {
     const {
@@ -12,11 +13,14 @@ const AvartarSelector = props => {
         id
     } = props;
     const dispatch = useDispatch();
-
-    const [displayAvatar, setDisplayAvatar] = useState(true);
+    const state = useSelector(state => state.deleteMany);
+    const itemsDeleted = isEqual(tabType, NAVIGATIONTITLE.chiTieu)
+        ? state.chiTieu.entities
+        : state.thuNhap.entities;
+    const [displayAvatar, setDisplayAvatar] = useState(!itemsDeleted.some(item => isEqual(item, id)));
 
     const handleDisplayAvatar = canDisplay => {
-        console.log('[handleDisplayAvatar]: ' + canDisplay)
+
         const payload = {
             dataId: id,
             selected: !canDisplay
@@ -26,7 +30,7 @@ const AvartarSelector = props => {
                 dispatch(setSelectedItemChiTieu(payload));
                 break;
             case NAVIGATIONTITLE.thuNhap:
-                dispatch(setSelectedItemThuNhap(payload))
+                dispatch(setSelectedItemThuNhap(payload));
                 break;
         }
 

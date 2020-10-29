@@ -1,8 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
+import { getMonday } from '../common/commonHelper';
 
+
+const monday = getMonday(new Date());
 const filterModel = {
-    fromDate: moment(new Date()).format('LL'),
+    fromDate: moment(monday).format('LL'),
     toDate: moment(new Date()).format('LL'),
     isShowToday: true
 };
@@ -10,8 +13,8 @@ const filterModel = {
 const filterSlice = createSlice({
     name: 'filter/filter',
     initialState: {
-        thuNhap:{
-          ...filterModel
+        thuNhap: {
+            ...filterModel
         },
         chiTieu: {
             ...filterModel
@@ -26,7 +29,7 @@ const filterSlice = createSlice({
             state.chiTieu.toDate = toDate;
             state.chiTieu.isShowToday = isShowToday
         },
-        setFilterThuNhap:(state, action)=>{
+        setFilterThuNhap: (state, action) => {
             const { timeRange, isShowToday } = action.payload;
             const { fromDate, toDate } = timeRange;
             console.log('[setFilterThuNhap]: ' + JSON.stringify(fromDate))
@@ -40,7 +43,7 @@ const { actions, reducer } = filterSlice;
 const {
     setFilterChiTieu,
     setFilterThuNhap
- } = actions;
+} = actions;
 export {
     setFilterChiTieu,
     setFilterThuNhap

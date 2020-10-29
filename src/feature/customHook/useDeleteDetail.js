@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import confirmWrapper from '../common/confirmWrapper';
 import useSetHeaderDetail from './useSetHeaderDetail';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -9,7 +8,7 @@ const useDeleteDetail = props => {
         date,
         dataId,
         localStoreKey,
-        action,
+        onDelete,
         navigation,
         message,
         buttonTextCancel,
@@ -19,14 +18,13 @@ const useDeleteDetail = props => {
         titleHeader
     } = props;
 
-    const dispatch = useDispatch();
     const executeDelete = async () => {
         const deleteModel = {
             date,
             dataId,
             localStoreKey
         }
-        await dispatch(action(deleteModel));
+        await onDelete(deleteModel);
         navigation.popToTop();
     }
 

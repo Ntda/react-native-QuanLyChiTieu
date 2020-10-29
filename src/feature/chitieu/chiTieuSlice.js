@@ -3,9 +3,14 @@ import { compareTime } from '../common/dateTimeHelper';
 import {
     getItemChiTieu,
     setItemChiTieu,
-    deleteItemChiTieu
+    deleteItemChiTieu,
+    deleteManyItemChiTieu
 } from '../common/localStoreHelper';
-import { buildTotalMoneyPerDay, totalMoneyPerDayFormatted, buildTotalMoneyBaseOnTimeRange } from '../common/commonHelper';
+import {
+    buildTotalMoneyPerDay,
+    totalMoneyPerDayFormatted,
+    buildTotalMoneyBaseOnTimeRange
+} from '../common/commonHelper';
 import { commaFormatted } from '../common/numberFormater';
 
 const chiTieuSlice = createSlice({
@@ -39,6 +44,7 @@ const chiTieuSlice = createSlice({
         [getItemChiTieu.rejected]: state => {
             state.loading = false;
         },
+
         [setItemChiTieu.pending]: state => {
             state.loading = true;
         },
@@ -59,6 +65,7 @@ const chiTieuSlice = createSlice({
         [setItemChiTieu.rejected]: state => {
             state.loading = false;
         },
+
         [deleteItemChiTieu.pending]: state => {
             state.loading = true;
         },
@@ -76,6 +83,26 @@ const chiTieuSlice = createSlice({
             state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
         },
         [deleteItemChiTieu.rejected]: state => {
+            state.loading = false;
+        },
+
+        [deleteManyItemChiTieu.pending]: state => {
+            state.loading = true;
+        },
+        [deleteManyItemChiTieu.fulfilled]: (state, action) => {
+            state.loading = false;
+            action.payload.sort((src, dest) => {
+                const dateTimeSource = Date.parse(src.title);
+                const dateTimeDest = Date.parse(dest.title);
+                return compareTime(dateTimeSource, dateTimeDest);
+            });
+            buildTotalMoneyPerDay(action.payload);
+            totalMoneyPerDayFormatted(action.payload);
+            state.entities = [...[], ...action.payload];
+            state.totalMoneyBaseOnTimeRange = buildTotalMoneyBaseOnTimeRange(action.payload);
+            state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
+        },
+        [deleteManyItemChiTieu.rejected]: state => {
             state.loading = false;
         }
     }

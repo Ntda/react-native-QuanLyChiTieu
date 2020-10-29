@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {isEqual} from 'lodash';
+import { isEqual } from 'lodash';
 
 const deleteModel = {
     entities: [],
@@ -16,6 +16,12 @@ const filterSlice = createSlice({
         }
     },
     reducers: {
+        clearDeleteItemChiTieu: (state, _) => {
+            state.chiTieu.entities.length = 0;
+        },
+        clearDeleteItemThuNhap: (state, _) => {
+            state.thuNhap.entities.length = 0;
+        },
         setSelectedItemChiTieu: (state, action) => {
             const {
                 dataId,
@@ -26,10 +32,11 @@ const filterSlice = createSlice({
             } else {
                 let { entities } = state.chiTieu
                 state.chiTieu.entities = entities.filter(id => !isEqual(id, dataId));
-                console.log('[Delete]: '+ JSON.stringify(entities))
+
             }
         },
         setSelectedItemThuNhap: (state, action) => {
+            console.log('[setSelectedItemThuNhap]: ' + JSON.stringify(action))
             const {
                 dataId,
                 selected
@@ -38,7 +45,7 @@ const filterSlice = createSlice({
                 state.thuNhap.entities.push(dataId);
             } else {
                 let { entities } = state.thuNhap
-                entities = entities.filter(id => !isEqual(id, dataId));
+                state.thuNhap.entities = entities.filter(id => !isEqual(id, dataId));
             }
         }
     }
@@ -46,10 +53,14 @@ const filterSlice = createSlice({
 const { actions, reducer } = filterSlice;
 const {
     setSelectedItemChiTieu,
-    setSelectedItemThuNhap
+    setSelectedItemThuNhap,
+    clearDeleteItemChiTieu,
+    clearDeleteItemThuNhap
 } = actions;
 export {
     setSelectedItemChiTieu,
-    setSelectedItemThuNhap
+    setSelectedItemThuNhap,
+    clearDeleteItemChiTieu,
+    clearDeleteItemThuNhap
 }
 export default reducer;

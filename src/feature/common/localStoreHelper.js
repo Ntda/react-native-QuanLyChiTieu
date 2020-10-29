@@ -118,7 +118,6 @@ const deleteItemChiTieu = createAsyncThunk(
                 console.log('[delete/itemChiTieu->Error: ]' + JSON.stringify(e));
             });
             const getDataModel = {
-                localStoreKey,
                 ...filterModelChiTieu
             };
 
@@ -128,6 +127,55 @@ const deleteItemChiTieu = createAsyncThunk(
         }
     }
 )
+
+const deleteManyItemChiTieu = createAsyncThunk(
+    'delete/deleteManyItemChiTieu',
+    async (model, { getState }) => {
+        const filterModel = getState().filter.chiTieu;
+        return (await deleteManyItem({
+            ...model,
+            filterModel
+        }));
+    }
+)
+
+const deleteManyItemThuNhap = createAsyncThunk(
+    'delete/deleteManyItemThuNhap',
+    async (model, { getState }) => {
+        const filterModel = getState().filter.thuNhap;
+        return (await deleteManyItem({
+            ...model,
+            filterModel
+        }));
+    }
+)
+
+const deleteManyItem = async model => {
+    const {
+        entities,
+        localStoreKey,
+        filterModel
+    } = model;
+    const jsonValue = await AsyncStorage.getItem(localStoreKey);
+    let newArray = jsonValue
+        ? JSON.parse(jsonValue)
+        : [];
+
+    for (let i = 0; i < newArray.length; i++) {
+        newArray[i].data = newArray[i].data.filter(d => !entities.some(id => isEqual(id, d.id)));
+    }
+
+    const arrayResult = newArray.filter(n => n.data.length);
+
+    console.log('[deleteManyItem]: ' + JSON.stringify(arrayResult));
+    console.log('[deleteMany]=> Write data to local storage: ' + localStoreKey);
+
+    await AsyncStorage.setItem(localStoreKey, JSON.stringify(arrayResult), e => {
+        console.log('[setItemToLocalStore->Error: ]' + JSON.stringify(e));
+    });
+
+    return executeFilter(arrayResult, filterModel);
+}
 
 const getItemFromLocalStorage = async model => {
     const {
@@ -175,5 +223,7 @@ export {
     setItemThuNhap,
     getDataByDate,
     deleteItemChiTieu,
-    deleteItemThuNhap
+    deleteItemThuNhap,
+    deleteManyItemChiTieu,
+    deleteManyItemThuNhap
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NAVIGATIONTITLE } from './Constant';
-import DeleteManyChiTieuWrapper from './DeleteManyChiTieuWrapper';
-import DeleteManyThuNhapWrapper from './DeleteManyThuNhapWrapper';
+import DeleteManyChiTieuWrapper from '../chitieu/DeleteManyChiTieuWrapper';
+import DeleteManyThuNhapWrapper from '../thunhap/DeleteManyThuNhapWrapper';
 
 const deleteManyFactory = tabType => {
      switch(tabType){

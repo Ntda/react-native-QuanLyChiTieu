@@ -8,6 +8,8 @@ import Detail from '../detail/Detail';
 import useDeleteDetail from '../customHook/useDeleteDetail';
 import { LOCALSTOREKEY } from '../common/Constant';
 import { deleteItemThuNhap } from '../common/localStoreHelper';
+import { useDispatch } from 'react-redux';
+import { setSelectedItemThuNhap } from '../delete/deleteSlice';
 
 const styles = StyleSheet.create({
     container: {
@@ -24,12 +26,21 @@ const ThuNhapDetail = ({
         date,
         id
     } = route.params;
+    const dispatch = useDispatch();
+
+    const handleDelete = async model => {
+        await dispatch(setSelectedItemThuNhap({
+            dataId: id,
+            selected: false
+        }));
+        await dispatch(deleteItemThuNhap(model));
+    }
 
     const propsDelete = {
         date,
         dataId: id,
         localStoreKey: LOCALSTOREKEY.THUNHAP,
-        action: deleteItemThuNhap,
+        onDelete: handleDelete,
         navigation,
         message: 'Xoá thu nhập',
         buttonTextCancel: 'Cancel',
@@ -38,6 +49,7 @@ const ThuNhapDetail = ({
         styleButtonOK: 'ok',
         titleHeader: 'Thu nhập'
     }
+
     useDeleteDetail(propsDelete);
 
     const appendMoneyToTitle = () => {

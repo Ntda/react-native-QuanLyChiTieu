@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { compareTime } from '../common/dateTimeHelper';
-import { getItemThuNhap, setItemThuNhap, deleteItemThuNhap } from '../common/localStoreHelper';
+import { getItemThuNhap, setItemThuNhap, deleteItemThuNhap, deleteManyItemThuNhap } from '../common/localStoreHelper';
 import {
     buildTotalMoneyPerDay,
     totalMoneyPerDayFormatted,
@@ -39,6 +39,7 @@ const thuNhapSlice = createSlice({
         [getItemThuNhap.rejected]: state => {
             state.loading = false;
         },
+
         [setItemThuNhap.pending]: state => {
             state.loading = true;
         },
@@ -59,6 +60,7 @@ const thuNhapSlice = createSlice({
         [setItemThuNhap.rejected]: state => {
             state.loading = false;
         },
+
         [deleteItemThuNhap.pending]: state => {
             state.loading = true;
         },
@@ -76,6 +78,26 @@ const thuNhapSlice = createSlice({
             state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
         },
         [deleteItemThuNhap.rejected]: state => {
+            state.loading = false;
+        },
+
+        [deleteManyItemThuNhap.pending]: state => {
+            state.loading = true;
+        },
+        [deleteManyItemThuNhap.fulfilled]: (state, action) => {
+            state.loading = false;
+            action.payload.sort((src, dest) => {
+                const dateTimeSource = Date.parse(src.title);
+                const dateTimeDest = Date.parse(dest.title);
+                return compareTime(dateTimeSource, dateTimeDest);
+            });
+            buildTotalMoneyPerDay(action.payload);
+            totalMoneyPerDayFormatted(action.payload);
+            state.entities = [...[], ...action.payload];
+            state.totalMoneyBaseOnTimeRange = buildTotalMoneyBaseOnTimeRange(action.payload);
+            state.totalMoneyBaseOnTimeRangeDisplay = `${commaFormatted(state.totalMoneyBaseOnTimeRange)} đ`;
+        },
+        [deleteManyItemThuNhap.rejected]: state => {
             state.loading = false;
         }
     }
