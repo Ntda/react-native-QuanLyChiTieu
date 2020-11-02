@@ -102,7 +102,7 @@ const buildVerticalCalendarOfCurrentYear = () => {
 const filterEntitiesByMonthYear = (entities, month, year) => {
     return entities.filter(e => {
         const dateStringToTypeDate = new Date(e.title);
-        const currentMonth = dateStringToTypeDate.getMonth();
+        const currentMonth = dateStringToTypeDate.getMonth() + 1;
         const currentYear = dateStringToTypeDate.getFullYear();
         return isEqual(month, currentMonth) && isEqual(year, currentYear);
     });

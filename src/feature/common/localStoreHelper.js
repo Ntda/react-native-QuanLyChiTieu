@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-community/async-storage';
 import { isEqual, cloneDeep } from 'lodash';
-import { executeFilter } from './commonHelper';
+import { executeFilter, filterEntitiesByMonthYear } from './commonHelper';
+import { LOCALSTOREKEY } from './Constant';
 
 const getItemChiTieu = createAsyncThunk(
     'get/itemChiTieu',
@@ -26,6 +27,25 @@ const getItemThuNhap = createAsyncThunk(
     async model => {
         const result = await getItemFromLocalStorage(model);
         return result;
+    }
+);
+
+const getDataThongKeByMonthAndYear = createAsyncThunk(
+    'get/getDataThongKeByMonthAndYear',
+    async model => {
+        const { selectedMonth, currentYear } = model;
+        const jsonValueChiTieu = await AsyncStorage.getItem(LOCALSTOREKEY.CHITIEU);
+        const jsonValueThuNhap = await AsyncStorage.getItem(LOCALSTOREKEY.THUNHAP);
+        const jsonToArrayChiTieu = jsonValueChiTieu
+            ? JSON.parse(jsonValueChiTieu)
+            : [];
+        const jsonToArrayThuNhap = jsonValueThuNhap
+            ? JSON.parse(jsonValueThuNhap)
+            : [];
+        return {
+            thuNhap: filterEntitiesByMonthYear(jsonToArrayThuNhap, selectedMonth, currentYear),
+            chiTieu: filterEntitiesByMonthYear(jsonToArrayChiTieu, selectedMonth, currentYear)
+        }
     }
 );
 
@@ -225,5 +245,6 @@ export {
     deleteItemChiTieu,
     deleteItemThuNhap,
     deleteManyItemChiTieu,
-    deleteManyItemThuNhap
+    deleteManyItemThuNhap,
+    getDataThongKeByMonthAndYear
 }
