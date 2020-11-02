@@ -5,6 +5,7 @@ import {
 import moment from 'moment';
 import { isEqual } from 'lodash';
 import { CHART } from './Constant';
+import { nanoid } from '@reduxjs/toolkit';
 
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
@@ -84,6 +85,21 @@ const buildDataPieChart = (ammountThuNhap, ammountChiTieu) => {
     }]
 }
 
+const buildVerticalCalendarOfCurrentYear = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const monthDataSource = [];
+    for (let i = currentDate.getMonth(); i >=1 ; i--) {
+        monthDataSource.push({
+            id: nanoid(),
+            month: i,
+            year: currentYear
+        });
+    }
+    return monthDataSource;
+}
+
+
 export {
     totalMoney,
     buildTotalMoneyPerDay,
@@ -91,5 +107,6 @@ export {
     executeFilter,
     buildTotalMoneyBaseOnTimeRange,
     buildDataPieChart,
-    getMonday
+    getMonday,
+    buildVerticalCalendarOfCurrentYear
 };

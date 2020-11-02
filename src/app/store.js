@@ -2,6 +2,7 @@ import chieuTieuReducer from '../feature/chitieu/chiTieuSlice';
 import thuNhapReducer from '../feature/thunhap/thuNhapSlice';
 import filterReducer from '../feature/filter/filterSlice';
 import deleteManyReducer from '../feature/delete/deleteSlice';
+import thongKeReducer from '../feature/thongke/thongKeSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 const store = configureStore({
@@ -9,7 +10,8 @@ const store = configureStore({
         thuNhap: thuNhapReducer,
         chiTieu: chieuTieuReducer,
         filter: filterReducer,
-        deleteMany: deleteManyReducer
+        deleteMany: deleteManyReducer,
+        thongKe: thongKeReducer
     }
 });
 
