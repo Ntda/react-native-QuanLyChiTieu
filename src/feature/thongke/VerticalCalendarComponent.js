@@ -86,6 +86,8 @@ const VerticalCalendarComponent = () => {
 
     const renderCalendarVertical = () => {
         return <FlatList
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
             horizontal
             data={monthDataSource}
             renderItem={renderItem}

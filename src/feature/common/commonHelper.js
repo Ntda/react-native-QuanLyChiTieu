@@ -4,7 +4,7 @@ import {
 } from './numberFormater';
 import moment from 'moment';
 import { isEqual } from 'lodash';
-import { CHART } from './Constant';
+import { CHART, CHARTCOLOR } from './Constant';
 import { nanoid } from '@reduxjs/toolkit';
 
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -51,11 +51,9 @@ const executeFilter = (array, filterModel) => {
     });
 }
 
-const getMonday = d => {
-    d = new Date(d);
-    const day = d.getDay();
-    const diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-    return new Date(d.setDate(diff));
+const getFirstDayOfMonth = () => {
+    const date = new Date();
+    return new Date(date.getFullYear(), date.getMonth(), 1);
 }
 
 const buildDataPieChart = (ammountThuNhap, ammountChiTieu) => {
@@ -89,7 +87,7 @@ const buildVerticalCalendarOfCurrentYear = () => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const monthDataSource = [];
-    for (let i = 12; i >= 1; i--) {
+    for (let i = currentDate.getMonth() + 1; i >= 1; i--) {
         monthDataSource.push({
             id: nanoid(),
             month: i,
@@ -122,10 +120,35 @@ const calculateAmountPerMonth = (
     }
 
     return {
-        thuNhap: (totalThuNhapPerMonth / 1000),
-        chiTieu: (totalChiTieuPerMonth / 1000),
-        conLai: ((totalThuNhapPerMonth - totalChiTieuPerMonth) / 1000)
+        thuNhapFormatter: `${commaFormatted(totalThuNhapPerMonth)} đ`,
+        thuNhap: (totalThuNhapPerMonth / 10000),
+        chiTieuFormatter: `${commaFormatted(totalChiTieuPerMonth)} đ`,
+        chiTieu: (totalChiTieuPerMonth / 10000),
+        conLaiFormatter: `${commaFormatted(totalThuNhapPerMonth - totalChiTieuPerMonth)} đ`,
+        conLai: ((totalThuNhapPerMonth - totalChiTieuPerMonth) / 10000)
     }
+}
+
+const buildDescriptionThongKeChart = (
+    thuNhapFormatter,
+    chiTieuFormatter,
+    conLaiFormatter
+) => {
+    return [{
+        title: 'Thu nhập',
+        ammount: `+ ${thuNhapFormatter}`,
+        color: CHARTCOLOR.THUNHAP
+    },
+    {
+        title: 'Chi tiêu',
+        ammount: `- ${chiTieuFormatter}`,
+        color: CHARTCOLOR.CHITIEU
+    },
+    {
+        title: 'Còn lại',
+        ammount: conLaiFormatter,
+        color: CHARTCOLOR.CONLAI
+    }]
 }
 
 export {
@@ -135,8 +158,9 @@ export {
     executeFilter,
     buildTotalMoneyBaseOnTimeRange,
     buildDataPieChart,
-    getMonday,
+    getFirstDayOfMonth,
     buildVerticalCalendarOfCurrentYear,
     calculateAmountPerMonth,
-    filterEntitiesByMonthYear
+    filterEntitiesByMonthYear,
+    buildDescriptionThongKeChart
 };

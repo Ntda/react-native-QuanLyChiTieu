@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
-import { getMonday } from '../common/commonHelper';
+import { getFirstDayOfMonth } from '../common/commonHelper';
 
 
-const monday = getMonday(new Date());
+const firstDayOfMonth = getFirstDayOfMonth();
 const filterModel = {
-    fromDate: moment(monday).format('LL'),
+    fromDate: moment(firstDayOfMonth).format('LL'),
     toDate: moment(new Date()).format('LL'),
     isShowToday: true
 };

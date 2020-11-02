@@ -5,7 +5,7 @@ import { getDataThongKeByMonthAndYear } from '../common/localStoreHelper';
 const thongKeSlice = createSlice({
     name: 'thongKe/thongKe',
     initialState: {
-        selectedMonth: new Date().getMonth(),
+        selectedMonth: new Date().getMonth() + 1,
         currentYear: new Date().getFullYear(),
         monthDataSource: buildVerticalCalendarOfCurrentYear(),
         loading: false,
@@ -26,7 +26,7 @@ const thongKeSlice = createSlice({
             buildTotalMoneyPerDay(thuNhap);
             buildTotalMoneyPerDay(chiTieu);
             const chartInfo = calculateAmountPerMonth(thuNhap, chiTieu);
-            state.chartInfo = chartInfo;
+            state.chartInfo =chartInfo;
         },
         [getDataThongKeByMonthAndYear.rejected]: (state, action) => {
             state.loading = false;

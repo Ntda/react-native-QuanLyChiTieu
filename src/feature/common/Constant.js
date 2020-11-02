@@ -31,6 +31,12 @@ const TIMERANGEROUTE = {
     title: 'Khoảng thời gian'
 }
 
+const CHARTCOLOR = {
+    THUNHAP: 'green',
+    CHITIEU: 'red',
+    CONLAI: 'blue'
+}
+
 const ICONTYPE = {
     ICONFILTERANT: 'ICONFILTERANT',
     ICONFILTERAWARESOME: 'ICONFILTERAWARESOME'
@@ -90,5 +96,6 @@ export {
     ICONTYPE,
     TABTYPE,
     VIEWDETAIL,
-    CHART
+    CHART,
+    CHARTCOLOR
 }

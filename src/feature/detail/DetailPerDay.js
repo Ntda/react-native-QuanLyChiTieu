@@ -3,27 +3,18 @@ import {
     View,
     Text,
     StyleSheet,
-    FlatList,
-    TouchableHighlight,
-    Dimensions
+    FlatList
 } from 'react-native';
 import PieChartComponent from '../../chart/PieChartComponent';
 import useSetHeaderDetail from '../customHook/useSetHeaderDetail';
 import { CHART } from '../common/Constant';
-import AvartarSelector from '../common/AvartarSelector';
-import { getRandomColor } from '../common/ColorPicker';
 import ItemCommon from '../common/ItemCommon';
-
-const widthDimension = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {
         margin: 10
     },
-    infoChart: {
-        padding: 25,
-        borderRadius: 15
-    },
+
     chartDescription: {
         width: 80,
         height: 10,
