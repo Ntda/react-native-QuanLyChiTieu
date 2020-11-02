@@ -11,13 +11,16 @@ import {
 } from "victory-native";
 import VerticalCalendarComponent from './VerticalCalendarComponent';
 import Chart from './Chart';
+import {
+  SafeAreaView
+} from 'react-native';
 
 const ThongKe = () => {
   return (
-    <View>
+    <SafeAreaView>
       <VerticalCalendarComponent />
       <Chart />
-    </View>
+    </SafeAreaView>
   )
 }
 

@@ -89,7 +89,7 @@ const buildVerticalCalendarOfCurrentYear = () => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const monthDataSource = [];
-    for (let i = currentDate.getMonth(); i >=1 ; i--) {
+    for (let i = 12; i >= 1; i--) {
         monthDataSource.push({
             id: nanoid(),
             month: i,
@@ -99,6 +99,34 @@ const buildVerticalCalendarOfCurrentYear = () => {
     return monthDataSource;
 }
 
+const filterEntitiesByMonthYear = (entities, month, year) => {
+    return entities.filter(e => {
+        const dateStringToTypeDate = new Date(e.title);
+        const currentMonth = dateStringToTypeDate.getMonth();
+        const currentYear = dateStringToTypeDate.getFullYear();
+        return isEqual(month, currentMonth) && isEqual(year, currentYear);
+    });
+}
+
+const calculateAmountPerMonth = (
+    thuNhapEntities,
+    chiTieuEntities
+) => {
+    let totalThuNhapPerMonth = 0;
+    let totalChiTieuPerMonth = 0;
+    for (let i = 0; i < thuNhapEntities.length; i++) {
+        totalThuNhapPerMonth += thuNhapEntities[i].totalMoney;
+    }
+    for (let i = 0; i < chiTieuEntities.length; i++) {
+        totalChiTieuPerMonth += chiTieuEntities[i].totalMoney;
+    }
+
+    return {
+        thuNhap: (totalThuNhapPerMonth / 1000),
+        chiTieu: (totalChiTieuPerMonth / 1000),
+        conLai: ((totalThuNhapPerMonth - totalChiTieuPerMonth) / 1000)
+    }
+}
 
 export {
     totalMoney,
@@ -108,5 +136,7 @@ export {
     buildTotalMoneyBaseOnTimeRange,
     buildDataPieChart,
     getMonday,
-    buildVerticalCalendarOfCurrentYear
+    buildVerticalCalendarOfCurrentYear,
+    calculateAmountPerMonth,
+    filterEntitiesByMonthYear
 };

@@ -5,13 +5,40 @@ import {
     VictoryGroup,
     VictoryBar
 } from "victory-native";
-import { useSelector, useDispatch } from 'react-redux';
+import {
+    View
+}from 'react-native';
+import { useSelector, useStore } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
+import { calculateAmountPerMonth, filterEntitiesByMonthYear } from '../common/commonHelper';
+import NoDataComponent from '../common/NoDataComponent';
 
 const Chart = () => {
     const monthModel = useSelector(state => state.thongKe);
+    const store = useStore().getState();
     const { selectedMonth, currentYear } = monthModel;
     const xAxisLabel = `${selectedMonth}/${currentYear}`;
+    const thuNhapEntities = filterEntitiesByMonthYear(
+        store.thuNhap.entities,
+        selectedMonth,
+        currentYear);
+    const chiTieuEntities = filterEntitiesByMonthYear(
+        store.chiTieu.entities,
+        selectedMonth,
+        currentYear);;
+
+    console.log('[store]: ' + JSON.stringify(chiTieuEntities));
+    if (!thuNhapEntities.length && !chiTieuEntities.length) {
+        return <View><NoDataComponent
+        message='Không có dữ liệu' /></View>
+    }
+    const chartInfo = calculateAmountPerMonth(
+        thuNhapEntities,
+        chiTieuEntities,
+        selectedMonth,
+        currentYear
+    );
+
 
     return (
         <VictoryChart
@@ -25,15 +52,13 @@ const Chart = () => {
                 }}
             >
                 <VictoryBar
-                    barWidth={90}
-                    data={[{ x: xAxisLabel, y: 100 }]}
+                    data={[{ x: xAxisLabel, y: chartInfo.thuNhap }]}
                 />
                 <VictoryBar
-                    barWidth={70}
-                    data={[{ x: xAxisLabel, y: 200 }]}
+                    data={[{ x: xAxisLabel, y: chartInfo.chiTieu }]}
                 />
                 <VictoryBar
-                    data={[{ x: xAxisLabel, y: 300 }]}
+                    data={[{ x: xAxisLabel, y: chartInfo.conLai }]}
                 />
             </VictoryGroup>
         </VictoryChart>

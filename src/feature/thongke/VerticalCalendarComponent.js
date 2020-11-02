@@ -11,7 +11,7 @@ import {
 }
     from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import { setSelectedMonth } from './thongKeSlice';
 
 const styles = StyleSheet.create({
@@ -39,6 +39,11 @@ const VerticalCalendarComponent = () => {
     const monthModel = useSelector(state => state.thongKe);
     const dispatch = useDispatch();
     const { selectedMonth, monthDataSource } = monthModel;
+
+    const handleSelectMonthChange = async month => {
+        await dispatch(setSelectedMonth(month));
+    };
+
     const Item = ({ month, year }) => {
         const styleTouchable = isEqual(selectedMonth, month)
             ? [
@@ -64,7 +69,7 @@ const VerticalCalendarComponent = () => {
         return (
             <TouchableOpacity
                 style={styleTouchable}
-                onPress={() => dispatch(setSelectedMonth(month))}>
+                onPress={() => handleSelectMonthChange(month)}>
                 <Text
                     style={styleTitle}>
                     {`${month}/${year}`}
