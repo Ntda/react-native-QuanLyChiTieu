@@ -31,8 +31,19 @@ const ReloadComponent = () => {
     const dispatch = useDispatch();
     const {
         selectedMonth,
-        currentYear
+        currentYear,
+        chartInfo
     } = monthModel;
+
+    const {
+        thuNhap,
+        chiTieu
+    } = chartInfo;
+
+    if (!thuNhap && !chiTieu) {
+        return null;
+    }
+
     return (
         <View style={styles.container}>
             <TouchableOpacity
