@@ -7,7 +7,7 @@ const firstDayOfMonth = getFirstDayOfMonth();
 const filterModel = {
     fromDate: moment(firstDayOfMonth).format('LL'),
     toDate: moment(new Date()).format('LL'),
-    isShowToday: true
+    isShowToday: false
 };
 
 const filterSlice = createSlice({

@@ -56,12 +56,10 @@ const ListViewComponent = props => {
         ...rest
     } = props;
 
-    //console.log('[Chi tieu]: ' + JSON.stringify(model));
     const renderItem = ({
         item,
         section
     }) => {
-        //console.log('[Item]: ' + JSON.stringify(section));
         return (
             <ItemCommon
                 routeViewDetail={routeViewDetail}

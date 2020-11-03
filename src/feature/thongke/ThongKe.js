@@ -6,12 +6,14 @@ import Chart from './Chart';
 import {
   SafeAreaView
 } from 'react-native';
+import ReloadComponent from './ReloadComponent';
 
 const ThongKe = () => {
   return (
     <SafeAreaView>
       <VerticalCalendarComponent />
       <Chart />
+      <ReloadComponent/>
     </SafeAreaView>
   )
 }
