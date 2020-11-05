@@ -9,14 +9,44 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import StackNavigation from './src/StackNavigation';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Provider } from 'react-redux';
 import store from './src/app/store';
+import MessageScreen from './src/MessageScreen';
+import CustomDrawer from './CustomDrawer';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
+const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <StackNavigation />
+        <Drawer.Navigator
+          drawerType='back'
+          initialRouteName='Home'
+          drawerContentOptions={{
+            activeTintColor: 'tomato'
+          }}
+          drawerContent={props => <CustomDrawer {...props} />}>
+          <Drawer.Screen
+            name='Home'
+            component={StackNavigation}
+            options={{
+              title: 'Home',
+              drawerIcon: ({ focused, size }) => (
+                <Icon
+                  name="home"
+                  color={focused ? 'red' : '#ccc'}
+                  size={size}
+                  solid
+                />
+              )
+            }} />
+          <Drawer.Screen
+            name='Notifications'
+            component={MessageScreen} />
+        </Drawer.Navigator>
       </NavigationContainer>
     </Provider>
   );
