@@ -15,6 +15,7 @@ import store from './src/app/store';
 import MessageScreen from './src/MessageScreen';
 import CustomDrawer from './CustomDrawer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { View } from 'react-native';
 
 const Drawer = createDrawerNavigator();
 
@@ -35,12 +36,23 @@ const App = () => {
             options={{
               title: 'Home',
               drawerIcon: ({ focused, size }) => (
-                <Icon
-                  name="home"
-                  color={focused ? 'red' : '#ccc'}
-                  size={size}
-                  solid
-                />
+                <View
+                  style={
+                    focused
+                      ? {
+                        borderLeftColor: 'red',
+                        borderLeftWidth: 2,
+                        paddingLeft: 5,
+                      }
+                      : null
+                  }>
+                  <Icon
+                    name="home"
+                    color={focused ? 'red' : '#ccc'}
+                    size={size}
+                    solid
+                  />
+                </View>
               )
             }} />
           <Drawer.Screen

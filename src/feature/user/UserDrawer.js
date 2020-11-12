@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { Avatar } from "react-native-elements";
+import ImagePicker from 'react-native-image-picker';
 
 const styles = StyleSheet.create({
     sideMenuProfileIcon: {
@@ -25,6 +26,26 @@ const styles = StyleSheet.create({
 });
 
 const UserDrawer = props => {
+    const handleAccessory = () => {
+        ImagePicker.showImagePicker({}, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                const source = { uri: response.uri };
+
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                console.log('source: ', source);
+            }
+        });
+    }
     const avatar_url =
         'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg';
 
@@ -37,6 +58,7 @@ const UserDrawer = props => {
                     uri: avatar_url
                 }}
                 showAccessory
+                onAccessoryPress={handleAccessory}
             />
             <Text style={styles.userName}>abc</Text>
         </View>
